@@ -1,0 +1,74 @@
+---
+import { Icon } from "astro-icon/components";
+const redes = [
+  {
+    icon: "mdi:facebook-box",
+    link: "https://google.com",
+  },
+  {
+    icon: "mdi:instagram",
+    link: "https://google.com",
+  },
+  {
+    icon: "mdi:whatsapp",
+    link: "https://google.com",
+  },
+  {
+    icon: "mdi:youtube",
+    link: "https://google.com",
+  },
+];
+---
+
+<footer class="border-t border-sand bg-ink text-cream">
+  <div
+    class="mx-auto flex max-w-6xl flex-col gap-8 px-5 py-12 md:flex-row md:items-end md:justify-between md:px-8"
+  >
+    <div>
+      <div class="flex items-start gap-4">
+        <img
+          src="/img/logo.png"
+          alt=""
+          class="h-14 w-14 rounded-full bg-paper object-cover"
+        />
+        <div>
+          <p class="font-display text-2xl">FSMET</p>
+          <p class="mt-1 max-w-sm text-sm leading-relaxed text-gold-soft">
+            Foro Social Mundial de las Economías Transformadoras. Jujuy y Salta,
+            Argentina.
+          </p>
+        </div>
+      </div>
+      <p class="text-muted mt-4">
+        &copy; 2026 FSMET. Todos los derechos reservados
+      </p>
+    </div>
+    <div>
+      <p class="text-lg text-cream/70">Encontranos en:</p>
+      <ul class="flex gap-3">
+        {
+          redes.map((red) => (
+            <a href={red.link} target="_blank" referrerpolicy="no-referrer">
+              <Icon
+                name={red.icon}
+                class="size-8 cursor-pointer hover:text-clay"
+              />
+            </a>
+          ))
+        }
+      </ul>
+      <p class="text-muted font-semibold mt-4 underline">
+        <a
+          href="https://maps.google.com"
+          target="_blank"
+          referrerpolicy="no-referrer"
+        >
+          Av. Hipolito Irigoyen Ejemplo, Palpala, Jujuy, Argentina
+        </a>
+      </p>
+      <p class="text-sm text-cream/70 mt-4">
+        Proceso en construcción. Memoria, red y territorio.
+      </p>
+    </div>
+  </div>
+</footer>

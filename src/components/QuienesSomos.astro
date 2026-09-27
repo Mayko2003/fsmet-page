@@ -1,0 +1,77 @@
+---
+const ejes = [
+	{
+		n: "01",
+		title: "Economía, Territorio y Buen Vivir",
+		text: "Desarrollo territorial, comunidad, inclusión y sostenibilidad de la vida.",
+	},
+	{
+		n: "02",
+		title: "Producción, Trabajo y Tramas",
+		text: "Cooperativas, circuitos cortos y articulación entre productoras y productores.",
+	},
+	{
+		n: "03",
+		title: "Finanzas Éticas y Redistribución",
+		text: "Crédito, fondos rotatorios, bancos comunitarios y educación financiera.",
+	},
+	{
+		n: "04",
+		title: "Agroecología y Transición Ecológica",
+		text: "Bienes comunes, bioinsumos, ambiente y producción sustentable.",
+	},
+	{
+		n: "05",
+		title: "Formación, Cultura y Sentido Común",
+		text: "Conocimientos territoriales, investigación, comunicación y educación.",
+	},
+	{
+		n: "06",
+		title: "Políticas Públicas e Incidencia",
+		text: "Propuestas, articulación con instituciones y marcos legislativos.",
+	},
+];
+---
+
+<section id="quienes-somos" class="scroll-mt-24 border-t border-sand bg-paper">
+	<div class="mx-auto max-w-6xl px-5 py-20 md:px-8">
+		<p class="text-sm font-semibold tracking-widest text-clay uppercase">Quiénes somos</p>
+		<h2 class="mt-3 max-w-3xl font-display text-3xl font-semibold md:text-5xl">
+			Un proceso colectivo, no solamente un evento
+		</h2>
+		<div class="mt-8 grid gap-8 lg:grid-cols-2">
+			<p class="text-lg leading-relaxed text-muted">
+				El FSMET busca conectar experiencias de economía social, solidaria, popular, comunitaria,
+				campesina, indígena, cooperativa, agroecológica, de cuidados y de finanzas éticas. El
+				problema no es la falta de alternativas: es que muchas siguen aisladas.
+			</p>
+			<p class="text-lg leading-relaxed text-muted">
+				La idea es construir una minga global: un encuentro donde confluimos organizaciones de
+				base, territorios, movimientos, comunidades e instituciones. El proceso empieza antes del
+				encuentro principal y continúa después.
+			</p>
+		</div>
+		<div class="mt-12 rounded-3xl bg-sand/70 p-6 md:p-8">
+			<p class="font-display text-2xl leading-snug text-ink md:text-3xl">
+				“Del proyecto al ecosistema.”
+			</p>
+			<p class="mt-3 max-w-2xl text-muted">
+				Organización responsable de la preparación: Movimiento Hacia Otra Economía, Social
+				Solidaria Popular Campesino Indígena, Afrodescendiente. Se está conformando un equipo de
+				gobernanza para el proceso.
+			</p>
+		</div>
+		<h3 class="mt-14 font-display text-2xl font-semibold">Seis ejes temáticos</h3>
+		<ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+			{
+				ejes.map((eje) => (
+					<li class="rounded-2xl border border-sand bg-cream p-5">
+						<span class="text-sm font-semibold text-clay">{eje.n}</span>
+						<h4 class="mt-2 font-display text-xl leading-snug">{eje.title}</h4>
+						<p class="mt-2 text-sm leading-relaxed text-muted">{eje.text}</p>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>
