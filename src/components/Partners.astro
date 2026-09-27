@@ -1,0 +1,67 @@
+---
+const partners = [
+	{
+		name: "FSMET",
+		logo: "/img/logo.png",
+	},
+	{
+		name: "FSMET",
+		logo: "/img/logo.png",
+	},
+	{
+		name: "FSMET",
+		logo: "/img/logo.png",
+	},
+	{
+		name: "FSMET",
+		logo: "/img/logo.png",
+	},
+  {
+    name: "FSMET",
+    logo: "/img/logo.png",
+  },
+  {
+    name: "FSMET",
+    logo: "/img/logo.png",
+  },
+  {
+    name: "FSMET",
+    logo: "/img/logo.png",
+  },
+  {
+    name: "FSMET",
+    logo: "/img/logo.png",
+  },
+  {
+    name: "FSMET",
+    logo: "/img/logo.png",
+  },
+  {
+    name: "FSMET",
+    logo: "/img/logo.png",
+  },
+  {
+    name: "FSMET",
+    logo: "/img/logo.png",
+  },
+];
+---
+
+<section id="partners" class="scroll-mt-24 border-t border-sand">
+	<div class="mx-auto max-w-6xl px-5 py-20 md:px-8">
+		<p class="text-sm font-semibold tracking-widest text-sky uppercase">Colaboradores</p>
+		<h2 class="mt-3 max-w-3xl font-display text-3xl font-semibold md:text-5xl">
+			Unidos por el cambio
+		</h2>
+    <p class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+      Los colaboradores del FSMET 2027 son aquellas entidades que han colaborado con el proceso desde su inicio.
+    </p>
+		<ul class="mt-12 space-y-0 flex flex-wrap gap-4">
+			{
+				partners.map((partner) => (
+					<li><img src={partner.logo} alt={partner.name} class="w-32 h-32 object-contain" /></li>
+				))
+			}
+		</ul>
+	</div>
+</section>
