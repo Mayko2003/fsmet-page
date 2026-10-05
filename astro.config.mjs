@@ -8,6 +8,8 @@ import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://fsmet-page.vercel.app",
+
   vite: {
     plugins: [tailwindcss()],
   },

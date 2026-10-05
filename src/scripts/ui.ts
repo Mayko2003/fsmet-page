@@ -14,6 +14,37 @@ const revealObserver = new IntersectionObserver(
 
 document.querySelectorAll("[data-reveal]").forEach((el) => revealObserver.observe(el));
 
+// Menú móvil: el botón hamburguesa abre/cierra el panel de navegación
+const menuBtn = document.querySelector<HTMLButtonElement>("[data-menu-btn]");
+const menuPanel = document.querySelector<HTMLElement>("[data-menu-panel]");
+const iconMenu = menuBtn?.querySelector<SVGElement>("[data-icon-menu]");
+const iconClose = menuBtn?.querySelector<SVGElement>("[data-icon-close]");
+
+if (menuBtn && menuPanel && iconMenu && iconClose) {
+	const setMenuOpen = (open: boolean) => {
+		menuPanel.classList.toggle("hidden", !open);
+		iconMenu.classList.toggle("hidden", open);
+		iconClose.classList.toggle("hidden", !open);
+		menuBtn.setAttribute("aria-expanded", String(open));
+		menuBtn.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+	};
+	const menuOpen = () => menuBtn.getAttribute("aria-expanded") === "true";
+
+	menuBtn.addEventListener("click", () => setMenuOpen(!menuOpen()));
+	menuPanel.querySelectorAll("a[data-nav]").forEach((link) =>
+		link.addEventListener("click", () => setMenuOpen(false)),
+	);
+	document.addEventListener("keydown", (e) => {
+		if (e.key === "Escape" && menuOpen()) {
+			setMenuOpen(false);
+			menuBtn.focus();
+		}
+	});
+	window.matchMedia("(min-width: 768px)").addEventListener("change", (e) => {
+		if (e.matches) setMenuOpen(false);
+	});
+}
+
 // Scrollspy: resalta en el nav el link de la sección que cruza el centro del viewport
 const navAnchors = document.querySelectorAll<HTMLAnchorElement>("header a[data-nav]");
 const anchorsBySection = new Map<string, HTMLAnchorElement[]>();
