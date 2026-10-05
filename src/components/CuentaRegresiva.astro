@@ -1,0 +1,64 @@
+---
+const target = "2027-04-07T00:00:00-03:00";
+
+const unidades = [
+	{ id: "dias", label: "días" },
+	{ id: "horas", label: "horas" },
+	{ id: "minutos", label: "min" },
+	{ id: "segundos", label: "seg" },
+];
+---
+
+<div
+	id="cuenta-regresiva"
+	data-target={target}
+	class="mt-10 rounded-2xl bg-ink/70 px-6 py-5 backdrop-blur-sm"
+>
+	<p class="text-xs font-semibold uppercase tracking-widest text-sand/80">
+		El encuentro principal comienza en
+	</p>
+	<div class="mt-3 flex gap-6 md:gap-8">
+		{
+			unidades.map((unidad) => (
+				<div class="text-center">
+					<span
+						data-cd={unidad.id}
+						class="block font-display text-3xl font-semibold tabular-nums text-sand md:text-4xl"
+					>
+						--
+					</span>
+					<span class="text-xs uppercase tracking-wider text-sand/60">{unidad.label}</span>
+				</div>
+			))
+		}
+	</div>
+	<p class="mt-3 text-sm text-sand/70">7 de abril de 2027 · Jujuy y Salta</p>
+</div>
+
+<script>
+	const root = document.getElementById("cuenta-regresiva");
+	const target = new Date(root?.dataset.target ?? "").getTime();
+
+	const fields = {
+		dias: root?.querySelector("[data-cd='dias']"),
+		horas: root?.querySelector("[data-cd='horas']"),
+		minutos: root?.querySelector("[data-cd='minutos']"),
+		segundos: root?.querySelector("[data-cd='segundos']"),
+	};
+
+	function tick() {
+		const total = Math.max(0, Math.floor((target - Date.now()) / 1000));
+		const dias = Math.floor(total / 86400);
+		const horas = Math.floor((total % 86400) / 3600);
+		const minutos = Math.floor((total % 3600) / 60);
+		const segundos = total % 60;
+
+		if (fields.dias) fields.dias.textContent = String(dias);
+		if (fields.horas) fields.horas.textContent = String(horas).padStart(2, "0");
+		if (fields.minutos) fields.minutos.textContent = String(minutos).padStart(2, "0");
+		if (fields.segundos) fields.segundos.textContent = String(segundos).padStart(2, "0");
+	}
+
+	tick();
+	setInterval(tick, 1000);
+</script>

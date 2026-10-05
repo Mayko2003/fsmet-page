@@ -3,12 +3,15 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
 import QuienesSomos from "../components/QuienesSomos.astro";
+import Estadisticas from "../components/Estadisticas.astro";
 import DeDondeVenimos from "../components/DeDondeVenimos.astro";
-import HojaDeRuta from "../components/HojaDeRuta.astro";
+import Territorios from "../components/Territorios.astro";
+import ReunionesWebinares from "../components/ReunionesWebinares.astro";
+import InfoUtil from "../components/InfoUtil.astro";
+import Preguntas from "../components/Preguntas.astro";
 import Inscripcion from "../components/Inscripcion.astro";
-import Partners from "../components/Partners.astro";
 import Footer from "../components/Footer.astro";
-import "../global.css";
+import "../styles/global.css";
 ---
 
 <Layout>
@@ -16,10 +19,13 @@ import "../global.css";
 	<main>
 		<Hero />
 		<QuienesSomos />
+		<Estadisticas />
 		<DeDondeVenimos />
-		<HojaDeRuta />
-    <Partners />
+		<Territorios />
+		<ReunionesWebinares />
+		<InfoUtil />
 		<!-- <Frases /> -->
+		<Preguntas />
 		<Inscripcion />
 	</main>
 	<Footer />

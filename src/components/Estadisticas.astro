@@ -1,0 +1,40 @@
+---
+const stats = [
+	{ valor: 64, sufijo: "", label: "Personas participantes" },
+	{ valor: 11, sufijo: "", label: "Países representados" },
+	{ valor: 6, sufijo: "", label: "Ejes temáticos" },
+	{ valor: 59, sufijo: "%", label: "Desde Argentina" },
+];
+---
+
+<section class="bg-ink py-16 text-cream">
+	<div class="mx-auto max-w-6xl px-5 md:px-8">
+		<p data-reveal class="text-sm font-semibold tracking-widest text-gold uppercase">
+			El proceso en números
+		</p>
+		<div class="mt-8 grid grid-cols-2 gap-6 lg:grid-cols-4">
+			{
+				stats.map((stat, i) => (
+					<div
+						data-reveal
+						style={`--reveal-delay: ${i * 80}ms`}
+						class="rounded-2xl border border-cream/10 bg-cream/5 p-6"
+					>
+						<p
+							data-count={stat.valor}
+							data-suffix={stat.sufijo}
+							class="font-display text-5xl font-semibold tabular-nums text-gold md:text-6xl"
+						>
+							{stat.valor}
+							{stat.sufijo}
+						</p>
+						<p class="mt-2 text-sm leading-snug text-cream/70">{stat.label}</p>
+					</div>
+				))
+			}
+		</div>
+		<p data-reveal class="mt-6 text-sm text-cream/50">
+			Encuesta de participación disponible hasta julio de 2026.
+		</p>
+	</div>
+</section>
