@@ -226,7 +226,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 				type="submit"
 				class="mt-6 w-full rounded-full bg-clay py-3.5 font-semibold text-paper transition hover:bg-clay-deep"
 			>
-				Enviar interés
+				Participar
 			</button>
 			<p
 				id="form-ok"
@@ -310,7 +310,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 		} finally {
 			if (submitBtn) {
 				submitBtn.disabled = false;
-				submitBtn.textContent = "Enviar interés";
+				submitBtn.textContent = "Participar";
 			}
 			(window as any).turnstile?.reset();
 		}
