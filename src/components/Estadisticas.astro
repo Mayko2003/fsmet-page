@@ -1,16 +1,14 @@
 ---
-const stats = [
-	{ valor: 64, sufijo: "", label: "Personas participantes" },
-	{ valor: 11, sufijo: "", label: "Países representados" },
-	{ valor: 6, sufijo: "", label: "Ejes temáticos" },
-	{ valor: 59, sufijo: "%", label: "Desde Argentina" },
-];
+import { getStrings } from "../i18n/strings";
+
+const s = getStrings(Astro.currentLocale);
+const stats = s.stats.items;
 ---
 
 <section class="bg-ink py-16 text-cream">
 	<div class="mx-auto max-w-6xl px-5 md:px-8">
 		<p data-reveal class="text-sm font-semibold tracking-widest text-gold uppercase">
-			El proceso en números
+			{s.stats.label}
 		</p>
 		<div class="mt-8 grid grid-cols-2 gap-6 lg:grid-cols-4">
 			{
@@ -34,7 +32,7 @@ const stats = [
 			}
 		</div>
 		<p data-reveal class="mt-6 text-sm text-cream/50">
-			Encuesta de participación disponible hasta julio de 2026.
+			{s.stats.footnote}
 		</p>
 	</div>
 </section>

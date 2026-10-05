@@ -3,6 +3,9 @@ import { Image } from "astro:assets";
 import CuentaRegresiva from "./CuentaRegresiva.astro";
 import fondo from "../assets/fondo.jpg";
 import logo from "../assets/logo.png";
+import { getStrings } from "../i18n/strings";
+
+const s = getStrings(Astro.currentLocale);
 ---
 
 <section id="inicio" class="relative overflow-hidden">
@@ -34,32 +37,30 @@ import logo from "../assets/logo.png";
 			<p
 				class="mb-4 inline-flex rounded-full bg-sand px-4 py-1.5 text-sm font-medium text-muted"
 			>
-				Foro Social Mundial · proceso territorial
+				{s.hero.badge}
 			</p>
 			<h1
 				class="font-display text-4xl leading-[1.1] font-semibold tracking-tight text-sand md:text-6xl"
 			>
-				De las alternativas dispersas a las convergencias territoriales
+				{s.hero.title}
 			</h1>
 			<p
 				class="mt-6 max-w-xl rounded-2xl bg-ink/55 p-4 text-lg leading-relaxed text-sand/90 backdrop-blur-sm"
 			>
-				El Foro Social Mundial de las Economías Transformadoras es un espacio
-				temático del FSM. La próxima edición se construye en Argentina, con
-				Jujuy y Salta como provincias anfitrionas.
+				{s.hero.text}
 			</p>
 			<div class="mt-8 flex flex-wrap gap-3">
 				<a
 					href="#quienes-somos"
 					class="rounded-full bg-ink px-6 py-3 text-sm font-semibold text-cream transition hover:bg-clay"
 				>
-					Conocer el proceso
+					{s.hero.ctaPrimary}
 				</a>
 				<a
 					href="#inscripcion"
 					class="rounded-full border border-sand bg-paper px-6 py-3 text-sm font-semibold text-ink transition hover:border-clay hover:text-clay"
 				>
-					Sumarse
+					{s.hero.ctaSecondary}
 				</a>
 			</div>
 			<CuentaRegresiva />
@@ -71,11 +72,11 @@ import logo from "../assets/logo.png";
 				widths={[256, 384, 512]}
 				sizes="(min-width: 1024px) 384px, 80vw"
 				format="webp"
-				alt="Identidad visual del FSMET: territorio, encuentro y red"
+				alt={s.hero.logoAlt}
 				class="relative mx-auto w-full max-w-sm drop-shadow-xl"
 			/>
 			<p class="mb-4 text-center font-display text-3xl font-semibold text-sand">
-				FSMET 2027 <br /> Jujuy y Salta
+				{s.hero.subtitle}
 			</p>
 		</div>
 	</div>

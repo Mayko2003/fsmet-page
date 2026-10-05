@@ -26,7 +26,10 @@ if (menuBtn && menuPanel && iconMenu && iconClose) {
 		iconMenu.classList.toggle("hidden", open);
 		iconClose.classList.toggle("hidden", !open);
 		menuBtn.setAttribute("aria-expanded", String(open));
-		menuBtn.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+		menuBtn.setAttribute(
+			"aria-label",
+			open ? (menuBtn.dataset.labelClose ?? "Cerrar menú") : (menuBtn.dataset.labelOpen ?? "Abrir menú"),
+		);
 	};
 	const menuOpen = () => menuBtn.getAttribute("aria-expanded") === "true";
 
@@ -40,7 +43,7 @@ if (menuBtn && menuPanel && iconMenu && iconClose) {
 			menuBtn.focus();
 		}
 	});
-	window.matchMedia("(min-width: 768px)").addEventListener("change", (e) => {
+	window.matchMedia("(min-width: 1024px)").addEventListener("change", (e) => {
 		if (e.matches) setMenuOpen(false);
 	});
 }

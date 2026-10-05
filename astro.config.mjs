@@ -10,6 +10,14 @@ import vercel from "@astrojs/vercel";
 export default defineConfig({
   site: "https://fsmet-page.vercel.app",
 
+  i18n: {
+    defaultLocale: "es",
+    locales: ["es", "en", "pt"],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()],
   },

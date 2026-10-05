@@ -2,7 +2,9 @@
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import logo from "../assets/logo.png";
+import { getStrings } from "../i18n/strings";
 
+const s = getStrings(Astro.currentLocale);
 const anio = new Date().getFullYear();
 
 const redes = [
@@ -30,25 +32,24 @@ const redes = [
 				<div>
 					<p class="font-display text-2xl">FSMET</p>
 					<p class="mt-1 max-w-sm text-sm leading-relaxed text-gold-soft">
-						Foro Social Mundial de las Economías Transformadoras. Jujuy y Salta,
-						Argentina.
+						{s.footer.desc}
 					</p>
 				</div>
 			</div>
 			<p class="text-muted mt-4">
-				&copy; {anio} FSMET. Todos los derechos reservados
+				&copy; {anio} FSMET. {s.footer.rights}
 			</p>
 		</div>
 		<div>
-			<p class="text-lg text-cream/70">Encontranos en:</p>
+			<p class="text-lg text-cream/70">{s.footer.findUs}</p>
 			<ul class="flex gap-3" aria-label="Redes sociales">
 				{
 					redes.map((red) => (
 						<li>
 							<span
-								title={`${red.label}: próximamente`}
+								title={`${red.label}: ${s.footer.soon}`}
 								class="inline-flex opacity-50"
-								aria-label={`${red.label} (próximamente)`}
+								aria-label={`${red.label} (${s.footer.soon})`}
 							>
 								<Icon name={red.icon} class="size-8" />
 							</span>
@@ -57,10 +58,10 @@ const redes = [
 				}
 			</ul>
 			<p class="mt-4 text-sm text-cream/60">
-				Canales oficiales próximamente.
+				{s.footer.channels}
 			</p>
 			<p class="mt-4 text-sm text-cream/70">
-				Proceso en construcción. Memoria, red y territorio.
+				{s.footer.building}
 			</p>
 		</div>
 	</div>
