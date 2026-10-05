@@ -218,6 +218,26 @@ const referencias: Punto[] = [
 					class="h-72 border-t border-sand lg:h-auto lg:min-h-96 lg:border-t-0 lg:border-l"
 				>
 				</div>
+				<div class="border-t border-sand px-6 py-5 md:px-8 lg:col-span-2">
+					<p class="text-xs font-semibold tracking-widest text-muted uppercase">
+						Hospedajes en el microcentro
+					</p>
+					<ul class="mt-3 grid gap-x-6 gap-y-2.5 text-sm sm:grid-cols-2">
+						{
+							hoteles.map((hotel, i) => (
+								<li class="flex items-center gap-2.5">
+									<span class="grid h-5.5 w-5.5 shrink-0 place-items-center rounded-full bg-clay text-[11px] font-bold text-paper shadow-sm">
+										{i + 1}
+									</span>
+									<span class="text-ink/90">
+										<strong class="font-semibold">{hotel.nombre}</strong>
+										<span class="text-muted"> · {hotel.detalle}</span>
+									</span>
+								</li>
+							))
+						}
+					</ul>
+				</div>
 			</div>
 		</article>
 	</div>
@@ -242,28 +262,39 @@ const referencias: Punto[] = [
 				maxZoom: 18,
 			}).addTo(map);
 
-			const markerIcon = (color: string) =>
+			const iconoHotel = (n: number) =>
 				L.divIcon({
 					className: "",
-					html: `<span style="display:block;width:14px;height:14px;border-radius:9999px;background:${color};border:3px solid #fffdf9;box-shadow:0 1px 4px rgba(0,0,0,.35)"></span>`,
-					iconSize: [14, 14],
-					iconAnchor: [7, 7],
-					popupAnchor: [0, -12],
+					html: `<span style="display:grid;place-items:center;width:22px;height:22px;border-radius:9999px;background:#d86a3a;color:#fffdf9;font:700 11px/1 'Outfit',sans-serif;border:2px solid #fffdf9;box-shadow:0 1px 4px rgba(0,0,0,.4)">${n}</span>`,
+					iconSize: [22, 22],
+					iconAnchor: [11, 11],
+					popupAnchor: [0, -14],
 				});
 
-			const iconoHotel = markerIcon("#d86a3a");
-			const iconoReferencia = markerIcon("#e4b44c");
+			const iconoReferencia = L.divIcon({
+				className: "",
+				html: `<span style="display:block;width:16px;height:16px;border-radius:9999px;background:#e4b44c;border:3px solid #fffdf9;box-shadow:0 1px 4px rgba(0,0,0,.4)"></span>`,
+				iconSize: [16, 16],
+				iconAnchor: [8, 8],
+				popupAnchor: [0, -12],
+			});
 
-			for (const punto of hoteles) {
-				L.marker([punto.lat, punto.lng], { icon: iconoHotel })
+			hoteles.forEach((punto, i) => {
+				L.marker([punto.lat, punto.lng], { icon: iconoHotel(i + 1) })
 					.addTo(map)
-					.bindPopup(`<strong>${punto.nombre}</strong><br>${punto.detalle}`);
-			}
+					.bindPopup(`<strong>${i + 1}. ${punto.nombre}</strong><br>${punto.detalle}`);
+			});
 
 			for (const punto of referencias) {
 				L.marker([punto.lat, punto.lng], { icon: iconoReferencia })
 					.addTo(map)
-					.bindPopup(`<strong>${punto.nombre}</strong><br>${punto.detalle}`);
+					.bindPopup(`<strong>${punto.nombre}</strong><br>${punto.detalle}`)
+					.bindTooltip(punto.nombre, {
+						permanent: true,
+						direction: "top",
+						offset: [0, -12],
+						className: "etiqueta-ciudad",
+					});
 			}
 
 			const puntos = hoteles.length > 0 ? hoteles : referencias;

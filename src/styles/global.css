@@ -70,6 +70,23 @@ details summary::-webkit-details-marker {
 	display: none;
 }
 
+/* Etiquetas permanentes de ciudades en el mapa de hospedaje */
+.leaflet-tooltip.etiqueta-ciudad {
+	background: var(--color-ink);
+	border: none;
+	border-radius: 9999px;
+	color: var(--color-cream);
+	font-family: var(--font-sans);
+	font-size: 11px;
+	font-weight: 600;
+	padding: 3px 9px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.leaflet-tooltip.etiqueta-ciudad::before {
+	display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	html.js [data-reveal] {
 		opacity: 1;
