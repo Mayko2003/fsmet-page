@@ -1,11 +1,20 @@
 import type { APIRoute } from "astro";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
 export const prerender = false;
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+	host: import.meta.env.SMTP_HOST,
+	port: Number(import.meta.env.SMTP_PORT ?? 465),
+	secure: Number(import.meta.env.SMTP_PORT ?? 465) === 465,
+	auth: {
+		user: import.meta.env.SMTP_USER,
+		pass: import.meta.env.SMTP_PASS,
+	},
+});
+
 const MAIL_TO = import.meta.env.MAIL_TO;
-const MAIL_FROM = import.meta.env.MAIL_FROM ?? "FSMET <onboarding@resend.dev>";
+const MAIL_FROM = import.meta.env.MAIL_FROM ?? import.meta.env.SMTP_USER;
 
 const escapeHtml = (value: string) =>
 	value
@@ -86,16 +95,16 @@ export const POST: APIRoute = async ({ request }) => {
 		</table>
 	`;
 
-	const { error } = await resend.emails.send({
-		from: MAIL_FROM,
-		to: MAIL_TO,
-		replyTo: email,
-		subject: `[FSMET] Inscripción ${rol === "expositor" ? "expositor/a" : "oyente"} — ${nombre}`,
-		html,
-	});
-
-	if (error) {
-		console.error("Resend error:", error);
+	try {
+		await transporter.sendMail({
+			from: MAIL_FROM,
+			to: MAIL_TO,
+			replyTo: email,
+			subject: `[FSMET] Inscripción ${rol === "expositor" ? "expositor/a" : "oyente"} — ${nombre}`,
+			html,
+		});
+	} catch (err) {
+		console.error("SMTP error:", err);
 		return json({ ok: false, error: "No se pudo enviar la inscripción." }, 502);
 	}
 
