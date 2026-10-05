@@ -147,6 +147,10 @@ const rolCardClass =
 						class={fieldClass}
 					/>
 				</label>
+				<label class="hidden" aria-hidden="true" tabindex="-1">
+					<span>Website</span>
+					<input name="website" type="text" tabindex="-1" autocomplete="off" />
+				</label>
 			</div>
 
 			<div id="panel-expositor" class="mt-6 hidden rounded-2xl border border-sand bg-paper p-5">
@@ -203,8 +207,7 @@ const rolCardClass =
 				id="form-ok"
 				class="mt-4 hidden rounded-2xl bg-sage-soft px-4 py-3 text-sm leading-relaxed text-ink"
 			>
-				Gracias. Recibimos tu interés de forma local en este navegador. El mecanismo oficial de
-				inscripción se anunciará cuando esté confirmado.
+				Gracias, recibimos tu inscripción. El equipo del proceso se va a poner en contacto.
 			</p>
 		</form>
 	</div>
@@ -238,7 +241,9 @@ const rolCardClass =
 	});
 	syncRol();
 
-	form?.addEventListener("submit", (event) => {
+	const submitBtn = form?.querySelector<HTMLButtonElement>("button[type='submit']");
+
+	form?.addEventListener("submit", async (event) => {
 		event.preventDefault();
 		if (!form.checkValidity()) {
 			error?.classList.remove("hidden");
@@ -249,12 +254,30 @@ const rolCardClass =
 			return;
 		}
 		error?.classList.add("hidden");
-		const data = Object.fromEntries(new FormData(form).entries());
-		const prev = JSON.parse(localStorage.getItem("fsmet-inscripciones") || "[]");
-		prev.push({ ...data, fecha: new Date().toISOString() });
-		localStorage.setItem("fsmet-inscripciones", JSON.stringify(prev));
-		ok?.classList.remove("hidden");
-		form.reset();
-		syncRol();
+		ok?.classList.add("hidden");
+		if (submitBtn) {
+			submitBtn.disabled = true;
+			submitBtn.textContent = "Enviando…";
+		}
+		try {
+			const res = await fetch("/api/inscripcion", {
+				method: "POST",
+				body: new FormData(form),
+			});
+			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+			ok?.classList.remove("hidden");
+			form.reset();
+			syncRol();
+		} catch {
+			error?.classList.remove("hidden");
+			if (error)
+				error.textContent =
+					"No se pudo enviar la inscripción. Intentá de nuevo en unos minutos.";
+		} finally {
+			if (submitBtn) {
+				submitBtn.disabled = false;
+				submitBtn.textContent = "Enviar interés";
+			}
+		}
 	});
 </script>
