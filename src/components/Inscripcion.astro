@@ -195,6 +195,18 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 							disabled
 							class={`resize-y ${fieldClass}`}></textarea>
 					</label>
+					<label class="flex cursor-pointer items-start gap-3">
+						<input
+							type="checkbox"
+							name="consentir_publicar"
+							value="si"
+							disabled
+							class="mt-1 h-4 w-4 shrink-0 accent-clay"
+						/>
+						<span class="text-sm leading-relaxed text-muted">
+							{s.inscripcion.expo.consentimiento}
+						</span>
+					</label>
 				</div>
 			</div>
 
