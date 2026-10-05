@@ -104,7 +104,14 @@ export const POST: APIRoute = async ({ request }) => {
 	}
 
 	const html = `
-		<h2>Nueva inscripción — FSMET</h2>
+		<h2>Recibimos tu inscripción — FSMET</h2>
+		<p style="font-family:sans-serif">
+			Hola ${escapeHtml(nombre)}, gracias por sumarte al proceso del Foro Social Mundial
+			de las Economías Transformadoras. Registramos tu participación como
+			<strong>${rol === "expositor" ? "expositor/a" : "oyente"}</strong>. El equipo del
+			proceso se va a poner en contacto con vos.
+		</p>
+		<p style="font-family:sans-serif">Esto es lo que recibimos:</p>
 		<table cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-family:sans-serif">
 			${filas
 				.map(
@@ -120,9 +127,9 @@ export const POST: APIRoute = async ({ request }) => {
 	try {
 		await transporter.sendMail({
 			from: MAIL_FROM,
-			to: MAIL_TO,
-			replyTo: email,
-			subject: `[FSMET] Inscripción ${rol === "expositor" ? "expositor/a" : "oyente"} — ${nombre}`,
+			to: email,
+			replyTo: MAIL_TO,
+			subject: "Recibimos tu inscripción — FSMET",
 			html,
 		});
 	} catch (err) {
