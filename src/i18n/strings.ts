@@ -303,6 +303,8 @@ const es = {
 				"Políticas Públicas e Incidencia",
 			],
 			resumen: "Resumen de la exposición",
+			consentimiento:
+				"Acepto que mi experiencia aparezca en el directorio de experiencias del proceso",
 		},
 		submit: "Participar",
 		sending: "Enviando…",
@@ -624,6 +626,8 @@ const en: Strings = {
 				"Public Policy and Advocacy",
 			],
 			resumen: "Presentation summary",
+			consentimiento:
+				"I agree that my experience may appear in the process directory of experiences",
 		},
 		submit: "Participate",
 		sending: "Sending…",
@@ -943,6 +947,8 @@ const pt: Strings = {
 				"Políticas Públicas e Incidência",
 			],
 			resumen: "Resumo da exposição",
+			consentimiento:
+				"Aceito que minha experiência apareça no diretório de experiências do processo",
 		},
 		submit: "Participar",
 		sending: "Enviando…",

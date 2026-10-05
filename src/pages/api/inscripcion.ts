@@ -100,6 +100,7 @@ export const POST: APIRoute = async ({ request }) => {
 			["Tipo de aporte", aporte],
 			["Eje temático", eje],
 			["Resumen", resumen],
+			["Publicar en directorio", data.consentir_publicar === "si" ? "Sí" : "No"],
 		);
 	}
 
