@@ -13,7 +13,6 @@ const transporter = nodemailer.createTransport({
 	},
 });
 
-const MAIL_TO = import.meta.env.MAIL_TO;
 const MAIL_FROM = import.meta.env.MAIL_FROM ?? import.meta.env.SMTP_USER;
 const TURNSTILE_SECRET = import.meta.env.TURNSTILE_SECRET_KEY;
 
@@ -104,14 +103,7 @@ export const POST: APIRoute = async ({ request }) => {
 	}
 
 	const html = `
-		<h2>Recibimos tu inscripción — FSMET</h2>
-		<p style="font-family:sans-serif">
-			Hola ${escapeHtml(nombre)}, gracias por sumarte al proceso del Foro Social Mundial
-			de las Economías Transformadoras. Registramos tu participación como
-			<strong>${rol === "expositor" ? "expositor/a" : "oyente"}</strong>. El equipo del
-			proceso se va a poner en contacto con vos.
-		</p>
-		<p style="font-family:sans-serif">Esto es lo que recibimos:</p>
+		<h2>Nueva inscripción — FSMET</h2>
 		<table cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-family:sans-serif">
 			${filas
 				.map(
@@ -127,9 +119,9 @@ export const POST: APIRoute = async ({ request }) => {
 	try {
 		await transporter.sendMail({
 			from: MAIL_FROM,
-			to: email,
-			replyTo: MAIL_TO,
-			subject: "Recibimos tu inscripción — FSMET",
+			to: import.meta.env.SMTP_USER,
+			replyTo: email,
+			subject: `[FSMET] Inscripción ${rol === "expositor" ? "expositor/a" : "oyente"} — ${nombre}`,
 			html,
 		});
 	} catch (err) {
