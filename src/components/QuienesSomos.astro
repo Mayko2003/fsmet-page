@@ -4,42 +4,48 @@ const ejes = [
 		n: "01",
 		title: "Economía, Territorio y Buen Vivir",
 		text: "Desarrollo territorial, comunidad, inclusión y sostenibilidad de la vida.",
+		temas: ["Economía transformadora", "Territorio", "Buen Vivir", "Comunidad", "Inclusión"],
 	},
 	{
 		n: "02",
 		title: "Producción, Trabajo y Tramas",
 		text: "Cooperativas, circuitos cortos y articulación entre productoras y productores.",
+		temas: ["Cooperativas", "Redes productivas", "Circuitos cortos", "Trabajo", "Articulación"],
 	},
 	{
 		n: "03",
 		title: "Finanzas Éticas y Redistribución",
 		text: "Crédito, fondos rotatorios, bancos comunitarios y educación financiera.",
+		temas: ["Crédito", "Fondos rotatorios", "Bancos comunitarios", "Educación financiera"],
 	},
 	{
 		n: "04",
 		title: "Agroecología y Transición Ecológica",
 		text: "Bienes comunes, bioinsumos, ambiente y producción sustentable.",
+		temas: ["Agroecología", "Bioinsumos", "Bienes comunes", "Soberanía alimentaria"],
 	},
 	{
 		n: "05",
 		title: "Formación, Cultura y Sentido Común",
 		text: "Conocimientos territoriales, investigación, comunicación y educación.",
+		temas: ["Educación", "Conocimientos territoriales", "Investigación", "Comunicación"],
 	},
 	{
 		n: "06",
 		title: "Políticas Públicas e Incidencia",
 		text: "Propuestas, articulación con instituciones y marcos legislativos.",
+		temas: ["Legislación", "Incidencia institucional", "Propuestas", "Gobiernos"],
 	},
 ];
 ---
 
 <section id="quienes-somos" class="scroll-mt-24 border-t border-sand bg-paper">
 	<div class="mx-auto max-w-6xl px-5 py-20 md:px-8">
-		<p class="text-sm font-semibold tracking-widest text-clay uppercase">Quiénes somos</p>
-		<h2 class="mt-3 max-w-3xl font-display text-3xl font-semibold md:text-5xl">
+		<p data-reveal class="text-sm font-semibold tracking-widest text-clay uppercase">Quiénes somos</p>
+		<h2 data-reveal style="--reveal-delay: 80ms" class="mt-3 max-w-3xl font-display text-3xl font-semibold md:text-5xl">
 			Un proceso colectivo, no solamente un evento
 		</h2>
-		<div class="mt-8 grid gap-8 lg:grid-cols-2">
+		<div data-reveal style="--reveal-delay: 150ms" class="mt-8 grid gap-8 lg:grid-cols-2">
 			<p class="text-lg leading-relaxed text-muted">
 				El FSMET busca conectar experiencias de economía social, solidaria, popular, comunitaria,
 				campesina, indígena, cooperativa, agroecológica, de cuidados y de finanzas éticas. El
@@ -51,7 +57,7 @@ const ejes = [
 				encuentro principal y continúa después.
 			</p>
 		</div>
-		<div class="mt-12 rounded-3xl bg-sand/70 p-6 md:p-8">
+		<div data-reveal class="mt-12 rounded-3xl bg-sand/70 p-6 md:p-8">
 			<p class="font-display text-2xl leading-snug text-ink md:text-3xl">
 				“Del proyecto al ecosistema.”
 			</p>
@@ -61,14 +67,37 @@ const ejes = [
 				gobernanza para el proceso.
 			</p>
 		</div>
-		<h3 class="mt-14 font-display text-2xl font-semibold">Seis ejes temáticos</h3>
-		<ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+		<h3 data-reveal class="mt-14 font-display text-2xl font-semibold">Seis ejes temáticos</h3>
+		<ul class="mt-6 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-3">
 			{
-				ejes.map((eje) => (
-					<li class="rounded-2xl border border-sand bg-cream p-5">
-						<span class="text-sm font-semibold text-clay">{eje.n}</span>
-						<h4 class="mt-2 font-display text-xl leading-snug">{eje.title}</h4>
-						<p class="mt-2 text-sm leading-relaxed text-muted">{eje.text}</p>
+				ejes.map((eje, i) => (
+					<li data-reveal style={`--reveal-delay: ${i * 60}ms`} class="rounded-2xl border border-sand bg-cream">
+						<details class="group">
+							<summary class="relative p-5 pr-10">
+								<span class="text-sm font-semibold text-clay">{eje.n}</span>
+								<h4 class="mt-2 font-display text-xl leading-snug">{eje.title}</h4>
+								<p class="mt-2 text-sm leading-relaxed text-muted">{eje.text}</p>
+								<svg
+									aria-hidden="true"
+									class="absolute right-4 top-5 h-5 w-5 text-clay transition-transform group-open:rotate-180"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+								>
+									<path d="m6 9 6 6 6-6" />
+								</svg>
+							</summary>
+							<ul class="flex flex-wrap gap-1.5 px-5 pb-5">
+								{
+									eje.temas.map((tema) => (
+										<li class="rounded-full bg-sand/60 px-2.5 py-1 text-xs font-medium text-ink/80">
+											{tema}
+										</li>
+									))
+								}
+							</ul>
+						</details>
 					</li>
 				))
 			}

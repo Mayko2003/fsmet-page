@@ -1,5 +1,10 @@
+---
+import CuentaRegresiva from "./CuentaRegresiva.astro";
+import RedViva from "./RedViva.astro";
+---
+
 <section id="inicio" class="relative overflow-hidden">
-  <!-- <div
+	<!-- <div
 		class="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-gold-soft/70 blur-3xl"
 	>
 	</div>
@@ -7,61 +12,64 @@
 		class="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-sage-soft/80 blur-3xl"
 	>
 	</div> -->
-  <!-- add a background image to the hero section -->
-  <div class="absolute w-full bg-center inset-0 -z-10">
-    <img
-      src="/img/fondo.jpg"
-      class="w-full h-full object-cover object-center"
-      alt="Fondo"
-    />
-  </div>
-  <div
-    class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:py-24"
-  >
-    <div>
-      <p
-        class="mb-4 inline-flex rounded-full bg-sand px-4 py-1.5 text-sm font-medium text-muted"
-      >
-        Foro Social Mundial · proceso territorial
-      </p>
-      <h1
-        class="font-display text-4xl leading-[1.1] font-semibold tracking-tight text-sand md:text-6xl"
-      >
-        De las alternativas dispersas a las convergencias territoriales
-      </h1>
-      <p
-        class="mt-6 max-w-xl text-lg leading-relaxed bg-ink text-sand rounded p-4 opacity-70"
-      >
-        El Foro Social Mundial de las Economías Transformadoras es un espacio
-        temático del FSM. La próxima edición se construye en Argentina, con
-        Jujuy y Salta como provincias anfitrionas.
-      </p>
-      <div class="mt-20 flex flex-wrap gap-3">
-        <a
-          href="#quienes-somos"
-          class="rounded-full bg-ink px-6 py-3 text-sm font-semibold text-cream transition hover:bg-clay"
-        >
-          Conocer el proceso
-        </a>
-        <a
-          href="#inscripcion"
-          class="rounded-full border border-sand bg-paper px-6 py-3 text-sm font-semibold text-ink transition hover:border-clay hover:text-clay"
-        >
-          Sumarse
-        </a>
-      </div>
-    </div>
-    <div class="relative mx-auto w-full max-w-md">
-      <!-- <div class="absolute inset-6 rounded-full bg-gold/30 blur-2xl"></div> -->
-      <img
-        src="/img/logo.png"
-        alt="Identidad visual del FSMET: territorio, encuentro y red"
-        class="relative mx-auto w-full max-w-sm drop-shadow-xl"
-      />
-      <span
-        class="font-display text-sand text-3xl flex justify-center mb-4 font-semibold"
-        >FSMET 2027 <br /> Jujuy y Salta</span
-      >
-    </div>
-  </div>
+	<!-- add a background image to the hero section -->
+	<div class="absolute w-full bg-center inset-0 -z-10">
+		<img
+			src="/img/fondo.jpg"
+			class="w-full h-full object-cover object-center"
+			alt="Fondo"
+		/>
+		<div class="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/35 to-ink/70"></div>
+	</div>
+	<RedViva />
+	<div
+		class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:py-24"
+	>
+		<div data-reveal>
+			<p
+				class="mb-4 inline-flex rounded-full bg-sand px-4 py-1.5 text-sm font-medium text-muted"
+			>
+				Foro Social Mundial · proceso territorial
+			</p>
+			<h1
+				class="font-display text-4xl leading-[1.1] font-semibold tracking-tight text-sand md:text-6xl"
+			>
+				De las alternativas dispersas a las convergencias territoriales
+			</h1>
+			<p
+				class="mt-6 max-w-xl rounded-2xl bg-ink/55 p-4 text-lg leading-relaxed text-sand/90 backdrop-blur-sm"
+			>
+				El Foro Social Mundial de las Economías Transformadoras es un espacio
+				temático del FSM. La próxima edición se construye en Argentina, con
+				Jujuy y Salta como provincias anfitrionas.
+			</p>
+			<div class="mt-20 flex flex-wrap gap-3">
+				<a
+					href="#quienes-somos"
+					class="rounded-full bg-ink px-6 py-3 text-sm font-semibold text-cream transition hover:bg-clay"
+				>
+					Conocer el proceso
+				</a>
+				<a
+					href="#inscripcion"
+					class="rounded-full border border-sand bg-paper px-6 py-3 text-sm font-semibold text-ink transition hover:border-clay hover:text-clay"
+				>
+					Sumarse
+				</a>
+			</div>
+			<CuentaRegresiva />
+		</div>
+		<div data-reveal style="--reveal-delay: 150ms" class="relative mx-auto w-full max-w-md">
+			<!-- <div class="absolute inset-6 rounded-full bg-gold/30 blur-2xl"></div> -->
+			<img
+				src="/img/logo.png"
+				alt="Identidad visual del FSMET: territorio, encuentro y red"
+				class="relative mx-auto w-full max-w-sm drop-shadow-xl"
+			/>
+			<span
+				class="font-display text-sand text-3xl flex justify-center mb-4 font-semibold"
+				>FSMET 2027 <br /> Jujuy y Salta</span
+			>
+		</div>
+	</div>
 </section>
