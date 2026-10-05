@@ -15,6 +15,22 @@ const transporter = nodemailer.createTransport({
 
 const MAIL_TO = import.meta.env.MAIL_TO;
 const MAIL_FROM = import.meta.env.MAIL_FROM ?? import.meta.env.SMTP_USER;
+const TURNSTILE_SECRET = import.meta.env.TURNSTILE_SECRET_KEY;
+
+async function verificarTurnstile(token: string, ip: string | null) {
+	if (!TURNSTILE_SECRET) return true;
+	const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+		method: "POST",
+		headers: { "Content-Type": "application/x-www-form-urlencoded" },
+		body: new URLSearchParams({
+			secret: TURNSTILE_SECRET,
+			response: token,
+			...(ip ? { remoteip: ip } : {}),
+		}),
+	});
+	const resultado = (await res.json()) as { success?: boolean };
+	return resultado.success === true;
+}
 
 const escapeHtml = (value: string) =>
 	value
@@ -35,6 +51,12 @@ export const POST: APIRoute = async ({ request }) => {
 
 	// Honeypot: los bots lo completan, los humanos no lo ven
 	if (data.website) return json({ ok: true }, 200);
+
+	const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null;
+	const token = typeof data["cf-turnstile-response"] === "string" ? data["cf-turnstile-response"] : "";
+	if (!(await verificarTurnstile(token, ip))) {
+		return json({ ok: false, error: "Verificación anti-bot fallida." }, 403);
+	}
 
 	const { nombre, email, territorio, organizacion, rol } = data;
 
