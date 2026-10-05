@@ -113,7 +113,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
 			<div class="mt-8 grid gap-5 sm:grid-cols-2">
 				<label class="block sm:col-span-2">
-					<span class="mb-1.5 block text-sm font-medium">Nombre y apellido</span>
+					<span class="mb-1.5 block text-sm font-medium">
+						Nombre y apellido <span class="text-clay" aria-hidden="true">*</span>
+					</span>
 					<input
 						required
 						name="nombre"
@@ -123,7 +125,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 					/>
 				</label>
 				<label class="block">
-					<span class="mb-1.5 block text-sm font-medium">Correo</span>
+					<span class="mb-1.5 block text-sm font-medium">
+						Correo <span class="text-clay" aria-hidden="true">*</span>
+					</span>
 					<input
 						required
 						name="email"
@@ -133,7 +137,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 					/>
 				</label>
 				<label class="block">
-					<span class="mb-1.5 block text-sm font-medium">Territorio / país</span>
+					<span class="mb-1.5 block text-sm font-medium">
+						Territorio / país <span class="text-clay" aria-hidden="true">*</span>
+					</span>
 					<input
 						required
 						name="territorio"
@@ -142,7 +148,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 					/>
 				</label>
 				<label class="block sm:col-span-2">
-					<span class="mb-1.5 block text-sm font-medium">Organización o comunidad</span>
+					<span class="mb-1.5 block text-sm font-medium">
+						Organización o comunidad <span class="font-normal text-muted">(opcional)</span>
+					</span>
 					<input
 						name="organizacion"
 						type="text"
@@ -161,7 +169,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 				</p>
 				<div class="mt-4 grid gap-5">
 					<label class="block">
-						<span class="mb-1.5 block text-sm font-medium">Título de la exposición</span>
+						<span class="mb-1.5 block text-sm font-medium">
+							Título de la exposición <span class="text-clay" aria-hidden="true">*</span>
+						</span>
 						<input
 							required
 							name="titulo_exposicion"
@@ -171,14 +181,18 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 						/>
 					</label>
 					<label class="block">
-						<span class="mb-1.5 block text-sm font-medium">Tipo de aporte</span>
+						<span class="mb-1.5 block text-sm font-medium">
+							Tipo de aporte <span class="text-clay" aria-hidden="true">*</span>
+						</span>
 						<select name="aporte" required disabled class={fieldClass}>
 							<option value="">Elegir…</option>
 							{aportes.map((a) => <option value={a}>{a}</option>)}
 						</select>
 					</label>
 					<label class="block">
-						<span class="mb-1.5 block text-sm font-medium">Eje temático</span>
+						<span class="mb-1.5 block text-sm font-medium">
+							Eje temático <span class="text-clay" aria-hidden="true">*</span>
+						</span>
 						<select name="eje" required disabled class={fieldClass}>
 							<option value="">Elegir…</option>
 							{ejes.map((e) => <option value={e}>{e}</option>)}
@@ -186,7 +200,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 					</label>
 					<label class="block">
 						<span class="mb-1.5 block text-sm font-medium">
-							Resumen de la exposición
+							Resumen de la exposición <span class="text-clay" aria-hidden="true">*</span>
 						</span>
 						<textarea
 							required

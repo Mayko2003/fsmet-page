@@ -1,6 +1,9 @@
 ---
+import { Image } from "astro:assets";
 import CuentaRegresiva from "./CuentaRegresiva.astro";
 import RedViva from "./RedViva.astro";
+import fondo from "../assets/fondo.jpg";
+import logo from "../assets/logo.png";
 ---
 
 <section id="inicio" class="relative overflow-hidden">
@@ -14,10 +17,14 @@ import RedViva from "./RedViva.astro";
 	</div> -->
 	<!-- add a background image to the hero section -->
 	<div class="absolute w-full bg-center inset-0 -z-10">
-		<img
-			src="/img/fondo.jpg"
+		<Image
+			src={fondo}
+			widths={[768, 1280, 1600]}
+			sizes="100vw"
+			format="webp"
+			quality={60}
 			class="w-full h-full object-cover object-center"
-			alt="Fondo"
+			alt=""
 		/>
 		<div class="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/35 to-ink/70"></div>
 	</div>
@@ -43,7 +50,7 @@ import RedViva from "./RedViva.astro";
 				temático del FSM. La próxima edición se construye en Argentina, con
 				Jujuy y Salta como provincias anfitrionas.
 			</p>
-			<div class="mt-20 flex flex-wrap gap-3">
+			<div class="mt-8 flex flex-wrap gap-3">
 				<a
 					href="#quienes-somos"
 					class="rounded-full bg-ink px-6 py-3 text-sm font-semibold text-cream transition hover:bg-clay"
@@ -61,15 +68,17 @@ import RedViva from "./RedViva.astro";
 		</div>
 		<div data-reveal style="--reveal-delay: 150ms" class="relative mx-auto w-full max-w-md">
 			<!-- <div class="absolute inset-6 rounded-full bg-gold/30 blur-2xl"></div> -->
-			<img
-				src="/img/logo.png"
+			<Image
+				src={logo}
+				widths={[256, 384, 512]}
+				sizes="(min-width: 1024px) 384px, 80vw"
+				format="webp"
 				alt="Identidad visual del FSMET: territorio, encuentro y red"
 				class="relative mx-auto w-full max-w-sm drop-shadow-xl"
 			/>
-			<span
-				class="font-display text-sand text-3xl flex justify-center mb-4 font-semibold"
-				>FSMET 2027 <br /> Jujuy y Salta</span
-			>
+			<p class="mb-4 text-center font-display text-3xl font-semibold text-sand">
+				FSMET 2027 <br /> Jujuy y Salta
+			</p>
 		</div>
 	</div>
 </section>

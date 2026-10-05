@@ -180,53 +180,63 @@ const referencias: Punto[] = [
 </section>
 
 <script>
-	import L from "leaflet";
 	import "leaflet/dist/leaflet.css";
 
 	const el = document.getElementById("mapa-hospedaje");
 
+	function initMapa(container: HTMLElement) {
+		import("leaflet").then((L) => {
+			type Punto = { nombre: string; lat: number; lng: number; detalle: string };
+			const hoteles: Punto[] = JSON.parse(container.dataset.hoteles ?? "[]");
+			const referencias: Punto[] = JSON.parse(container.dataset.referencias ?? "[]");
+
+			const map = L.map(container, { scrollWheelZoom: false }).setView([-24.1858, -65.2995], 12);
+
+			L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+				attribution:
+					'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+				maxZoom: 18,
+			}).addTo(map);
+
+			const markerIcon = (color: string) =>
+				L.divIcon({
+					className: "",
+					html: `<span style="display:block;width:14px;height:14px;border-radius:9999px;background:${color};border:3px solid #fffdf9;box-shadow:0 1px 4px rgba(0,0,0,.35)"></span>`,
+					iconSize: [14, 14],
+					iconAnchor: [7, 7],
+					popupAnchor: [0, -12],
+				});
+
+			const iconoHotel = markerIcon("#d86a3a");
+			const iconoReferencia = markerIcon("#e4b44c");
+
+			for (const punto of hoteles) {
+				L.marker([punto.lat, punto.lng], { icon: iconoHotel })
+					.addTo(map)
+					.bindPopup(`<strong>${punto.nombre}</strong><br>${punto.detalle}`);
+			}
+
+			for (const punto of referencias) {
+				L.marker([punto.lat, punto.lng], { icon: iconoReferencia })
+					.addTo(map)
+					.bindPopup(`<strong>${punto.nombre}</strong><br>${punto.detalle}`);
+			}
+
+			const puntos = [...hoteles, ...referencias];
+			if (puntos.length > 0) {
+				map.fitBounds(
+					puntos.map((punto) => [punto.lat, punto.lng] as [number, number]),
+					{ padding: [40, 40], maxZoom: 12 },
+				);
+			}
+		});
+	}
+
 	if (el) {
-		type Punto = { nombre: string; lat: number; lng: number; detalle: string };
-		const hoteles: Punto[] = JSON.parse(el.dataset.hoteles ?? "[]");
-		const referencias: Punto[] = JSON.parse(el.dataset.referencias ?? "[]");
-
-		const map = L.map(el, { scrollWheelZoom: false }).setView([-24.1858, -65.2995], 12);
-
-		L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-			attribution:
-				'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-			maxZoom: 18,
-		}).addTo(map);
-
-		const markerIcon = (color: string) =>
-			L.divIcon({
-				className: "",
-				html: `<span style="display:block;width:14px;height:14px;border-radius:9999px;background:${color};border:3px solid #fffdf9;box-shadow:0 1px 4px rgba(0,0,0,.35)"></span>`,
-				iconSize: [14, 14],
-				iconAnchor: [7, 7],
-				popupAnchor: [0, -12],
-			});
-
-		const iconoHotel = markerIcon("#d86a3a");
-		const iconoReferencia = markerIcon("#e4b44c");
-
-		for (const punto of hoteles) {
-			L.marker([punto.lat, punto.lng], { icon: iconoHotel })
-				.addTo(map)
-				.bindPopup(`<strong>${punto.nombre}</strong><br>${punto.detalle}`);
-		}
-
-		for (const punto of referencias) {
-			L.marker([punto.lat, punto.lng], { icon: iconoReferencia })
-				.addTo(map)
-				.bindPopup(`<strong>${punto.nombre}</strong><br>${punto.detalle}`);
-		}
-
-		if (hoteles.length > 0) {
-			map.fitBounds(
-				hoteles.map((punto) => [punto.lat, punto.lng] as [number, number]),
-				{ padding: [40, 40] },
-			);
-		}
+		new IntersectionObserver(([entry], observer) => {
+			if (!entry.isIntersecting) return;
+			observer.disconnect();
+			initMapa(el);
+		}).observe(el);
 	}
 </script>

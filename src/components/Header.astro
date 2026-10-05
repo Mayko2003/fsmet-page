@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import logo from "../assets/logo.png";
+
 const links = [
 	{ href: "#quienes-somos", label: "Quiénes somos" },
 	{ href: "#de-donde-venimos", label: "De dónde venimos" },
@@ -16,7 +19,7 @@ const links = [
 >
 	<nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 md:px-8">
 		<a href="#inicio" class="flex items-center gap-3">
-			<img src="/img/logo.png" alt="Logo FSMET" class="h-11 w-11 rounded-full object-cover" />
+			<Image src={logo} alt="Logo FSMET" width={44} height={44} format="webp" class="h-11 w-11 rounded-full object-cover" />
 			<span class="leading-tight">
 				<span class="block font-display text-lg font-semibold tracking-tight">FSMET</span>
 				<span class="hidden text-xs text-muted sm:block">Economías transformadoras</span>
@@ -33,20 +36,45 @@ const links = [
 				))
 			}
 		</ul>
-		<a
-			href="#inscripcion"
-			class="rounded-full bg-clay px-4 py-2 text-sm font-semibold text-paper shadow-sm transition hover:bg-clay-deep"
-		>
-			Participar
-		</a>
+		<div class="flex items-center gap-3">
+			<a
+				href="#inscripcion"
+				class="rounded-full bg-clay px-4 py-2 text-sm font-semibold text-paper shadow-sm transition hover:bg-clay-deep"
+			>
+				Participar
+			</a>
+			<button
+				type="button"
+				data-menu-btn
+				aria-expanded="false"
+				aria-controls="menu-movil"
+				aria-label="Abrir menú"
+				class="grid h-10 w-10 place-items-center rounded-full border border-sand text-ink transition hover:bg-sand/60 md:hidden"
+			>
+				<svg data-icon-menu class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+					<path d="M4 7h16M4 12h16M4 17h16" />
+				</svg>
+				<svg data-icon-close class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+					<path d="M6 6l12 12M18 6L6 18" />
+				</svg>
+			</button>
+		</div>
 	</nav>
-	<div class="flex gap-4 overflow-x-auto border-t border-sand/70 px-5 py-2 text-sm font-medium text-muted md:hidden">
-		{
-			links.map((link) => (
-				<a data-nav class="shrink-0 whitespace-nowrap hover:text-clay" href={link.href}>
-					{link.label}
-				</a>
-			))
-		}
+	<div
+		id="menu-movil"
+		data-menu-panel
+		class="hidden border-t border-sand/70 bg-cream/95 md:hidden"
+	>
+		<ul class="text-sm font-medium text-muted">
+			{
+				links.map((link) => (
+					<li class="border-b border-sand/60 last:border-b-0">
+						<a data-nav class="block px-6 py-3.5 transition hover:bg-sand/40 hover:text-clay" href={link.href}>
+							{link.label}
+						</a>
+					</li>
+				))
+			}
+		</ul>
 	</div>
 </header>
