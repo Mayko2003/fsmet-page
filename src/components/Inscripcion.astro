@@ -24,6 +24,8 @@ const fieldClass =
 
 const rolCardClass =
 	"flex cursor-pointer items-start gap-4 rounded-2xl border-2 border-sand bg-paper p-5 transition peer-checked:border-clay peer-checked:bg-gold-soft/30 peer-checked:shadow-sm hover:border-clay/60";
+
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
 <section id="inscripcion" class="scroll-mt-24 border-t border-sand bg-paper">
@@ -196,6 +198,15 @@ const rolCardClass =
 				</div>
 			</div>
 
+			{
+				turnstileSiteKey && (
+					<div
+						class="cf-turnstile mt-6"
+						data-sitekey={turnstileSiteKey}
+						data-theme="light"
+					/>
+				)
+			}
 			<p id="form-error" class="mt-4 hidden text-sm text-clay-deep"></p>
 			<button
 				type="submit"
@@ -212,6 +223,8 @@ const rolCardClass =
 		</form>
 	</div>
 </section>
+
+{turnstileSiteKey && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />}
 
 <script>
 	const form = document.getElementById("form-inscripcion") as HTMLFormElement | null;
@@ -255,6 +268,13 @@ const rolCardClass =
 		}
 		error?.classList.add("hidden");
 		ok?.classList.add("hidden");
+		const body = new FormData(form);
+		const tieneTurnstile = Boolean(form.querySelector(".cf-turnstile"));
+		if (tieneTurnstile && !body.get("cf-turnstile-response")) {
+			error?.classList.remove("hidden");
+			if (error) error.textContent = "Completá la verificación anti-bot.";
+			return;
+		}
 		if (submitBtn) {
 			submitBtn.disabled = true;
 			submitBtn.textContent = "Enviando…";
@@ -262,7 +282,7 @@ const rolCardClass =
 		try {
 			const res = await fetch("/api/inscripcion", {
 				method: "POST",
-				body: new FormData(form),
+				body,
 			});
 			if (!res.ok) throw new Error(`HTTP ${res.status}`);
 			ok?.classList.remove("hidden");
@@ -278,6 +298,7 @@ const rolCardClass =
 				submitBtn.disabled = false;
 				submitBtn.textContent = "Enviar interés";
 			}
+			(window as any).turnstile?.reset();
 		}
 	});
 </script>
