@@ -1,23 +1,10 @@
 ---
 import { Icon } from "astro-icon/components";
+import { getStrings } from "../i18n/strings";
 
-const aportes = [
-	"Investigación / conocimiento",
-	"Experiencia práctica / gestión",
-	"Formación / educación popular",
-	"Activismo / organización comunitaria",
-	"Incidencia política / normativa",
-	"Innovación productiva / tecnológica",
-];
-
-const ejes = [
-	"Economía, Territorio y Buen Vivir",
-	"Producción, Trabajo y Tramas socioproductivas",
-	"Finanzas Éticas, Crédito y Redistribución",
-	"Agroecología, Ambiente y Transición Ecológica",
-	"Formación, Cultura y Cambio de sentido común",
-	"Políticas Públicas e Incidencia",
-];
+const s = getStrings(Astro.currentLocale);
+const aportes = s.inscripcion.expo.aportes;
+const ejes = s.inscripcion.expo.ejes;
 
 const fieldClass =
 	"w-full rounded-xl border border-sand bg-paper px-4 py-3 outline-none ring-clay/30 transition focus:ring-2 disabled:opacity-50";
@@ -31,28 +18,21 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 <section id="inscripcion" class="scroll-mt-24 border-t border-sand bg-paper">
 	<div class="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:px-8 lg:grid-cols-[0.9fr_1.1fr]">
 		<div data-reveal>
-			<p class="text-sm font-semibold tracking-widest text-clay uppercase">Inscripción</p>
-			<h2 class="mt-3 font-display text-3xl font-semibold md:text-5xl">Sumarse al proceso</h2>
+			<p class="text-sm font-semibold tracking-widest text-clay uppercase">{s.inscripcion.label}</p>
+			<h2 class="mt-3 font-display text-3xl font-semibold md:text-5xl">{s.inscripcion.h2}</h2>
 			<p class="mt-6 text-lg leading-relaxed text-muted">
-				Podés sumarte como <strong class="font-semibold text-ink">expositor/a</strong> —presentando
-				una experiencia, investigación o propuesta— o como <strong class="font-semibold text-ink"
-					>oyente</strong
-				>, participando de las reuniones y del encuentro. El canal oficial sigue en construcción:
-				este formulario registra interés para el proceso preparatorio.
+				{s.inscripcion.introPre} <strong class="font-semibold text-ink">{s.inscripcion.introExpositor}</strong>
+				{s.inscripcion.introMid} <strong class="font-semibold text-ink">{s.inscripcion.introOyente}</strong>{s.inscripcion.introPost}
 			</p>
 			<ul class="mt-8 space-y-3 text-muted">
-				<li class="flex gap-3">
-					<span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-clay"></span>
-					Organizaciones, cooperativas y comunidades territoriales
-				</li>
-				<li class="flex gap-3">
-					<span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-gold"></span>
-					Universidades, equipos de investigación y formación
-				</li>
-				<li class="flex gap-3">
-					<span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-sage"></span>
-					Gobiernos locales e instituciones públicas
-				</li>
+				{
+					s.inscripcion.bullets.map((bullet, i) => (
+						<li class="flex gap-3">
+							<span class:list={["mt-1.5 h-2 w-2 shrink-0 rounded-full", i === 0 ? "bg-clay" : i === 1 ? "bg-gold" : "bg-sage"]}></span>
+							{bullet}
+						</li>
+					))
+				}
 			</ul>
 		</div>
 		<form
@@ -60,11 +40,17 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 			style="--reveal-delay: 150ms"
 			id="form-inscripcion"
 			class="rounded-3xl border border-sand bg-cream p-6 shadow-sm md:p-8"
+			data-msg-invalid={s.inscripcion.errInvalid}
+			data-msg-turnstile={s.inscripcion.errTurnstile}
+			data-msg-send={s.inscripcion.errSend}
+			data-msg-sending={s.inscripcion.sending}
+			data-msg-submit={s.inscripcion.submit}
 			novalidate
 		>
+			<input type="hidden" name="lang" value={Astro.currentLocale ?? "es"} />
 			<fieldset>
 				<legend class="text-sm font-semibold tracking-widest text-muted uppercase">
-					¿Cómo querés participar?
+					{s.inscripcion.legend}
 				</legend>
 				<div class="mt-4 grid gap-3 sm:grid-cols-2">
 					<label>
@@ -81,9 +67,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 								<Icon name="mdi:account-group" class="h-6 w-6" />
 							</span>
 							<span>
-								<span class="block font-display text-lg leading-snug">Asisto como oyente</span>
+								<span class="block font-display text-lg leading-snug">{s.inscripcion.rolOyente.title}</span>
 								<span class="mt-1 block text-sm leading-relaxed text-muted">
-									Quiero participar de las reuniones y del encuentro
+									{s.inscripcion.rolOyente.desc}
 								</span>
 							</span>
 						</div>
@@ -101,9 +87,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 								<Icon name="mdi:microphone-variant" class="h-6 w-6" />
 							</span>
 							<span>
-								<span class="block font-display text-lg leading-snug">Soy expositor/a</span>
+								<span class="block font-display text-lg leading-snug">{s.inscripcion.rolExpositor.title}</span>
 								<span class="mt-1 block text-sm leading-relaxed text-muted">
-									Presento una experiencia, investigación o propuesta
+									{s.inscripcion.rolExpositor.desc}
 								</span>
 							</span>
 						</div>
@@ -114,7 +100,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 			<div class="mt-8 grid gap-5 sm:grid-cols-2">
 				<label class="block sm:col-span-2">
 					<span class="mb-1.5 block text-sm font-medium">
-						Nombre y apellido <span class="text-clay" aria-hidden="true">*</span>
+						{s.inscripcion.fields.nombre} <span class="text-clay" aria-hidden="true">*</span>
 					</span>
 					<input
 						required
@@ -126,7 +112,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 				</label>
 				<label class="block">
 					<span class="mb-1.5 block text-sm font-medium">
-						Correo <span class="text-clay" aria-hidden="true">*</span>
+						{s.inscripcion.fields.email} <span class="text-clay" aria-hidden="true">*</span>
 					</span>
 					<input
 						required
@@ -138,7 +124,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 				</label>
 				<label class="block">
 					<span class="mb-1.5 block text-sm font-medium">
-						Territorio / país <span class="text-clay" aria-hidden="true">*</span>
+						{s.inscripcion.fields.territorio} <span class="text-clay" aria-hidden="true">*</span>
 					</span>
 					<input
 						required
@@ -149,7 +135,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 				</label>
 				<label class="block sm:col-span-2">
 					<span class="mb-1.5 block text-sm font-medium">
-						Organización o comunidad <span class="font-normal text-muted">(opcional)</span>
+						{s.inscripcion.fields.organizacion} <span class="font-normal text-muted">{s.inscripcion.fields.opcional}</span>
 					</span>
 					<input
 						name="organizacion"
@@ -165,12 +151,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
 			<div id="panel-expositor" class="mt-6 hidden rounded-2xl border border-sand bg-paper p-5">
 				<p class="text-sm font-semibold tracking-widest text-clay uppercase">
-					Datos de la exposición
+					{s.inscripcion.expo.title}
 				</p>
 				<div class="mt-4 grid gap-5">
 					<label class="block">
 						<span class="mb-1.5 block text-sm font-medium">
-							Título de la exposición <span class="text-clay" aria-hidden="true">*</span>
+							{s.inscripcion.expo.titulo} <span class="text-clay" aria-hidden="true">*</span>
 						</span>
 						<input
 							required
@@ -182,25 +168,25 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 					</label>
 					<label class="block">
 						<span class="mb-1.5 block text-sm font-medium">
-							Tipo de aporte <span class="text-clay" aria-hidden="true">*</span>
+							{s.inscripcion.expo.aporte} <span class="text-clay" aria-hidden="true">*</span>
 						</span>
 						<select name="aporte" required disabled class={fieldClass}>
-							<option value="">Elegir…</option>
+							<option value="">{s.inscripcion.expo.elegir}</option>
 							{aportes.map((a) => <option value={a}>{a}</option>)}
 						</select>
 					</label>
 					<label class="block">
 						<span class="mb-1.5 block text-sm font-medium">
-							Eje temático <span class="text-clay" aria-hidden="true">*</span>
+							{s.inscripcion.expo.eje} <span class="text-clay" aria-hidden="true">*</span>
 						</span>
 						<select name="eje" required disabled class={fieldClass}>
-							<option value="">Elegir…</option>
+							<option value="">{s.inscripcion.expo.elegir}</option>
 							{ejes.map((e) => <option value={e}>{e}</option>)}
 						</select>
 					</label>
 					<label class="block">
 						<span class="mb-1.5 block text-sm font-medium">
-							Resumen de la exposición <span class="text-clay" aria-hidden="true">*</span>
+							{s.inscripcion.expo.resumen} <span class="text-clay" aria-hidden="true">*</span>
 						</span>
 						<textarea
 							required
@@ -226,13 +212,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 				type="submit"
 				class="mt-6 w-full rounded-full bg-clay py-3.5 font-semibold text-paper transition hover:bg-clay-deep"
 			>
-				Participar
+				{s.inscripcion.submit}
 			</button>
 			<p
 				id="form-ok"
 				class="mt-4 hidden rounded-2xl bg-sage-soft px-4 py-3 text-sm leading-relaxed text-ink"
 			>
-				Gracias, recibimos tu inscripción. El equipo del proceso se va a poner en contacto.
+				{s.inscripcion.ok}
 			</p>
 		</form>
 	</div>
@@ -272,11 +258,10 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
 	form?.addEventListener("submit", async (event) => {
 		event.preventDefault();
+		const msg = form.dataset;
 		if (!form.checkValidity()) {
 			error?.classList.remove("hidden");
-			if (error)
-				error.textContent =
-					"Revisá el formulario: faltan campos obligatorios para el rol que elegiste.";
+			if (error) error.textContent = msg.msgInvalid ?? "";
 			form.reportValidity();
 			return;
 		}
@@ -286,12 +271,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 		const tieneTurnstile = Boolean(form.querySelector(".cf-turnstile"));
 		if (tieneTurnstile && !body.get("cf-turnstile-response")) {
 			error?.classList.remove("hidden");
-			if (error) error.textContent = "Completá la verificación anti-bot.";
+			if (error) error.textContent = msg.msgTurnstile ?? "";
 			return;
 		}
 		if (submitBtn) {
 			submitBtn.disabled = true;
-			submitBtn.textContent = "Enviando…";
+			submitBtn.textContent = msg.msgSending ?? "";
 		}
 		try {
 			const res = await fetch("/api/inscripcion", {
@@ -304,13 +289,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 			syncRol();
 		} catch {
 			error?.classList.remove("hidden");
-			if (error)
-				error.textContent =
-					"No se pudo enviar la inscripción. Intentá de nuevo en unos minutos.";
+			if (error) error.textContent = msg.msgSend ?? "";
 		} finally {
 			if (submitBtn) {
 				submitBtn.disabled = false;
-				submitBtn.textContent = "Participar";
+				submitBtn.textContent = msg.msgSubmit ?? "";
 			}
 			(window as any).turnstile?.reset();
 		}

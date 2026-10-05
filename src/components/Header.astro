@@ -1,31 +1,26 @@
 ---
 import { Image } from "astro:assets";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import logo from "../assets/logo.png";
+import { getStrings, LOCALES } from "../i18n/strings";
 
-const links = [
-	{ href: "#quienes-somos", label: "Quiénes somos" },
-	{ href: "#de-donde-venimos", label: "De dónde venimos" },
-	{ href: "#territorios", label: "Territorios" },
-	{ href: "#reuniones", label: "Reuniones" },
-	{ href: "#info-util", label: "Info útil" },
-	{ href: "#preguntas", label: "Preguntas" },
-	/* { href: "#frases", label: "Frases" }, */
-	/* { href: "#inscripcion", label: "Inscripción" }, */
-];
+const s = getStrings(Astro.currentLocale);
+const actual = Astro.currentLocale ?? "es";
+const links = s.nav.links;
 ---
 
 <header
 	class="sticky top-0 z-50 border-b border-sand/80 bg-cream/85 backdrop-blur-md"
 >
 	<nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 md:px-8">
-		<a href="#inicio" class="flex items-center gap-3">
+		<a href={getRelativeLocaleUrl(actual)} class="flex items-center gap-3">
 			<Image src={logo} alt="Logo FSMET" width={44} height={44} format="webp" class="h-11 w-11 rounded-full object-cover" />
 			<span class="leading-tight">
 				<span class="block font-display text-lg font-semibold tracking-tight">FSMET</span>
-				<span class="hidden text-xs text-muted sm:block">Economías transformadoras</span>
+				<span class="hidden text-xs text-muted sm:block">{s.nav.tagline}</span>
 			</span>
 		</a>
-		<ul class="hidden items-center gap-6 text-sm font-medium text-muted md:flex">
+		<ul class="hidden items-center gap-6 text-sm font-medium text-muted lg:flex">
 			{
 				links.map((link) => (
 					<li>
@@ -37,19 +32,43 @@ const links = [
 			}
 		</ul>
 		<div class="flex items-center gap-3">
+			<div
+				class="flex items-center gap-1 rounded-full border border-sand px-1 py-1 text-xs font-semibold text-muted"
+				role="group"
+				aria-label={s.nav.langLabel}
+			>
+				{
+					LOCALES.map((locale) => (
+						<a
+							href={getRelativeLocaleUrl(locale)}
+							aria-current={locale === actual ? "true" : undefined}
+							class:list={[
+								"rounded-full px-2 py-0.5 uppercase transition",
+								locale === actual
+									? "bg-ink text-cream"
+									: "hover:text-clay",
+							]}
+						>
+							{locale}
+						</a>
+					))
+				}
+			</div>
 			<a
 				href="#inscripcion"
 				class="rounded-full bg-clay px-4 py-2 text-sm font-semibold text-paper shadow-sm transition hover:bg-clay-deep"
 			>
-				Participar
+				{s.nav.participar}
 			</a>
 			<button
 				type="button"
 				data-menu-btn
+				data-label-open={s.nav.menuOpen}
+				data-label-close={s.nav.menuClose}
 				aria-expanded="false"
 				aria-controls="menu-movil"
-				aria-label="Abrir menú"
-				class="grid h-10 w-10 place-items-center rounded-full border border-sand text-ink transition hover:bg-sand/60 md:hidden"
+				aria-label={s.nav.menuOpen}
+				class="grid h-10 w-10 place-items-center rounded-full border border-sand text-ink transition hover:bg-sand/60 lg:hidden"
 			>
 				<svg data-icon-menu class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
 					<path d="M4 7h16M4 12h16M4 17h16" />
@@ -63,7 +82,7 @@ const links = [
 	<div
 		id="menu-movil"
 		data-menu-panel
-		class="hidden border-t border-sand/70 bg-cream/95 md:hidden"
+		class="hidden border-t border-sand/70 bg-cream/95 lg:hidden"
 	>
 		<ul class="text-sm font-medium text-muted">
 			{

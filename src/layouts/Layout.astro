@@ -1,17 +1,18 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { getStrings, LOCALES } from "../i18n/strings";
+
+const s = getStrings(Astro.currentLocale);
+const { title = s.meta.title, description = s.meta.description } = Astro.props;
+
 interface Props {
 	title?: string;
 	description?: string;
 }
-
-const {
-	title = "FSMET — Foro Social Mundial de las Economías Transformadoras",
-	description = "Proceso colectivo y territorial para conectar experiencias de economías transformadoras. Próxima edición en Argentina, con Jujuy y Salta como provincias anfitrionas.",
-} = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={Astro.currentLocale ?? "es"}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,7 +21,7 @@ const {
 		<meta name="description" content={description} />
 		<meta name="theme-color" content="#2a221c" />
 		<meta property="og:type" content="website" />
-		<meta property="og:locale" content="es_AR" />
+		<meta property="og:locale" content={s.meta.ogLocale} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
@@ -32,6 +33,20 @@ const {
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={new URL("/img/og.jpg", Astro.site)} />
 		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+		{
+			LOCALES.map((locale) => (
+				<link
+					rel="alternate"
+					hreflang={locale}
+					href={new URL(getRelativeLocaleUrl(locale), Astro.site)}
+				/>
+			))
+		}
+		<link
+			rel="alternate"
+			hreflang="x-default"
+			href={new URL(getRelativeLocaleUrl("es"), Astro.site)}
+		/>
 		<title>{title}</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -48,7 +63,7 @@ const {
 			href="#contenido"
 			class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-5 focus:py-2 focus:text-sm focus:font-semibold focus:text-cream"
 		>
-			Saltar al contenido
+			{s.meta.skip}
 		</a>
 		<slot />
 		<script>

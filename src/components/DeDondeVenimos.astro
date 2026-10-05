@@ -1,49 +1,19 @@
 ---
 import Country from "../assets/country.svg";
-const hitos = [
-	{
-		when: "2020",
-		where: "Barcelona",
-		text: "Primera edición del FSMET. Punto de partida internacional del proceso.",
-	},
-	{
-		when: "2024",
-		where: "Colombia",
-		text: "Segunda edición. Consolidación de redes y aprendizajes territoriales.",
-	},
-	{
-		when: "Asamblea",
-		where: "Decisión colectiva",
-		text: "La Asamblea del FSMET resolvió realizar una tercera edición en Argentina.",
-	},
-	{
-		when: "2025",
-		where: "Salta y Palpalá / Jujuy",
-		text: "Asambleas territoriales que definieron a Jujuy y Salta como provincias anfitrionas.",
-	},
-	{
-		when: "Desde sept. 2025",
-		where: "Proceso nacional",
-		text: "Reuniones presenciales periódicas. Se trabaja desde experiencias concretas: microcréditos, bioinsumos, agroecología, turismo rural, reciclaje y cuidados.",
-	},
-	{
-		when: "7 de abril de 2027",
-		where: "Jujuy y Salta",
-		text: "Comienzo del encuentro principal del FSMET 2027. Cronograma y sedes por confirmar.",
-	},
-];
+import { getStrings } from "../i18n/strings";
+
+const s = getStrings(Astro.currentLocale);
+const hitos = s.venimos.hitos;
 ---
 
 <section id="de-donde-venimos" class="scroll-mt-24 border-t border-sand">
 	<div class="mx-auto max-w-6xl px-5 py-20 md:px-8">
-		<p data-reveal class="text-sm font-semibold tracking-widest text-sky uppercase">De dónde venimos</p>
+		<p data-reveal class="text-sm font-semibold tracking-widest text-sky uppercase">{s.venimos.label}</p>
 		<h2 data-reveal style="--reveal-delay: 80ms" class="mt-3 max-w-3xl font-display text-3xl font-semibold md:text-5xl">
-			Una historia de encuentros que se vuelve territorio
+			{s.venimos.h2}
 		</h2>
 		<p data-reveal style="--reveal-delay: 150ms" class="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-			El FSMET es un espacio temático del Foro Social Mundial. Cada edición suma memorias,
-			organizaciones y tramas. La edición argentina se ancla en el norte, con Jujuy y Salta como
-			anfitrionas.
+			{s.venimos.intro}
 		</p>
 		<div class="mt-12 grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">
 			<ol data-timeline class="relative space-y-0">

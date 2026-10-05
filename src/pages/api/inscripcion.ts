@@ -74,6 +74,7 @@ export const POST: APIRoute = async ({ request }) => {
 
 	const filas: [string, string][] = [
 		["Rol", rol === "expositor" ? "Expositor/a" : "Oyente"],
+		["Idioma", typeof data.lang === "string" ? data.lang : "es"],
 		["Nombre", nombre],
 		["Correo", email],
 		["Territorio / país", territorio],

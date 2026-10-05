@@ -1,67 +1,30 @@
 ---
 import { Icon } from "astro-icon/components";
+import { getStrings } from "../i18n/strings";
 
-type Reunion = {
-	tematica: string;
-	expositor: string;
-	fecha: string;
-	youtube?: string;
-};
-
-const reuniones: Reunion[] = [
-	{
-		tematica: "Economía, Territorio y Buen Vivir",
-		expositor: "Por confirmar",
-		fecha: "Por confirmar",
-	},
-	{
-		tematica: "Producción, Trabajo y Tramas Socioproductivas",
-		expositor: "Por confirmar",
-		fecha: "Por confirmar",
-	},
-	{
-		tematica: "Finanzas Éticas, Crédito y Redistribución",
-		expositor: "Por confirmar",
-		fecha: "Por confirmar",
-	},
-	{
-		tematica: "Agroecología, Ambiente y Transición Ecológica",
-		expositor: "Por confirmar",
-		fecha: "Por confirmar",
-	},
-	{
-		tematica: "Formación, Cultura y Cambio de Sentido Común",
-		expositor: "Por confirmar",
-		fecha: "Por confirmar",
-	},
-	{
-		tematica: "Políticas Públicas e Incidencia",
-		expositor: "Por confirmar",
-		fecha: "Por confirmar",
-	},
-];
+const s = getStrings(Astro.currentLocale);
+const reuniones: { tematica: string; expositor: string; fecha: string; youtube?: string }[] =
+	s.reuniones.items;
 ---
 
 <section id="reuniones" class="scroll-mt-24 border-t border-sand bg-paper">
 	<div class="mx-auto max-w-6xl px-5 py-20 md:px-8">
 		<p data-reveal class="text-sm font-semibold tracking-widest text-sage uppercase">
-			Reuniones webinares
+			{s.reuniones.label}
 		</p>
 		<h2
 			data-reveal
 			style="--reveal-delay: 80ms"
 			class="mt-3 max-w-3xl font-display text-3xl font-semibold md:text-5xl"
 		>
-			El proceso también se construye en línea
+			{s.reuniones.h2}
 		</h2>
 		<p
 			data-reveal
 			style="--reveal-delay: 150ms"
 			class="mt-6 max-w-2xl text-lg leading-relaxed text-muted"
 		>
-			Ciclo de encuentros virtuales abiertos que acompañan el camino hacia el foro, desde
-			octubre de 2026 hasta el encuentro principal de abril de 2027. Se transmiten en vivo
-			por YouTube.
+			{s.reuniones.intro}
 		</p>
 		<ul class="mt-12 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
 			{
@@ -77,7 +40,7 @@ const reuniones: Reunion[] = [
 								{reunion.fecha}
 							</span>
 							<span class="text-xs font-semibold tracking-widest text-muted uppercase">
-								Webinar
+								{s.reuniones.webinar}
 							</span>
 						</div>
 						<h3 class="mt-4 font-display text-xl leading-snug">{reunion.tematica}</h3>
@@ -94,12 +57,12 @@ const reuniones: Reunion[] = [
 									class="inline-flex items-center gap-2 rounded-full bg-clay px-4 py-2 text-sm font-semibold text-paper transition hover:bg-clay-deep"
 								>
 									<Icon name="mdi:youtube" class="h-5 w-5" />
-									Ver transmisión en vivo
+									{s.reuniones.live}
 								</a>
 							) : (
 								<span class="inline-flex items-center gap-2 rounded-full border border-dashed border-sand px-4 py-2 text-sm font-medium text-muted">
 									<Icon name="mdi:youtube" class="h-5 w-5" />
-									Transmisión próximamente
+									{s.reuniones.soon}
 								</span>
 							)}
 						</div>
