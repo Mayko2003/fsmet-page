@@ -325,7 +325,7 @@ export type Strings = typeof es;
 
 const en: Strings = {
 	meta: {
-		title: "WSFTE — World Social Forum of Transformative Economies",
+		title: "FSMET — World Social Forum of Transformative Economies",
 		description:
 			"A collective, territorial process connecting transformative economy experiences. Next edition in Argentina, hosted by the provinces of Jujuy and Salta.",
 		ogLocale: "en_US",
@@ -352,8 +352,8 @@ const en: Strings = {
 		text: "The World Social Forum of Transformative Economies is a thematic space of the WSF. The next edition is being built in Argentina, with Jujuy and Salta as host provinces.",
 		ctaPrimary: "Learn about the process",
 		ctaSecondary: "Join us",
-		subtitle: "WSFTE 2027 · Jujuy & Salta",
-		logoAlt: "WSFTE visual identity: territory, gathering and network",
+		subtitle: "FSMET 2027 · Jujuy & Salta",
+		logoAlt: "FSMET visual identity: territory, gathering and network",
 		countdown: {
 			label: "The main gathering begins in",
 			units: ["days", "hours", "min", "sec"],
@@ -363,7 +363,7 @@ const en: Strings = {
 	quienes: {
 		label: "Who we are",
 		h2: "A collective process, not just an event",
-		p1: "The WSFTE seeks to connect experiences of social, solidarity, popular, community, peasant, indigenous, cooperative, agroecological, care and ethical-finance economies. The problem is not a lack of alternatives: it is that many remain isolated.",
+		p1: "The FSMET seeks to connect experiences of social, solidarity, popular, community, peasant, indigenous, cooperative, agroecological, care and ethical-finance economies. The problem is not a lack of alternatives: it is that many remain isolated.",
 		p2: "The idea is to build a global minga: a gathering where grassroots organizations, territories, movements, communities and institutions converge. The process begins before the main gathering and continues afterwards.",
 		quote: "“From project to ecosystem.”",
 		quoteCaption:
@@ -421,12 +421,12 @@ const en: Strings = {
 	venimos: {
 		label: "Where we come from",
 		h2: "A history of gatherings that becomes territory",
-		intro: "The WSFTE is a thematic space of the World Social Forum. Each edition adds memories, organizations and networks. The Argentine edition is anchored in the north, with Jujuy and Salta as hosts.",
+		intro: "The FSMET is a thematic space of the World Social Forum. Each edition adds memories, organizations and networks. The Argentine edition is anchored in the north, with Jujuy and Salta as hosts.",
 		hitos: [
 			{
 				when: "2020",
 				where: "Barcelona",
-				text: "First edition of the WSFTE. International starting point of the process.",
+				text: "First edition of the FSMET. International starting point of the process.",
 			},
 			{
 				when: "2024",
@@ -436,7 +436,7 @@ const en: Strings = {
 			{
 				when: "Assembly",
 				where: "Collective decision",
-				text: "The WSFTE Assembly resolved to hold a third edition in Argentina.",
+				text: "The FSMET Assembly resolved to hold a third edition in Argentina.",
 			},
 			{
 				when: "2025",
@@ -451,7 +451,7 @@ const en: Strings = {
 			{
 				when: "April 7, 2027",
 				where: "Jujuy and Salta",
-				text: "Start of the main gathering of WSFTE 2027. Schedule and venues to be confirmed.",
+				text: "Start of the main gathering of FSMET 2027. Schedule and venues to be confirmed.",
 			},
 		],
 	},
@@ -467,7 +467,7 @@ const en: Strings = {
 			},
 			{
 				nombre: "Salta",
-				texto: "The territorial assembly of Salta (2025) consolidated the provincial process and defined it as co-host of the third edition of the WSFTE.",
+				texto: "The territorial assembly of Salta (2025) consolidated the provincial process and defined it as co-host of the third edition of the FSMET.",
 			},
 		],
 		footnote: "Preparatory process underway · venues and logistics to be confirmed.",
@@ -547,7 +547,7 @@ const en: Strings = {
 		h2: "What people usually ask",
 		items: [
 			{
-				q: "What is the WSFTE?",
+				q: "What is the FSMET?",
 				a: "A thematic space of the World Social Forum dedicated to transformative economies. It connects experiences of social, solidarity, popular, cooperative, agroecological, care and ethical-finance economies that currently work in isolation.",
 			},
 			{
@@ -568,7 +568,7 @@ const en: Strings = {
 			},
 			{
 				q: "Why Jujuy and Salta?",
-				a: "The WSFTE Assembly decided to hold the third edition in Argentina, and the 2025 territorial assemblies in Salta and Palpalá defined Jujuy and Salta as host provinces.",
+				a: "The FSMET Assembly decided to hold the third edition in Argentina, and the 2025 territorial assemblies in Salta and Palpalá defined Jujuy and Salta as host provinces.",
 			},
 			{
 				q: "What happens after the gathering?",
