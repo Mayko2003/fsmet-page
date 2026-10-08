@@ -8,7 +8,7 @@ import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://fsmet-page.vercel.app",
+  site: "https://fsmet.com.ar",
 
   i18n: {
     defaultLocale: "es",
