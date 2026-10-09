@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 	},
 });
 
-const MAIL_FROM = import.meta.env.MAIL_FROM ?? import.meta.env.SMTP_USER;
+const MAIL_RECIPIENT = import.meta.env.MAIL_RECIPIENT ?? import.meta.env.SMTP_USER;
 const TURNSTILE_SECRET = import.meta.env.TURNSTILE_SECRET_KEY;
 
 async function verificarTurnstile(token: string, ip: string | null) {
@@ -120,8 +120,8 @@ export const POST: APIRoute = async ({ request }) => {
 
 	try {
 		await transporter.sendMail({
-			from: MAIL_FROM,
-			to: import.meta.env.SMTP_USER,
+			from: import.meta.env.SMTP_USER,
+			to: MAIL_RECIPIENT,
 			replyTo: email,
 			subject: `[FSMET] Inscripción ${rol === "expositor" ? "expositor/a" : "oyente"} — ${nombre}`,
 			html,
