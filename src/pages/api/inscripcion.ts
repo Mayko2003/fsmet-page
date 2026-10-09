@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 	},
 });
 
-const MAIL_RECIPIENT = import.meta.env.MAIL_RECIPIENT ?? import.meta.env.SMTP_USER;
+const MAIL_RECIPIENT = import.meta.env.MAIL_RECIPIENT || import.meta.env.SMTP_USER;
 const TURNSTILE_SECRET = import.meta.env.TURNSTILE_SECRET_KEY;
 
 async function verificarTurnstile(token: string, ip: string | null) {
