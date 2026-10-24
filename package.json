@@ -1,5 +1,6 @@
 {
   "name": "fsmet-page",
+  "description": "Sitio web del FSMET — Foro Social Mundial de las Economías Transformadoras. Próxima edición: Jujuy y Salta, Argentina · abril 2027.",
   "type": "module",
   "version": "0.0.1",
   "packageManager": "pnpm@12.6.0",
