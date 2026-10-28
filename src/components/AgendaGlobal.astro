@@ -1,0 +1,14 @@
+---
+import CardsSection from "./CardsSection.astro";
+import { getStrings } from "../i18n/strings";
+
+const s = getStrings(Astro.currentLocale);
+---
+
+<CardsSection
+	id="agenda-global"
+	label={s.agenda.label}
+	h2={s.agenda.h2}
+	intro={s.agenda.intro}
+	items={s.agenda.items}
+/>

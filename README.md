@@ -5,9 +5,9 @@ conectar experiencias de economía social, solidaria, popular, comunitaria, camp
 indígena, cooperativa, agroecológica, de cuidados y de finanzas éticas.
 
 La próxima edición se construye en **Argentina**, con **Jujuy y Salta** como provincias
-anfitrionas. El encuentro principal comienza el **7 de abril de 2027**.
+anfitrionas. El encuentro principal se realiza los días **7, 8 y 9 de abril de 2027**.
 
-🌐 **https://fsmet.com.ar** — Disponible en español, inglés y portugués.
+🌐 **https://fsmet.com.ar** — Disponible en español, inglés, portugués y francés.
 
 ## Contenido del sitio
 
@@ -16,9 +16,10 @@ anfitrionas. El encuentro principal comienza el **7 de abril de 2027**.
   (territorio y buen vivir, producción y trabajo, finanzas éticas, agroecología,
   formación y cultura, cuidados).
 - **De dónde venimos** — recorrido histórico por las ediciones anteriores del foro.
-- **Territorios** — mapa interactivo (Leaflet) con las experiencias y nodos territoriales.
+- **Territorios** — Jujuy y Salta como provincias anfitrionas.
 - **Reuniones y webinarios** — agenda de encuentros previos del proceso.
-- **Info útil** — alojamiento, transporte y logística para quienes participen.
+- **Info útil** — cómo llegar, altura y clima, y un mapa interactivo (Leaflet)
+  con hospedajes sugeridos en San Salvador de Jujuy.
 - **Inscripción** — formulario de registro con verificación anti-bot
   (Cloudflare Turnstile + honeypot) y envío por correo vía SMTP (`POST /api/inscripcion`).
 - **Preguntas frecuentes** y frases destacadas del proceso.

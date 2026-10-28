@@ -18,17 +18,22 @@ const TURNSTILE_SECRET = import.meta.env.TURNSTILE_SECRET_KEY;
 
 async function verificarTurnstile(token: string, ip: string | null) {
 	if (!TURNSTILE_SECRET) return true;
-	const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-		method: "POST",
-		headers: { "Content-Type": "application/x-www-form-urlencoded" },
-		body: new URLSearchParams({
-			secret: TURNSTILE_SECRET,
-			response: token,
-			...(ip ? { remoteip: ip } : {}),
-		}),
-	});
-	const resultado = (await res.json()) as { success?: boolean };
-	return resultado.success === true;
+	try {
+		const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+			method: "POST",
+			headers: { "Content-Type": "application/x-www-form-urlencoded" },
+			body: new URLSearchParams({
+				secret: TURNSTILE_SECRET,
+				response: token,
+				...(ip ? { remoteip: ip } : {}),
+			}),
+		});
+		const resultado = (await res.json()) as { success?: boolean };
+		return resultado.success === true;
+	} catch (err) {
+		console.error("Turnstile verify error:", err);
+		return false;
+	}
 }
 
 const escapeHtml = (value: string) =>
@@ -38,6 +43,8 @@ const escapeHtml = (value: string) =>
 		.replaceAll(">", "&gt;")
 		.replaceAll('"', "&quot;")
 		.replaceAll("'", "&#39;");
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const json = (body: Record<string, unknown>, status: number) =>
 	new Response(JSON.stringify(body), {
@@ -65,8 +72,8 @@ export const POST: APIRoute = async ({ request }) => {
 		typeof territorio !== "string" ||
 		typeof rol !== "string" ||
 		!nombre.trim() ||
-		!email.trim() ||
 		!territorio.trim() ||
+		!EMAIL_RE.test(email) ||
 		!["oyente", "expositor"].includes(rol)
 	) {
 		return json({ ok: false, error: "Faltan campos obligatorios." }, 400);

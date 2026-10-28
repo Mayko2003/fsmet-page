@@ -1,6 +1,14 @@
-export const LOCALES = ["es", "en", "pt"] as const;
+export const LOCALES = ["es", "en", "pt", "fr"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "es";
+
+// Nombre nativo de cada idioma (independiente del locale activo)
+export const LOCALE_NAMES: Record<string, string> = {
+	es: "Español",
+	en: "English",
+	pt: "Português",
+	fr: "Français",
+};
 
 const es = {
 	meta: {
@@ -36,7 +44,7 @@ const es = {
 		countdown: {
 			label: "El encuentro principal comienza en",
 			units: ["días", "horas", "min", "seg"],
-			date: "7 de abril de 2027 · Jujuy y Salta",
+			date: "7, 8 y 9 de abril de 2027 · Jujuy y Salta",
 		},
 	},
 	quienes: {
@@ -87,15 +95,36 @@ const es = {
 			},
 		],
 	},
-	stats: {
-		label: "El proceso en números",
+	marcha: {
+		label: "El proceso en marcha",
+		h2: "Espacios que ya caminan",
+		intro: "El FSMET no empieza en abril de 2027: diálogos mensuales, un doctorado internacional y un comité de coordinación ya están moviendo el proceso.",
 		items: [
-			{ valor: 64, sufijo: "", label: "Personas participantes" },
-			{ valor: 11, sufijo: "", label: "Países representados" },
-			{ valor: 6, sufijo: "", label: "Ejes temáticos" },
-			{ valor: 59, sufijo: "%", label: "Desde Argentina" },
+			{
+				icon: "mdi:forum-outline",
+				meta: "Mensual · virtual",
+				title: "Diálogos Globales",
+				text: "Encuentros mensuales entre el FSM, el FSMET y otros foros globales para debatir ideas, elaborar propuestas y compartir acciones. Iniciativa de la Cátedra Global de la Universidad Cooperativa del Buen Vivir.",
+				cta: "Ver diálogos",
+				url: "https://www.otraeconomia.com/di%C3%A1logos-globales-fsmet/?preview_sid=635060",
+			},
+			{
+				icon: "mdi:school-outline",
+				meta: "Formación · 14 meses · inscripción abierta",
+				title: "Doctorado Economías Transformadoras",
+				text: "Doctorado internacional acordado en la asamblea de Palpalá: formación e investigación-acción desde las prácticas territoriales, con módulos asincrónicos. Sin títulos previos requeridos.",
+				cta: "Conocer el doctorado",
+				url: "https://www.otraeconomia.com/?preview_sid=271675",
+			},
+			{
+				icon: "mdi:account-group-outline",
+				meta: "~200 organizaciones · 30+ países",
+				title: "Comité Coordinación Internacional",
+				text: "El espacio que coordina el proceso hacia el FSMET 2027: organizaciones, movimientos sociales, universidades y redes de economías transformadoras de todo el mundo.",
+				cta: "Ver el comité",
+				url: "https://www.otraeconomia.com/comit%C3%A9-coordinaci%C3%B3n-internacional-fsmet-2027-y-pre-m%C3%A9xico/",
+			},
 		],
-		footnote: "Encuesta de participación disponible hasta julio de 2026.",
 	},
 	venimos: {
 		label: "De dónde venimos",
@@ -128,9 +157,14 @@ const es = {
 				text: "Reuniones presenciales periódicas. Se trabaja desde experiencias concretas: microcréditos, bioinsumos, agroecología, turismo rural, reciclaje y cuidados.",
 			},
 			{
-				when: "7 de abril de 2027",
+				when: "24–26 nov. 2026",
+				where: "México · Pre-FSMET",
+				text: "Pre-FSMET 2026 en México: círculos de la palabra territoriales (24 y 25 nov., formato híbrido) y jornada de propuestas en el Congreso de la Unión, CDMX (26 nov.), bajo el lema «Construyendo alternativas solidarias».",
+			},
+			{
+				when: "7–9 de abril de 2027",
 				where: "Jujuy y Salta",
-				text: "Comienzo del encuentro principal del FSMET 2027. Cronograma y sedes por confirmar.",
+				text: "Encuentro principal del FSMET 2027: tres jornadas. Sedes y cronograma de cada fecha por confirmar.",
 			},
 		],
 	},
@@ -159,13 +193,25 @@ const es = {
 		live: "Ver transmisión en vivo",
 		soon: "Transmisión próximamente",
 		pending: "Por confirmar",
+		empty: "Muy pronto",
+		emptyText:
+			"Estamos preparando el ciclo de webinarios que acompañará el camino hacia el foro. Las fechas, temáticas y links de transmisión se anunciarán aquí.",
+		items: [],
+	},
+	agenda: {
+		label: "Agenda global",
+		h2: "Otros encuentros del ecosistema",
+		intro: "El FSMET es parte de un ecosistema global de foros y procesos de economías transformadoras. Estos son otros encuentros que también están en marcha.",
 		items: [
-			{ tematica: "Economía, Territorio y Buen Vivir", expositor: "Por confirmar", fecha: "Por confirmar" },
-			{ tematica: "Producción, Trabajo y Tramas Socioproductivas", expositor: "Por confirmar", fecha: "Por confirmar" },
-			{ tematica: "Finanzas Éticas, Crédito y Redistribución", expositor: "Por confirmar", fecha: "Por confirmar" },
-			{ tematica: "Agroecología, Ambiente y Transición Ecológica", expositor: "Por confirmar", fecha: "Por confirmar" },
-			{ tematica: "Formación, Cultura y Cambio de Sentido Común", expositor: "Por confirmar", fecha: "Por confirmar" },
-			{ tematica: "Políticas Públicas e Incidencia", expositor: "Por confirmar", fecha: "Por confirmar" },
+			{
+				icon: "mdi:earth",
+				logo: "/img/maricagsef2027-es.webp",
+				meta: "9–12 oct. 2027 · Maricá, Brasil",
+				title: "MaricáGSEF2027 — Foro Global de la Economía Social y Solidaria",
+				text: "8.ª edición del foro bienal del GSEF, coorganizado con la Prefeitura de Maricá. Reúne gobiernos locales y nacionales, redes, instituciones y actores de la ESS de todo el mundo.",
+				cta: "Conocer el foro",
+				url: "https://www.gsef-net.org/es/maricagsef2027",
+			},
 		],
 	},
 	infoutil: {
@@ -213,9 +259,9 @@ const es = {
 		},
 		hoteles: [
 			{ detalle: "Güemes 864 · 4★ · salones de eventos" },
-			{ detalle: "Av. 19 de Abril 683 · 4★ superior · frente al parque Xibi-Xibi" },
+			{ detalle: "Av. 19 de Abril 687 · 4★ superior · frente al parque Xibi-Xibi" },
 			{ detalle: "Ramírez de Velazco 244 · spa · salón de convenciones" },
-			{ detalle: "Belgrano 1263 · 4★ · microcentro" },
+			{ detalle: "Belgrano 1263 · 3★ · microcentro" },
 			{ detalle: "Boutique · a metros de Plaza Belgrano y la Catedral" },
 			{ detalle: "Alvear 627 · desayuno incluido · a 300 m del Cabildo" },
 			{ detalle: "Alvear 1230 · opción económica · desayuno y Wi-Fi" },
@@ -243,7 +289,7 @@ const es = {
 			},
 			{
 				q: "¿Cuándo y dónde es el encuentro?",
-				a: "El encuentro principal comienza el 7 de abril de 2027 en Jujuy y Salta. Las sedes exactas y el cronograma completo se anunciarán cuando estén confirmados.",
+				a: "El encuentro principal se realiza los días 7, 8 y 9 de abril de 2027 en Jujuy y Salta. Las sedes y el cronograma de cada jornada se anunciarán cuando estén confirmados.",
 			},
 			{
 				q: "¿Por qué Jujuy y Salta?",
@@ -359,7 +405,7 @@ const en: Strings = {
 		countdown: {
 			label: "The main gathering begins in",
 			units: ["days", "hours", "min", "sec"],
-			date: "April 7, 2027 · Jujuy and Salta",
+			date: "April 7–9, 2027 · Jujuy and Salta",
 		},
 	},
 	quienes: {
@@ -410,15 +456,36 @@ const en: Strings = {
 			},
 		],
 	},
-	stats: {
-		label: "The process in numbers",
+	marcha: {
+		label: "The process in motion",
+		h2: "Spaces already moving",
+		intro: "The FSMET doesn't start in April 2027: monthly dialogues, an international doctorate and a coordination committee are already moving the process forward.",
 		items: [
-			{ valor: 64, sufijo: "", label: "Participants" },
-			{ valor: 11, sufijo: "", label: "Countries represented" },
-			{ valor: 6, sufijo: "", label: "Thematic axes" },
-			{ valor: 59, sufijo: "%", label: "From Argentina" },
+			{
+				icon: "mdi:forum-outline",
+				meta: "Monthly · online",
+				title: "Global Dialogues",
+				text: "Monthly meetings between the WSF, the FSMET and other global forums to debate ideas, develop proposals and share actions. An initiative of the Global Chair of the Universidad Cooperativa del Buen Vivir.",
+				cta: "See the dialogues",
+				url: "https://www.otraeconomia.com/di%C3%A1logos-globales-fsmet/?preview_sid=635060",
+			},
+			{
+				icon: "mdi:school-outline",
+				meta: "Education · 14 months · enrollment open",
+				title: "Transformative Economies Doctorate",
+				text: "International doctorate agreed at the Palpalá assembly: education and action-research rooted in territorial practices, with asynchronous modules. No prior academic degrees required.",
+				cta: "Learn about the doctorate",
+				url: "https://www.otraeconomia.com/?preview_sid=271675",
+			},
+			{
+				icon: "mdi:account-group-outline",
+				meta: "~200 organizations · 30+ countries",
+				title: "International Coordination Committee",
+				text: "The space coordinating the process towards FSMET 2027: organizations, social movements, universities and transformative economy networks from around the world.",
+				cta: "See the committee",
+				url: "https://www.otraeconomia.com/comit%C3%A9-coordinaci%C3%B3n-internacional-fsmet-2027-y-pre-m%C3%A9xico/",
+			},
 		],
-		footnote: "Participation survey available until July 2026.",
 	},
 	venimos: {
 		label: "Where we come from",
@@ -451,9 +518,14 @@ const en: Strings = {
 				text: "Periodic in-person meetings. The work starts from concrete experiences: microcredit, bio-inputs, agroecology, rural tourism, recycling and care work.",
 			},
 			{
-				when: "April 7, 2027",
+				when: "Nov. 24–26, 2026",
+				where: "Mexico · Pre-FSMET",
+				text: "Pre-FSMET 2026 in Mexico: territorial word circles (Nov. 24–25, hybrid format) and a proposals day at the Congreso de la Unión, Mexico City (Nov. 26), under the motto “Building solidarity-based alternatives”.",
+			},
+			{
+				when: "April 7–9, 2027",
 				where: "Jujuy and Salta",
-				text: "Start of the main gathering of FSMET 2027. Schedule and venues to be confirmed.",
+				text: "Main gathering of FSMET 2027: three days. Venues and the schedule for each date to be confirmed.",
 			},
 		],
 	},
@@ -482,13 +554,25 @@ const en: Strings = {
 		live: "Watch the live stream",
 		soon: "Stream coming soon",
 		pending: "To be confirmed",
+		empty: "Coming soon",
+		emptyText:
+			"We are preparing the webinar series that will accompany the road to the forum. Dates, topics and stream links will be announced here.",
+		items: [],
+	},
+	agenda: {
+		label: "Global agenda",
+		h2: "Other gatherings in the ecosystem",
+		intro: "The FSMET is part of a global ecosystem of transformative economy forums and processes. These are other gatherings also underway.",
 		items: [
-			{ tematica: "Economy, Territory and Buen Vivir", expositor: "To be confirmed", fecha: "To be confirmed" },
-			{ tematica: "Production, Work and Social-Productive Networks", expositor: "To be confirmed", fecha: "To be confirmed" },
-			{ tematica: "Ethical Finance, Credit and Redistribution", expositor: "To be confirmed", fecha: "To be confirmed" },
-			{ tematica: "Agroecology, Environment and Ecological Transition", expositor: "To be confirmed", fecha: "To be confirmed" },
-			{ tematica: "Education, Culture and Change of Common Sense", expositor: "To be confirmed", fecha: "To be confirmed" },
-			{ tematica: "Public Policy and Advocacy", expositor: "To be confirmed", fecha: "To be confirmed" },
+			{
+				icon: "mdi:earth",
+				logo: "/img/maricagsef2027-en.webp",
+				meta: "Oct 9–12, 2027 · Maricá, Brazil",
+				title: "MaricáGSEF2027 — Global Social and Solidarity Economy Forum",
+				text: "8th edition of the GSEF's biennial forum, co-organized with the Maricá City Hall. It brings together local and national governments, networks, institutions and SSE actors from around the world.",
+				cta: "Learn about the forum",
+				url: "https://www.gsef-net.org/es/maricagsef2027",
+			},
 		],
 	},
 	infoutil: {
@@ -536,9 +620,9 @@ const en: Strings = {
 		},
 		hoteles: [
 			{ detalle: "Güemes 864 · 4★ · event halls" },
-			{ detalle: "Av. 19 de Abril 683 · superior 4★ · facing Xibi-Xibi park" },
+			{ detalle: "Av. 19 de Abril 687 · superior 4★ · facing Xibi-Xibi park" },
 			{ detalle: "Ramírez de Velazco 244 · spa · convention hall" },
-			{ detalle: "Belgrano 1263 · 4★ · city center" },
+			{ detalle: "Belgrano 1263 · 3★ · city center" },
 			{ detalle: "Boutique · steps from Plaza Belgrano and the Cathedral" },
 			{ detalle: "Alvear 627 · breakfast included · 300 m from the Cabildo" },
 			{ detalle: "Alvear 1230 · budget option · breakfast and Wi-Fi" },
@@ -566,7 +650,7 @@ const en: Strings = {
 			},
 			{
 				q: "When and where is the gathering?",
-				a: "The main gathering begins on April 7, 2027 in Jujuy and Salta. Exact venues and the full schedule will be announced once confirmed.",
+				a: "The main gathering takes place on April 7, 8 and 9, 2027 in Jujuy and Salta. Venues and the schedule for each day will be announced once confirmed.",
 			},
 			{
 				q: "Why Jujuy and Salta?",
@@ -680,7 +764,7 @@ const pt: Strings = {
 		countdown: {
 			label: "O encontro principal começa em",
 			units: ["dias", "horas", "min", "seg"],
-			date: "7 de abril de 2027 · Jujuy e Salta",
+			date: "7, 8 e 9 de abril de 2027 · Jujuy e Salta",
 		},
 	},
 	quienes: {
@@ -731,15 +815,36 @@ const pt: Strings = {
 			},
 		],
 	},
-	stats: {
-		label: "O processo em números",
+	marcha: {
+		label: "O processo em marcha",
+		h2: "Espaços que já caminham",
+		intro: "O FSMET não começa em abril de 2027: diálogos mensais, um doutorado internacional e um comitê de coordenação já estão movendo o processo.",
 		items: [
-			{ valor: 64, sufijo: "", label: "Pessoas participantes" },
-			{ valor: 11, sufijo: "", label: "Países representados" },
-			{ valor: 6, sufijo: "", label: "Eixos temáticos" },
-			{ valor: 59, sufijo: "%", label: "Da Argentina" },
+			{
+				icon: "mdi:forum-outline",
+				meta: "Mensal · virtual",
+				title: "Diálogos Globais",
+				text: "Encontros mensais entre o FSM, o FSMET e outros fóruns globais para debater ideias, elaborar propostas e compartilhar ações. Iniciativa da Cátedra Global da Universidade Cooperativa del Buen Vivir.",
+				cta: "Ver diálogos",
+				url: "https://www.otraeconomia.com/di%C3%A1logos-globales-fsmet/?preview_sid=635060",
+			},
+			{
+				icon: "mdi:school-outline",
+				meta: "Formação · 14 meses · inscrições abertas",
+				title: "Doutorado Economias Transformadoras",
+				text: "Doutorado internacional acordado na assembleia de Palpalá: formação e pesquisa-ação a partir das práticas territoriais, com módulos assíncronos. Sem títulos acadêmicos prévios exigidos.",
+				cta: "Conhecer o doutorado",
+				url: "https://www.otraeconomia.com/?preview_sid=271675",
+			},
+			{
+				icon: "mdi:account-group-outline",
+				meta: "~200 organizações · 30+ países",
+				title: "Comitê de Coordenação Internacional",
+				text: "O espaço que coordena o processo rumo ao FSMET 2027: organizações, movimentos sociais, universidades e redes de economias transformadoras de todo o mundo.",
+				cta: "Ver o comitê",
+				url: "https://www.otraeconomia.com/comit%C3%A9-coordinaci%C3%B3n-internacional-fsmet-2027-y-pre-m%C3%A9xico/",
+			},
 		],
-		footnote: "Pesquisa de participação disponível até julho de 2026.",
 	},
 	venimos: {
 		label: "De onde viemos",
@@ -772,9 +877,14 @@ const pt: Strings = {
 				text: "Reuniões presenciais periódicas. Trabalha-se a partir de experiências concretas: microcréditos, bioinsumos, agroecologia, turismo rural, reciclagem e cuidados.",
 			},
 			{
-				when: "7 de abril de 2027",
+				when: "24–26 nov. 2026",
+				where: "México · Pré-FSMET",
+				text: "Pré-FSMET 2026 no México: círculos da palavra territoriais (24 e 25 nov., formato híbrido) e jornada de propostas no Congresso da União, Cidade do México (26 nov.), sob o lema «Construindo alternativas solidárias».",
+			},
+			{
+				when: "7–9 de abril de 2027",
 				where: "Jujuy e Salta",
-				text: "Início do encontro principal do FSMET 2027. Cronograma e sedes a confirmar.",
+				text: "Encontro principal do FSMET 2027: três jornadas. Sedes e cronograma de cada data a confirmar.",
 			},
 		],
 	},
@@ -803,13 +913,25 @@ const pt: Strings = {
 		live: "Assistir à transmissão ao vivo",
 		soon: "Transmissão em breve",
 		pending: "A confirmar",
+		empty: "Em breve",
+		emptyText:
+			"Estamos preparando o ciclo de webinars que acompanhará o caminho até o fórum. As datas, temáticas e links de transmissão serão anunciados aqui.",
+		items: [],
+	},
+	agenda: {
+		label: "Agenda global",
+		h2: "Outros encontros do ecossistema",
+		intro: "O FSMET faz parte de um ecossistema global de fóruns e processos de economias transformadoras. Estes são outros encontros que também estão em marcha.",
 		items: [
-			{ tematica: "Economia, Território e Bem Viver", expositor: "A confirmar", fecha: "A confirmar" },
-			{ tematica: "Produção, Trabalho e Tramas Socioprodutivas", expositor: "A confirmar", fecha: "A confirmar" },
-			{ tematica: "Finanças Éticas, Crédito e Redistribuição", expositor: "A confirmar", fecha: "A confirmar" },
-			{ tematica: "Agroecologia, Ambiente e Transição Ecológica", expositor: "A confirmar", fecha: "A confirmar" },
-			{ tematica: "Formação, Cultura e Mudança de Senso Comum", expositor: "A confirmar", fecha: "A confirmar" },
-			{ tematica: "Políticas Públicas e Incidência", expositor: "A confirmar", fecha: "A confirmar" },
+			{
+				icon: "mdi:earth",
+				logo: "/img/maricagsef2027-es.webp",
+				meta: "9–12 out. 2027 · Maricá, Brasil",
+				title: "MaricáGSEF2027 — Fórum Global de Economia Social e Solidária",
+				text: "8ª edição do fórum bienal do GSEF, co-organizado com a Prefeitura de Maricá. Reúne governos locais e nacionais, redes, instituições e atores da ESS do mundo todo.",
+				cta: "Conhecer o fórum",
+				url: "https://www.gsef-net.org/es/maricagsef2027",
+			},
 		],
 	},
 	infoutil: {
@@ -853,13 +975,13 @@ const pt: Strings = {
 			],
 			legendHotel: "Hospedagem sugerida",
 			legendCity: "Cidade anfitriã",
-			listTitle: "Hospedagens no miocentro",
+			listTitle: "Hospedagens no microcentro",
 		},
 		hoteles: [
 			{ detalle: "Güemes 864 · 4★ · salões de eventos" },
-			{ detalle: "Av. 19 de Abril 683 · 4★ superior · em frente ao parque Xibi-Xibi" },
+			{ detalle: "Av. 19 de Abril 687 · 4★ superior · em frente ao parque Xibi-Xibi" },
 			{ detalle: "Ramírez de Velazco 244 · spa · salão de convenções" },
-			{ detalle: "Belgrano 1263 · 4★ · miocentro" },
+			{ detalle: "Belgrano 1263 · 3★ · microcentro" },
 			{ detalle: "Boutique · a poucos metros da Plaza Belgrano e da Catedral" },
 			{ detalle: "Alvear 627 · café da manhã incluído · a 300 m do Cabildo" },
 			{ detalle: "Alvear 1230 · opção econômica · café da manhã e Wi-Fi" },
@@ -887,7 +1009,7 @@ const pt: Strings = {
 			},
 			{
 				q: "Quando e onde é o encontro?",
-				a: "O encontro principal começa em 7 de abril de 2027 em Jujuy e Salta. As sedes exatas e o cronograma completo serão anunciados quando confirmados.",
+				a: "O encontro principal acontece nos dias 7, 8 e 9 de abril de 2027 em Jujuy e Salta. As sedes e o cronograma de cada jornada serão anunciados quando confirmados.",
 			},
 			{
 				q: "Por que Jujuy e Salta?",
@@ -967,7 +1089,366 @@ const pt: Strings = {
 	},
 };
 
-const ui: Record<Locale, Strings> = { es, en, pt };
+const fr: Strings = {
+	meta: {
+		title: "FSMET — Forum Social Mondial des Économies Transformatrices",
+		description:
+			"Un processus collectif et territorial pour relier les expériences d'économies transformatrices. Prochaine édition en Argentine, avec Jujuy et Salta comme provinces hôtes.",
+		ogLocale: "fr_FR",
+		skip: "Aller au contenu",
+	},
+	nav: {
+		tagline: "Économies transformatrices",
+		links: [
+			{ href: "#quienes-somos", label: "Qui sommes-nous" },
+			{ href: "#de-donde-venimos", label: "D'où nous venons" },
+			{ href: "#territorios", label: "Territoires" },
+			{ href: "#reuniones", label: "Réunions" },
+			{ href: "#info-util", label: "Infos utiles" },
+			{ href: "#preguntas", label: "FAQ" },
+		],
+		participar: "Participer",
+		menuOpen: "Ouvrir le menu",
+		menuClose: "Fermer le menu",
+		langLabel: "Langue",
+	},
+	hero: {
+		badge: "Forum Social Mondial · processus territorial",
+		title: "Des alternatives dispersées aux convergences territoriales",
+		text: "Le Forum Social Mondial des Économies Transformatrices est un espace thématique du FSM. La prochaine édition se construit en Argentine, avec Jujuy et Salta comme provinces hôtes.",
+		ctaPrimary: "Découvrir le processus",
+		ctaSecondary: "Nous rejoindre",
+		subtitle: "FSMET 2027 · Jujuy et Salta",
+		logoAlt: "Identité visuelle du FSMET : territoire, rencontre et réseau",
+		countdown: {
+			label: "La rencontre principale commence dans",
+			units: ["jours", "heures", "min", "s"],
+			date: "7, 8 et 9 avril 2027 · Jujuy et Salta",
+		},
+	},
+	quienes: {
+		label: "Qui sommes-nous",
+		h2: "Un processus collectif, pas seulement un événement",
+		p1: "Le FSMET cherche à relier les expériences d'économie sociale, solidaire, populaire, communautaire, paysanne, autochtone, coopérative, agroécologique, de soins et de finance éthique. Le problème n'est pas le manque d'alternatives : c'est que beaucoup restent isolées.",
+		p2: "L'idée est de construire une minga mondiale : une rencontre où convergent organisations de base, territoires, mouvements, communautés et institutions. Le processus commence avant la rencontre principale et se poursuit après.",
+		quote: "« Du projet à l'écosystème. »",
+		quoteCaption:
+			"Organisation responsable de la préparation : Movimiento Hacia Otra Economía, Social Solidaria Popular Campesino Indígena, Afrodescendiente. Une équipe de gouvernance du processus est en cours de formation.",
+		ejesTitle: "Six axes thématiques",
+		ejes: [
+			{
+				n: "01",
+				title: "Économie, Territoire et Buen Vivir",
+				text: "Développement territorial, communauté, inclusion et durabilité de la vie.",
+				temas: ["Économie transformatrice", "Territoire", "Buen Vivir", "Communauté", "Inclusion"],
+			},
+			{
+				n: "02",
+				title: "Production, Travail et Trames",
+				text: "Coopératives, circuits courts et articulation entre productrices et producteurs.",
+				temas: ["Coopératives", "Réseaux productifs", "Circuits courts", "Travail", "Articulation"],
+			},
+			{
+				n: "03",
+				title: "Finances Éthiques et Redistribution",
+				text: "Crédit, fonds rotatifs, banques communautaires et éducation financière.",
+				temas: ["Crédit", "Fonds rotatifs", "Banques communautaires", "Éducation financière"],
+			},
+			{
+				n: "04",
+				title: "Agroécologie et Transition Écologique",
+				text: "Biens communs, intrants biologiques, environnement et production durable.",
+				temas: ["Agroécologie", "Intrants biologiques", "Biens communs", "Souveraineté alimentaire"],
+			},
+			{
+				n: "05",
+				title: "Formation, Culture et Sens Commun",
+				text: "Savoirs territoriaux, recherche, communication et éducation.",
+				temas: ["Éducation", "Savoirs territoriaux", "Recherche", "Communication"],
+			},
+			{
+				n: "06",
+				title: "Politiques Publiques et Plaidoyer",
+				text: "Propositions, articulation avec les institutions et cadres législatifs.",
+				temas: ["Législation", "Plaidoyer institutionnel", "Propositions", "Gouvernements"],
+			},
+		],
+	},
+	marcha: {
+		label: "Le processus en marche",
+		h2: "Des espaces déjà en mouvement",
+		intro: "Le FSMET ne commence pas en avril 2027 : dialogues mensuels, doctorat international et comité de coordination font déjà avancer le processus.",
+		items: [
+			{
+				icon: "mdi:forum-outline",
+				meta: "Mensuel · en ligne",
+				title: "Dialogues Globaux",
+				text: "Rencontres mensuelles entre le FSM, le FSMET et d'autres forums mondiaux pour débattre d'idées, élaborer des propositions et partager des actions. Une initiative de la Chaire Globale de l'Universidad Cooperativa del Buen Vivir.",
+				cta: "Voir les dialogues",
+				url: "https://www.otraeconomia.com/di%C3%A1logos-globales-fsmet/?preview_sid=635060",
+			},
+			{
+				icon: "mdi:school-outline",
+				meta: "Formation · 14 mois · inscriptions ouvertes",
+				title: "Doctorat Économies Transformatrices",
+				text: "Doctorat international décidé à l'assemblée de Palpalá : formation et recherche-action à partir des pratiques territoriales, avec des modules asynchrones. Aucun diplôme préalable requis.",
+				cta: "Découvrir le doctorat",
+				url: "https://www.otraeconomia.com/?preview_sid=271675",
+			},
+			{
+				icon: "mdi:account-group-outline",
+				meta: "~200 organisations · 30+ pays",
+				title: "Comité de Coordination Internationale",
+				text: "L'espace qui coordonne le processus vers le FSMET 2027 : organisations, mouvements sociaux, universités et réseaux d'économies transformatrices du monde entier.",
+				cta: "Voir le comité",
+				url: "https://www.otraeconomia.com/comit%C3%A9-coordinaci%C3%B3n-international-fsmet-2027-y-pre-m%C3%A9xico/",
+			},
+		],
+	},
+	venimos: {
+		label: "D'où nous venons",
+		h2: "Une histoire de rencontres qui devient territoire",
+		intro: "Le FSMET est un espace thématique du Forum Social Mondial. Chaque édition ajoute mémoires, organisations et réseaux. L'édition argentine s'ancre dans le nord, avec Jujuy et Salta comme hôtes.",
+		hitos: [
+			{
+				when: "2020",
+				where: "Barcelone",
+				text: "Première édition du FSMET. Point de départ international du processus.",
+			},
+			{
+				when: "2024",
+				where: "Colombie",
+				text: "Deuxième édition. Consolidation des réseaux et des apprentissages territoriaux.",
+			},
+			{
+				when: "Assemblée",
+				where: "Décision collective",
+				text: "L'Assemblée du FSMET a décidé d'organiser une troisième édition en Argentine.",
+			},
+			{
+				when: "2025",
+				where: "Salta et Palpalá / Jujuy",
+				text: "Assemblées territoriales qui ont désigné Jujuy et Salta comme provinces hôtes.",
+			},
+			{
+				when: "Depuis sept. 2025",
+				where: "Processus national",
+				text: "Réunions présentielles périodiques. Le travail part d'expériences concrètes : microcrédits, intrants biologiques, agroécologie, tourisme rural, recyclage et soins.",
+			},
+			{
+				when: "24–26 nov. 2026",
+				where: "Mexique · Pré-FSMET",
+				text: "Pré-FSMET 2026 au Mexique : cercles de parole territoriaux (24 et 25 nov., format hybride) et journée de propositions au Congrès de l'Union, Mexico (26 nov.), sous la devise « Construire des alternatives solidaires ».",
+			},
+			{
+				when: "7–9 avril 2027",
+				where: "Jujuy et Salta",
+				text: "Rencontre principale du FSMET 2027 : trois journées. Lieux et programme de chaque date à confirmer.",
+			},
+		],
+	},
+	territorios: {
+		label: "Territoires",
+		h2: "Jujuy et Salta, provinces hôtes",
+		intro: "L'édition argentine s'ancre dans le nord. Le territoire n'est pas seulement le lieu de la rencontre : c'est là où vivent les expériences que le processus veut relier.",
+		badge: "Province hôte",
+		cards: [
+			{
+				nombre: "Jujuy",
+				texto: "L'assemblée territoriale de Palpalá (2025) a réuni organisations, communautés et institutions et a désigné Jujuy comme province hôte.",
+			},
+			{
+				nombre: "Salta",
+				texto: "L'assemblée territoriale de Salta (2025) a consolidé le processus provincial et l'a désignée co-hôte de la troisième édition du FSMET.",
+			},
+		],
+		footnote: "Processus préparatoire en cours · lieux et logistique à confirmer.",
+	},
+	reuniones: {
+		label: "Réunions et webinaires",
+		h2: "Le processus se construit aussi en ligne",
+		intro: "Cycle de rencontres virtuelles ouvertes qui accompagnent le chemin vers le forum, d'octobre 2026 jusqu'à la rencontre principale d'avril 2027. Diffusées en direct sur YouTube.",
+		webinar: "Webinaire",
+		live: "Voir la diffusion en direct",
+		soon: "Diffusion bientôt disponible",
+		pending: "À confirmer",
+		empty: "Bientôt disponible",
+		emptyText:
+			"Nous préparons le cycle de webinaires qui accompagnera le chemin vers le forum. Les dates, thématiques et liens de diffusion seront annoncés ici.",
+		items: [],
+	},
+	agenda: {
+		label: "Agenda mondial",
+		h2: "D'autres rencontres de l'écosystème",
+		intro: "Le FSMET s'inscrit dans un écosystème mondial de forums et processus d'économies transformatrices. Voici d'autres rencontres également en marche.",
+		items: [
+			{
+				icon: "mdi:earth",
+				logo: "/img/maricagsef2027-fr.webp",
+				meta: "9–12 oct. 2027 · Maricá, Brésil",
+				title: "MaricáGSEF2027 — Forum Global de l'Économie Sociale et Solidaire",
+				text: "8e édition du forum biennal du GSEF, co-organisé avec la mairie de Maricá. Il réunit collectivités locales et nationales, réseaux, institutions et acteurs de l'ESS du monde entier.",
+				cta: "Découvrir le forum",
+				url: "https://www.gsef-net.org/es/maricagsef2027",
+			},
+		],
+	},
+	infoutil: {
+		label: "Informations utiles",
+		h2: "Arriver et séjourner sur le territoire",
+		intro: "Informations pratiques pour préparer le voyage à Jujuy et Salta. Cette section se complète au fur et à mesure que les lieux, la logistique et les hébergements sont confirmés.",
+		pending: "À confirmer",
+		bloques: [
+			{
+				icon: "mdi:airplane",
+				title: "Comment arriver",
+				items: [
+					{ text: "Aéroport Gdor. Horacio Guzmán (JUJ), à El Cadillal, à ~33 km de San Salvador de Jujuy." },
+					{ text: "Aéroport Martín Miguel de Güemes (SLA), à ~10 km de la ville de Salta." },
+					{ text: "Les deux capitales disposent de terminaux de bus avec des liaisons depuis tout le pays." },
+				],
+			},
+			{
+				icon: "mdi:routes",
+				title: "Routes et transferts",
+				items: [
+					{ text: "San Salvador de Jujuy ↔ Salta capitale : ~90 km par la RN9 (corniche) ou la RN34." },
+					{ text: "Transferts officiels entre les lieux et horaires suggérés.", pendiente: true },
+				],
+			},
+			{
+				icon: "mdi:terrain",
+				title: "Altitude et climat",
+				items: [
+					{ text: "San Salvador de Jujuy et Salta capitale sont à ~1 200 m d'altitude ; avril est tempéré et sec." },
+					{ text: "Si vous parcourez la Quebrada de Humahuaca ou la Puna (2 000 à 3 700 m), prévoyez un jour d'acclimatation." },
+				],
+			},
+		],
+		hospedaje: {
+			title: "Hébergement",
+			text: "La carte montre des hôtels du microcentre de San Salvador de Jujuy comme référence initiale. Conventions, tarifs spéciaux et distance au lieu final seront publiés une fois confirmés.",
+			pendingItems: [
+				"Options solidaires et hébergement communautaire",
+				"Hébergement à Salta capitale",
+			],
+			legendHotel: "Hébergement suggéré",
+			legendCity: "Ville hôte",
+			listTitle: "Hébergements dans le microcentre",
+		},
+		hoteles: [
+			{ detalle: "Güemes 864 · 4★ · salles d'événements" },
+			{ detalle: "Av. 19 de Abril 687 · 4★ supérieur · face au parc Xibi-Xibi" },
+			{ detalle: "Ramírez de Velazco 244 · spa · salle de conventions" },
+			{ detalle: "Belgrano 1263 · 3★ · microcentre" },
+			{ detalle: "Boutique · à quelques pas de la Plaza Belgrano et de la Cathédrale" },
+			{ detalle: "Alvear 627 · petit-déjeuner inclus · à 300 m du Cabildo" },
+			{ detalle: "Alvear 1230 · option économique · petit-déjeuner et Wi-Fi" },
+		],
+	},
+	preguntas: {
+		label: "Questions fréquentes",
+		h2: "Ce qui se demande souvent",
+		items: [
+			{
+				q: "Qu'est-ce que le FSMET ?",
+				a: "Un espace thématique du Forum Social Mondial dédié aux économies transformatrices. Il relie des expériences d'économie sociale, solidaire, populaire, coopérative, agroécologique, de soins et de finance éthique qui fonctionnent aujourd'hui de manière isolée.",
+			},
+			{
+				q: "Est-ce un événement ou un processus ?",
+				a: "Un processus. La rencontre principale est un moment dans un chemin qui commence avant — assemblées, échanges et systématisation d'expériences — et se poursuit après avec des réseaux, des propositions et une action collective.",
+			},
+			{
+				q: "Qui peut participer ?",
+				a: "Organisations sociales, coopératives, communautés, productrices et producteurs, universités et chercheurs, étudiants, gouvernements locaux, institutions et réseaux nationaux et internationaux.",
+			},
+			{
+				q: "Qu'est-ce qu'une économie transformatrice ?",
+				a: "Un terme large qui inclut l'économie sociale et solidaire, l'économie populaire, le coopérativisme, la production communautaire, l'agroécologie, la souveraineté alimentaire, les systèmes de soins, la finance éthique, les circuits courts et d'autres pratiques qui placent la vie et le territoire au centre.",
+			},
+			{
+				q: "Quand et où se déroule la rencontre ?",
+				a: "La rencontre principale se déroule les 7, 8 et 9 avril 2027 à Jujuy et Salta. Les lieux et le programme de chaque journée seront annoncés une fois confirmés.",
+			},
+			{
+				q: "Pourquoi Jujuy et Salta ?",
+				a: "L'Assemblée du FSMET a décidé d'organiser la troisième édition en Argentine, et les assemblées territoriales de 2025 à Salta et Palpalá ont désigné Jujuy et Salta comme provinces hôtes.",
+			},
+			{
+				q: "Que se passe-t-il après la rencontre ?",
+				a: "L'idée est que le forum ne se termine pas quand la rencontre finit : on cherche des groupes de travail, des réseaux, des campagnes communes, des propositions de politiques publiques et des mécanismes de suivi.",
+			},
+		],
+		footerText: "Une autre question ou envie d'ajouter votre expérience ?",
+		footerLink: "Écrivez-nous depuis le formulaire",
+	},
+	inscripcion: {
+		label: "Inscription",
+		h2: "Rejoindre le processus",
+		introPre: "Vous pouvez participer comme",
+		introExpositor: "exposant·e",
+		introMid: "— en présentant une expérience, une recherche ou une proposition — ou comme",
+		introOyente: "auditeur·rice",
+		introPost: ", en participant aux réunions et à la rencontre. Le canal officiel est encore en construction : ce formulaire enregistre votre intérêt pour le processus préparatoire.",
+		bullets: [
+			"Organisations, coopératives et communautés territoriales",
+			"Universités, équipes de recherche et de formation",
+			"Gouvernements locaux et institutions publiques",
+		],
+		legend: "Comment souhaitez-vous participer ?",
+		rolOyente: { title: "J'assiste comme auditeur·rice", desc: "Je veux participer aux réunions et à la rencontre" },
+		rolExpositor: { title: "Je suis exposant·e", desc: "Je présente une expérience, une recherche ou une proposition" },
+		fields: {
+			nombre: "Nom et prénom",
+			email: "Courriel",
+			territorio: "Territoire / pays",
+			organizacion: "Organisation ou communauté",
+			opcional: "(facultatif)",
+		},
+		expo: {
+			title: "Informations sur l'exposé",
+			titulo: "Titre de l'exposé",
+			aporte: "Type d'apport",
+			elegir: "Choisir…",
+			aportes: [
+				"Recherche / connaissance",
+				"Expérience pratique / gestion",
+				"Formation / éducation populaire",
+				"Activisme / organisation communautaire",
+				"Plaidoyer politique / normatif",
+				"Innovation productive / technologique",
+			],
+			eje: "Axe thématique",
+			ejes: [
+				"Économie, Territoire et Buen Vivir",
+				"Production, Travail et Trames socioproductives",
+				"Finances Éthiques, Crédit et Redistribution",
+				"Agroécologie, Environnement et Transition Écologique",
+				"Formation, Culture et Changement de sens commun",
+				"Politiques Publiques et Plaidoyer",
+			],
+			resumen: "Résumé de l'exposé",
+			consentimiento:
+				"J'accepte que mon expérience apparaisse dans le répertoire des expériences du processus",
+		},
+		submit: "Participer",
+		sending: "Envoi en cours…",
+		ok: "Merci, nous avons bien reçu votre inscription. L'équipe du processus vous contactera.",
+		errInvalid: "Vérifiez le formulaire : il manque des champs obligatoires pour le rôle choisi.",
+		errTurnstile: "Veuillez compléter la vérification anti-robot.",
+		errSend: "L'inscription n'a pas pu être envoyée. Réessayez dans quelques minutes.",
+	},
+	footer: {
+		desc: "Forum Social Mondial des Économies Transformatrices. Jujuy et Salta, Argentine.",
+		rights: "Tous droits réservés",
+		findUs: "Retrouvez-nous sur :",
+		soon: "bientôt",
+		channels: "Canaux officiels bientôt disponibles.",
+		building: "Processus en construction. Mémoire, réseau et territoire.",
+	},
+};
+
+const ui: Record<Locale, Strings> = { es, en, pt, fr };
 
 export function getStrings(locale: string | undefined): Strings {
 	return ui[(locale as Locale) ?? DEFAULT_LOCALE] ?? es;

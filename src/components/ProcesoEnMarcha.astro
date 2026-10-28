@@ -1,0 +1,14 @@
+---
+import CardsSection from "./CardsSection.astro";
+import { getStrings } from "../i18n/strings";
+
+const s = getStrings(Astro.currentLocale);
+---
+
+<CardsSection
+	id="proceso-en-marcha"
+	label={s.marcha.label}
+	h2={s.marcha.h2}
+	intro={s.marcha.intro}
+	items={s.marcha.items}
+/>

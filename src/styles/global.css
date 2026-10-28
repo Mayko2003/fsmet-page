@@ -88,6 +88,10 @@ details summary::-webkit-details-marker {
 }
 
 @media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
 	html.js [data-reveal] {
 		opacity: 1;
 		transform: none;

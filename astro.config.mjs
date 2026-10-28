@@ -4,6 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 
 import icon from "astro-icon";
 
+import sitemap from "@astrojs/sitemap";
+
 import vercel from "@astrojs/vercel";
 
 // https://astro.build/config
@@ -12,7 +14,7 @@ export default defineConfig({
 
   i18n: {
     defaultLocale: "es",
-    locales: ["es", "en", "pt"],
+    locales: ["es", "en", "pt", "fr"],
     routing: {
       prefixDefaultLocale: false,
     },
@@ -26,5 +28,13 @@ export default defineConfig({
     webAnalytics: { enabled: true },
   }),
 
-  integrations: [icon()],
+  integrations: [
+    icon(),
+    sitemap({
+      i18n: {
+        defaultLocale: "es",
+        locales: { es: "es", en: "en", pt: "pt", fr: "fr" },
+      },
+    }),
+  ],
 });

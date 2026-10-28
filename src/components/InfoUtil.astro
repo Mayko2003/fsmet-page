@@ -5,22 +5,81 @@ import { getStrings } from "../i18n/strings";
 const s = getStrings(Astro.currentLocale);
 const bloques = s.infoutil.bloques;
 
+type Contacto = { tel: string; whatsapp: string; email: string; web: string };
 type Punto = { nombre: string; lat: number; lng: number; detalle: string };
+type Hotel = Punto & Contacto & { telHref: string };
 
-// Hospedajes sugeridos (microcentro de San Salvador de Jujuy)
-const coords: { nombre: string; lat: number; lng: number }[] = [
-	{ nombre: "Howard Johnson Plaza Jujuy", lat: -24.1831, lng: -65.3074 },
-	{ nombre: "Amérian Jujuy", lat: -24.1889, lng: -65.3047 },
-	{ nombre: "Ohasis Hotel Spa", lat: -24.1864, lng: -65.3101 },
-	{ nombre: "El Arribo Hotel", lat: -24.1857, lng: -65.3105 },
-	{ nombre: "Hotel Gregorio I", lat: -24.1877, lng: -65.3044 },
-	{ nombre: "Hotel ICONICO JUJUY Centro", lat: -24.1839, lng: -65.302 },
-	{ nombre: "Hotel Munay Jujuy", lat: -24.1845, lng: -65.31 },
+// Hospedajes sugeridos (microcentro de San Salvador de Jujuy) con datos de contacto
+const coords: ({ nombre: string; lat: number; lng: number } & Contacto)[] = [
+	{
+		nombre: "Howard Johnson Plaza Jujuy",
+		lat: -24.1831,
+		lng: -65.3074,
+		tel: "+54 388 424-9800",
+		whatsapp: "5493883407627",
+		email: "reservas@hjjujuy.com.ar",
+		web: "hjjujuy.com.ar",
+	},
+	{
+		nombre: "Amérian Jujuy",
+		lat: -24.1889,
+		lng: -65.3047,
+		tel: "+54 9 388 515-0999",
+		whatsapp: "5493885150999",
+		email: "info@amerian.com",
+		web: "amerian.com",
+	},
+	{
+		nombre: "Ohasis Hotel Spa",
+		lat: -24.1864,
+		lng: -65.3101,
+		tel: "+54 388 424-1017",
+		whatsapp: "5493885055080",
+		email: "reservas@ohasishoteljujuy.com",
+		web: "ohasishoteljujuy.com",
+	},
+	{
+		nombre: "El Arribo Hotel",
+		lat: -24.1857,
+		lng: -65.3105,
+		tel: "+54 388 422-2539",
+		whatsapp: "5493886056908",
+		email: "info@elarribo.com",
+		web: "elarribo.com",
+	},
+	{
+		nombre: "Hotel Gregorio I",
+		lat: -24.1877,
+		lng: -65.3044,
+		tel: "+54 388 424-4545",
+		whatsapp: "5493885828822",
+		email: "info@gregoriohotel.com",
+		web: "gregoriohotel.com",
+	},
+	{
+		nombre: "Hotel ICONICO JUJUY Centro",
+		lat: -24.1839,
+		lng: -65.302,
+		tel: "+54 388 422-2982",
+		whatsapp: "5493885843456",
+		email: "jujuyhotel627@gmail.com",
+		web: "alojarjujuy.com",
+	},
+	{
+		nombre: "Hotel Munay Jujuy",
+		lat: -24.1845,
+		lng: -65.31,
+		tel: "+54 388 422-8435",
+		whatsapp: "5493884174629",
+		email: "jujuy@munayhotel.com.ar",
+		web: "munayhotel.com.ar",
+	},
 ];
 
-const hoteles: Punto[] = coords.map((hotel, i) => ({
+const hoteles: Hotel[] = coords.map((hotel, i) => ({
 	...hotel,
 	detalle: s.infoutil.hoteles[i].detalle,
+	telHref: `+${hotel.tel.replace(/[^0-9]/g, "")}`,
 }));
 
 const referencias: Punto[] = [
@@ -143,16 +202,52 @@ const referencias: Punto[] = [
 					<p class="text-xs font-semibold tracking-widest text-muted uppercase">
 						{s.infoutil.hospedaje.listTitle}
 					</p>
-					<ul class="mt-3 grid gap-x-6 gap-y-2.5 text-sm sm:grid-cols-2">
+					<ul class="mt-3 grid gap-x-6 gap-y-4 text-sm sm:grid-cols-2">
 						{
 							hoteles.map((hotel, i) => (
-								<li class="flex items-center gap-2.5">
-									<span class="grid h-5.5 w-5.5 shrink-0 place-items-center rounded-full bg-clay text-[11px] font-bold text-paper shadow-sm">
+								<li class="flex items-start gap-2.5">
+									<span class="mt-0.5 grid h-5.5 w-5.5 shrink-0 place-items-center rounded-full bg-clay text-[11px] font-bold text-paper shadow-sm">
 										{i + 1}
 									</span>
-									<span class="text-ink/90">
-										<strong class="font-semibold">{hotel.nombre}</strong>
-										<span class="text-muted"> · {hotel.detalle}</span>
+									<span class="min-w-0">
+										<span class="text-ink/90">
+											<strong class="font-semibold">{hotel.nombre}</strong>
+											<span class="text-muted"> · {hotel.detalle}</span>
+										</span>
+										<span class="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
+											<a
+												href={`tel:${hotel.telHref}`}
+												class="inline-flex items-center gap-1.5 transition hover:text-clay"
+											>
+												<Icon name="mdi:phone" class="h-3.5 w-3.5" />
+												{hotel.tel}
+											</a>
+											<a
+												href={`https://wa.me/${hotel.whatsapp}`}
+												target="_blank"
+												rel="noopener noreferrer"
+												class="inline-flex items-center gap-1.5 transition hover:text-clay"
+											>
+												<Icon name="mdi:whatsapp" class="h-3.5 w-3.5" />
+												WhatsApp
+											</a>
+											<a
+												href={`https://${hotel.web}`}
+												target="_blank"
+												rel="noopener noreferrer"
+												class="inline-flex items-center gap-1.5 transition hover:text-clay"
+											>
+												<Icon name="mdi:web" class="h-3.5 w-3.5" />
+												{hotel.web}
+											</a>
+											<a
+												href={`mailto:${hotel.email}`}
+												class="inline-flex items-center gap-1.5 break-all transition hover:text-clay"
+											>
+												<Icon name="mdi:email-outline" class="h-3.5 w-3.5" />
+												{hotel.email}
+											</a>
+										</span>
 									</span>
 								</li>
 							))

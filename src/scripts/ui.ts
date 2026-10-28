@@ -85,37 +85,6 @@ for (const id of anchorsBySection.keys()) {
 	if (section) spyObserver.observe(section);
 }
 
-// Contadores: [data-count] anima de 0 al valor al entrar en viewport
-const counters = document.querySelectorAll<HTMLElement>("[data-count]");
-
-if (!reducedMotion && counters.length) {
-	const counterObserver = new IntersectionObserver(
-		(entries) => {
-			for (const entry of entries) {
-				if (!entry.isIntersecting) continue;
-				counterObserver.unobserve(entry.target);
-				const el = entry.target as HTMLElement;
-				const target = Number(el.dataset.count ?? 0);
-				const suffix = el.dataset.suffix ?? "";
-				const duration = 1400;
-				const start = performance.now();
-				const frame = (now: number) => {
-					const progress = Math.min(1, (now - start) / duration);
-					const eased = 1 - Math.pow(1 - progress, 3);
-					el.textContent = Math.round(target * eased) + suffix;
-					if (progress < 1) requestAnimationFrame(frame);
-				};
-				requestAnimationFrame(frame);
-			}
-		},
-		{ threshold: 0.5 },
-	);
-	counters.forEach((el) => {
-		el.textContent = "0" + (el.dataset.suffix ?? "");
-		counterObserver.observe(el);
-	});
-}
-
 // Timeline: la línea crece con el scroll a lo largo de [data-timeline]
 const timeline = document.querySelector<HTMLElement>("[data-timeline]");
 const timelineLine = timeline?.querySelector<HTMLElement>("[data-timeline-line]");
