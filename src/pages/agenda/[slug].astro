@@ -1,0 +1,41 @@
+---
+import { getEmDashEntry } from "emdash";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import PreviewNotice from "../../components/PreviewNotice.astro";
+import AgendaGlobal from "../../components/AgendaGlobal.astro";
+
+const slug = Astro.params.slug;
+
+if (!slug) {
+	return Astro.rewrite("/404");
+}
+
+const { entry, isPreview, error } = await getEmDashEntry("agenda", slug, {
+	locale: Astro.currentLocale,
+});
+
+if (error) {
+	console.error("[emdash] No se pudo cargar el preview de agenda:", error);
+	return new Response("No se pudo cargar la vista previa", { status: 500 });
+}
+
+if (!entry) {
+	if (isPreview) return Astro.rewrite("/404");
+	return Astro.redirect("/#agenda-global");
+}
+
+if (!isPreview) {
+	return Astro.redirect("/#agenda-global");
+}
+---
+
+<Layout title="Vista previa · Agenda global">
+	<Header />
+	<main id="contenido">
+		<PreviewNotice label="Vista previa · Agenda global" />
+		<AgendaGlobal previewEntry={entry} />
+	</main>
+	<Footer />
+</Layout>

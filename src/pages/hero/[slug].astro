@@ -1,0 +1,41 @@
+---
+import { getEmDashEntry } from "emdash";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import PreviewNotice from "../../components/PreviewNotice.astro";
+import Hero from "../../components/Hero.astro";
+
+const slug = Astro.params.slug;
+
+if (!slug) {
+	return Astro.rewrite("/404");
+}
+
+const { entry, isPreview, error } = await getEmDashEntry("hero", slug, {
+	locale: Astro.currentLocale,
+});
+
+if (error) {
+	console.error("[emdash] No se pudo cargar el preview de hero:", error);
+	return new Response("No se pudo cargar la vista previa", { status: 500 });
+}
+
+if (!entry) {
+	if (isPreview) return Astro.rewrite("/404");
+	return Astro.redirect("/#inicio");
+}
+
+if (!isPreview) {
+	return Astro.redirect("/#inicio");
+}
+---
+
+<Layout title="Vista previa · Hero">
+	<Header />
+	<main id="contenido">
+		<PreviewNotice label="Vista previa · Hero" />
+		<Hero previewEntry={entry} />
+	</main>
+	<Footer />
+</Layout>

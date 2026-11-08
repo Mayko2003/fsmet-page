@@ -1,33 +1,89 @@
 ---
 import { Image } from "astro:assets";
+import { Image as EmDashImage } from "emdash/ui";
 import CuentaRegresiva from "./CuentaRegresiva.astro";
 import fondo from "../assets/fondo.jpg";
 import logo from "../assets/logo.png";
 import { getStrings } from "../i18n/strings";
+import { commas, getSection } from "../lib/emdash-section";
 
+type HeroData = {
+	badge?: string;
+	title?: string;
+	text?: string;
+	cta_primary_label?: string;
+	cta_primary_url?: string;
+	cta_secondary_label?: string;
+	cta_secondary_url?: string;
+	subtitle?: string;
+	logo_alt?: string;
+	countdown_label?: string;
+	countdown_units?: string;
+	countdown_target?: string;
+	countdown_date?: string;
+	background_image?: {
+		id?: string;
+		src?: string;
+		alt?: string;
+		width?: number;
+		height?: number;
+		provider?: string;
+		meta?: Record<string, unknown>;
+	} | null;
+};
+
+interface Props {
+	previewEntry?: { data: HeroData } | null;
+}
+
+const { previewEntry } = Astro.props;
 const s = getStrings(Astro.currentLocale);
+const cms = previewEntry?.data ?? (await getSection<HeroData>("hero", Astro.currentLocale));
+
+const countdownUnits = commas(cms?.countdown_units);
+
+const hero = {
+	badge: cms?.badge || s.hero.badge,
+	title: cms?.title || s.hero.title,
+	text: cms?.text || s.hero.text,
+	ctaPrimaryLabel: cms?.cta_primary_label || s.hero.ctaPrimary,
+	ctaPrimaryUrl: cms?.cta_primary_url || "#quienes-somos",
+	ctaSecondaryLabel: cms?.cta_secondary_label || s.hero.ctaSecondary,
+	ctaSecondaryUrl: cms?.cta_secondary_url || "#inscripcion",
+	subtitle: cms?.subtitle || s.hero.subtitle,
+	logoAlt: cms?.logo_alt || s.hero.logoAlt,
+	countdown: {
+		label: cms?.countdown_label || s.hero.countdown.label,
+		units: countdownUnits.length ? countdownUnits : s.hero.countdown.units,
+		target: cms?.countdown_target || "2027-04-07T00:00:00-03:00",
+		date: cms?.countdown_date || s.hero.countdown.date,
+	},
+	backgroundImage: cms?.background_image ?? null,
+};
 ---
 
 <section id="inicio" class="relative overflow-hidden">
-	<!-- <div
-		class="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-gold-soft/70 blur-3xl"
-	>
-	</div>
-	<div
-		class="pointer-events-none absolute -right-16 bottom-0 h-80 w-80 rounded-full bg-sage-soft/80 blur-3xl"
-	>
-	</div> -->
-	<!-- add a background image to the hero section -->
-	<div class="absolute w-full bg-center inset-0 -z-10">
-		<Image
-			src={fondo}
-			widths={[768, 1280, 1600]}
-			sizes="100vw"
-			format="webp"
-			quality={60}
-			class="w-full h-full object-cover object-center"
-			alt=""
-		/>
+	<div class="absolute inset-0 -z-10 w-full bg-center">
+		{
+			hero.backgroundImage ? (
+				<EmDashImage
+					image={hero.backgroundImage}
+					alt=""
+					priority
+					class="h-full w-full object-cover object-center"
+				/>
+			) : (
+				<Image
+					src={fondo}
+					widths={[768, 1280, 1600]}
+					sizes="100vw"
+					format="webp"
+					quality={60}
+					class="h-full w-full object-cover object-center"
+					alt=""
+				/>
+			)
+		}
 		<div class="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/35 to-ink/70"></div>
 	</div>
 	<div
@@ -37,46 +93,50 @@ const s = getStrings(Astro.currentLocale);
 			<p
 				class="mb-4 inline-flex rounded-full bg-sand px-4 py-1.5 text-sm font-medium text-muted"
 			>
-				{s.hero.badge}
+				{hero.badge}
 			</p>
 			<h1
 				class="font-display text-4xl leading-[1.1] font-semibold tracking-tight text-sand md:text-6xl"
 			>
-				{s.hero.title}
+				{hero.title}
 			</h1>
 			<p
 				class="mt-6 max-w-xl rounded-2xl bg-ink/55 p-4 text-lg leading-relaxed text-sand/90 backdrop-blur-sm"
 			>
-				{s.hero.text}
+				{hero.text}
 			</p>
 			<div class="mt-8 flex flex-wrap gap-3">
 				<a
-					href="#quienes-somos"
+					href={hero.ctaPrimaryUrl}
 					class="rounded-full bg-ink px-6 py-3 text-sm font-semibold text-cream transition hover:bg-clay"
 				>
-					{s.hero.ctaPrimary}
+					{hero.ctaPrimaryLabel}
 				</a>
 				<a
-					href="#inscripcion"
+					href={hero.ctaSecondaryUrl}
 					class="rounded-full border border-sand bg-paper px-6 py-3 text-sm font-semibold text-ink transition hover:border-clay hover:text-clay"
 				>
-					{s.hero.ctaSecondary}
+					{hero.ctaSecondaryLabel}
 				</a>
 			</div>
-			<CuentaRegresiva />
+			<CuentaRegresiva
+				label={hero.countdown.label}
+				units={hero.countdown.units}
+				target={hero.countdown.target}
+				date={hero.countdown.date}
+			/>
 		</div>
 		<div data-reveal style="--reveal-delay: 150ms" class="relative mx-auto w-full max-w-md">
-			<!-- <div class="absolute inset-6 rounded-full bg-gold/30 blur-2xl"></div> -->
 			<Image
 				src={logo}
 				widths={[256, 384, 512]}
 				sizes="(min-width: 1024px) 384px, 80vw"
 				format="webp"
-				alt={s.hero.logoAlt}
+				alt={hero.logoAlt}
 				class="relative mx-auto w-full max-w-sm drop-shadow-xl"
 			/>
 			<p class="mb-4 text-center font-display text-3xl font-semibold text-sand">
-				{s.hero.subtitle}
+				{hero.subtitle}
 			</p>
 		</div>
 	</div>

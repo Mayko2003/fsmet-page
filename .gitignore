@@ -5,6 +5,15 @@ dist/
 # generated types
 .astro/
 
+# EmDash: base SQLite, uploads locales, sesiones y migraciones generadas
+/uploads/
+/data.db
+/data.db-*
+*.db
+*.db-wal
+*.db-shm
+.emdash/migrations.json
+
 # dependencies
 node_modules/
 
@@ -25,3 +34,12 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Supabase CLI (estado local, no commitear)
+supabase/.temp/
+
+# Credenciales locales de la base (no commitear)
+pwd.bd
+
+# Agent skill registry cache
+.atl/

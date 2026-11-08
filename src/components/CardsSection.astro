@@ -1,9 +1,19 @@
 ---
 import { Icon } from "astro-icon/components";
+import { Image as EmDashImage } from "emdash/ui";
 
 export interface CardItem {
 	icon: string;
 	logo?: string;
+	logoImage?: {
+		id?: string;
+		src?: string;
+		alt?: string;
+		width?: number;
+		height?: number;
+		provider?: string;
+		meta?: Record<string, unknown>;
+	} | null;
 	meta: string;
 	title: string;
 	text: string;
@@ -51,7 +61,13 @@ const labelClass = accent === "sage" ? "text-sage" : "text-clay";
 						style={`--reveal-delay: ${i * 80}ms`}
 						class="flex flex-col rounded-3xl border border-sand bg-paper p-6"
 					>
-						{item.logo ? (
+						{item.logoImage ? (
+							<EmDashImage
+								image={item.logoImage}
+								alt={item.title}
+								class="w-full rounded-2xl border border-sand"
+							/>
+						) : item.logo ? (
 							<img
 								src={item.logo}
 								alt={item.title}

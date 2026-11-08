@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Webinar">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbf7f1"/>
+      <stop offset="1" stop-color="#f3e6d4"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fffdf9"/>
+      <stop offset="1" stop-color="#f6e3b0" stop-opacity=".38"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg)"/>
+
+  <circle cx="90" cy="90" r="140" fill="#6f8f73" opacity=".18"/>
+  <circle cx="1120" cy="120" r="180" fill="#6f97a6" opacity=".16"/>
+  <circle cx="1080" cy="620" r="200" fill="#e4b44c" opacity=".18"/>
+  <circle cx="120" cy="600" r="120" fill="#d86a3a" opacity=".10"/>
+
+  <rect x="230" y="159" width="740" height="410" rx="36" fill="#2a221c" opacity=".12"/>
+  <rect x="230" y="145" width="740" height="410" rx="36" fill="url(#screen)" stroke="#2a221c" stroke-width="6"/>
+
+  <circle cx="285" cy="200" r="10" fill="#d86a3a"/>
+  <circle cx="320" cy="200" r="10" fill="#e4b44c"/>
+  <circle cx="355" cy="200" r="10" fill="#6f8f73"/>
+  <line x1="400" y1="200" x2="910" y2="200" stroke="#2a221c" stroke-opacity=".12" stroke-width="6" stroke-linecap="round"/>
+
+  <circle cx="600" cy="350" r="92" fill="#d86a3a"/>
+  <path d="M580 305 L665 350 L580 395 Z" fill="#fffdf9"/>
+
+  <g opacity=".9">
+    <circle cx="410" cy="470" r="34" fill="#6f8f73"/>
+    <path d="M350 545 C350 510 375 490 410 490 C445 490 470 510 470 545 Z" fill="#6f8f73"/>
+    <circle cx="790" cy="470" r="34" fill="#6f97a6"/>
+    <path d="M730 545 C730 510 755 490 790 490 C825 490 850 510 850 545 Z" fill="#6f97a6"/>
+  </g>
+
+  <rect x="860" y="92" width="210" height="56" rx="28" fill="#2a221c"/>
+  <circle cx="895" cy="120" r="9" fill="#d86a3a"/>
+  <rect x="920" y="110" width="112" height="20" rx="10" fill="#fbf7f1" opacity=".85"/>
+</svg>

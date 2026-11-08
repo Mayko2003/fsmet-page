@@ -1,9 +1,50 @@
 ---
 import { Icon } from "astro-icon/components";
 import { getStrings } from "../i18n/strings";
+import { getSection, lines } from "../lib/emdash-section";
 
+interface Props {
+	previewEntry?: { data: InfoData } | null;
+}
+
+const { previewEntry } = Astro.props;
 const s = getStrings(Astro.currentLocale);
-const bloques = s.infoutil.bloques;
+const cms = previewEntry?.data ?? (await getSection<InfoData>("info", Astro.currentLocale));
+
+type InfoBlock = { icon: string; title: string; items: { text: string; pendiente?: boolean }[] };
+
+type CmsBlock = {
+	icon?: string;
+	title?: string;
+	items?: string;
+	pending_items?: string;
+};
+
+type CmsHotel = {
+	name?: string;
+	detail?: string;
+	lat?: number;
+	lng?: number;
+	phone?: string;
+	whatsapp?: string;
+	email?: string;
+	web?: string;
+};
+
+type InfoData = {
+	label?: string;
+	heading?: string;
+	intro?: string;
+	pending_label?: string;
+	blocks?: CmsBlock[];
+	lodging_title?: string;
+	lodging_text?: string;
+	lodging_pending_items?: string;
+	lodging_legend_hotel?: string;
+	lodging_legend_city?: string;
+	lodging_list_title?: string;
+	hotels?: CmsHotel[];
+};
 
 type Contacto = { tel: string; whatsapp: string; email: string; web: string };
 type Punto = { nombre: string; lat: number; lng: number; detalle: string };
@@ -76,11 +117,61 @@ const coords: ({ nombre: string; lat: number; lng: number } & Contacto)[] = [
 	},
 ];
 
-const hoteles: Hotel[] = coords.map((hotel, i) => ({
+const fallbackHoteles: Hotel[] = coords.map((hotel, i) => ({
 	...hotel,
-	detalle: s.infoutil.hoteles[i].detalle,
+	detalle: s.infoutil.hoteles[i]?.detalle ?? "",
 	telHref: `+${hotel.tel.replace(/[^0-9]/g, "")}`,
 }));
+
+const cmsHoteles: Hotel[] = (cms?.hotels ?? [])
+	.filter(
+		(hotel) =>
+			Boolean(hotel.name) && typeof hotel.lat === "number" && typeof hotel.lng === "number",
+	)
+	.map((hotel) => ({
+		nombre: hotel.name ?? "",
+		lat: hotel.lat as number,
+		lng: hotel.lng as number,
+		detalle: hotel.detail ?? "",
+		tel: hotel.phone ?? "",
+		whatsapp: hotel.whatsapp ?? "",
+		email: hotel.email ?? "",
+		web: hotel.web ?? "",
+		telHref: hotel.phone ? `+${hotel.phone.replace(/[^0-9]/g, "")}` : "",
+	}));
+
+const hoteles: Hotel[] = cmsHoteles.length ? cmsHoteles : fallbackHoteles;
+
+const bloques: InfoBlock[] =
+	cms?.blocks?.length ?
+		cms.blocks.map((bloque) => ({
+			icon: bloque.icon || "mdi:information-outline",
+			title: bloque.title || "",
+			items: [
+				...lines(bloque.items).map((text) => ({ text })),
+				...lines(bloque.pending_items).map((text) => ({ text, pendiente: true })),
+			],
+		}))
+	: s.infoutil.bloques;
+
+const pendingLabel = cms?.pending_label || s.infoutil.pending;
+
+const info = {
+	label: cms?.label || s.infoutil.label,
+	h2: cms?.heading || s.infoutil.h2,
+	intro: cms?.intro || s.infoutil.intro,
+};
+
+const hospedaje = {
+	title: cms?.lodging_title || s.infoutil.hospedaje.title,
+	text: cms?.lodging_text || s.infoutil.hospedaje.text,
+	pendingItems: lines(cms?.lodging_pending_items).length
+		? lines(cms?.lodging_pending_items)
+		: s.infoutil.hospedaje.pendingItems,
+	legendHotel: cms?.lodging_legend_hotel || s.infoutil.hospedaje.legendHotel,
+	legendCity: cms?.lodging_legend_city || s.infoutil.hospedaje.legendCity,
+	listTitle: cms?.lodging_list_title || s.infoutil.hospedaje.listTitle,
+};
 
 const referencias: Punto[] = [
 	{
@@ -101,21 +192,21 @@ const referencias: Punto[] = [
 <section id="info-util" class="scroll-mt-24 border-t border-sand">
 	<div class="mx-auto max-w-6xl px-5 py-20 md:px-8">
 		<p data-reveal class="text-sm font-semibold tracking-widest text-sky uppercase">
-			{s.infoutil.label}
+			{info.label}
 		</p>
 		<h2
 			data-reveal
 			style="--reveal-delay: 80ms"
 			class="mt-3 max-w-3xl font-display text-3xl font-semibold md:text-5xl"
 		>
-			{s.infoutil.h2}
+			{info.h2}
 		</h2>
 		<p
 			data-reveal
 			style="--reveal-delay: 150ms"
 			class="mt-6 max-w-2xl text-lg leading-relaxed text-muted"
 		>
-			{s.infoutil.intro}
+			{info.intro}
 		</p>
 		<div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 			{
@@ -139,7 +230,7 @@ const referencias: Punto[] = [
 										{item.text}
 										{item.pendiente && (
 											<span class="ml-2 inline-flex rounded-full bg-sand px-2.5 py-0.5 align-middle text-xs font-semibold text-ink/70">
-												{s.infoutil.pending}
+												{pendingLabel}
 											</span>
 										)}
 									</span>
@@ -160,20 +251,20 @@ const referencias: Punto[] = [
 						<span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gold-soft text-clay">
 							<Icon name="mdi:bed-outline" class="h-6 w-6" />
 						</span>
-						<h3 class="font-display text-2xl">{s.infoutil.hospedaje.title}</h3>
+						<h3 class="font-display text-2xl">{hospedaje.title}</h3>
 					</div>
 					<p class="mt-5 leading-relaxed text-muted">
-						{s.infoutil.hospedaje.text}
+						{hospedaje.text}
 					</p>
 					<ul class="mt-5 space-y-3">
 						{
-							s.infoutil.hospedaje.pendingItems.map((item) => (
+							hospedaje.pendingItems.map((item) => (
 								<li class="flex items-start gap-3 leading-relaxed text-muted">
 									<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-clay/70"></span>
 									<span>
 										{item}
 										<span class="ml-2 inline-flex rounded-full bg-sand px-2.5 py-0.5 align-middle text-xs font-semibold text-ink/70">
-											{s.infoutil.pending}
+											{pendingLabel}
 										</span>
 									</span>
 								</li>
@@ -183,11 +274,11 @@ const referencias: Punto[] = [
 					<div class="mt-6 flex flex-wrap gap-4 text-xs font-medium text-muted">
 						<span class="inline-flex items-center gap-2">
 							<span class="h-3 w-3 rounded-full border-2 border-paper bg-clay shadow"></span>
-							{s.infoutil.hospedaje.legendHotel}
+							{hospedaje.legendHotel}
 						</span>
 						<span class="inline-flex items-center gap-2">
 							<span class="h-3 w-3 rounded-full border-2 border-paper bg-gold shadow"></span>
-							{s.infoutil.hospedaje.legendCity}
+							{hospedaje.legendCity}
 						</span>
 					</div>
 				</div>
@@ -200,7 +291,7 @@ const referencias: Punto[] = [
 				</div>
 				<div class="border-t border-sand px-6 py-5 md:px-8 lg:col-span-2">
 					<p class="text-xs font-semibold tracking-widest text-muted uppercase">
-						{s.infoutil.hospedaje.listTitle}
+						{hospedaje.listTitle}
 					</p>
 					<ul class="mt-3 grid gap-x-6 gap-y-4 text-sm sm:grid-cols-2">
 						{
@@ -212,41 +303,49 @@ const referencias: Punto[] = [
 									<span class="min-w-0">
 										<span class="text-ink/90">
 											<strong class="font-semibold">{hotel.nombre}</strong>
-											<span class="text-muted"> · {hotel.detalle}</span>
+											{hotel.detalle && <span class="text-muted"> · {hotel.detalle}</span>}
 										</span>
 										<span class="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
-											<a
-												href={`tel:${hotel.telHref}`}
-												class="inline-flex items-center gap-1.5 transition hover:text-clay"
-											>
-												<Icon name="mdi:phone" class="h-3.5 w-3.5" />
-												{hotel.tel}
-											</a>
-											<a
-												href={`https://wa.me/${hotel.whatsapp}`}
-												target="_blank"
-												rel="noopener noreferrer"
-												class="inline-flex items-center gap-1.5 transition hover:text-clay"
-											>
-												<Icon name="mdi:whatsapp" class="h-3.5 w-3.5" />
-												WhatsApp
-											</a>
-											<a
-												href={`https://${hotel.web}`}
-												target="_blank"
-												rel="noopener noreferrer"
-												class="inline-flex items-center gap-1.5 transition hover:text-clay"
-											>
-												<Icon name="mdi:web" class="h-3.5 w-3.5" />
-												{hotel.web}
-											</a>
-											<a
-												href={`mailto:${hotel.email}`}
-												class="inline-flex items-center gap-1.5 break-all transition hover:text-clay"
-											>
-												<Icon name="mdi:email-outline" class="h-3.5 w-3.5" />
-												{hotel.email}
-											</a>
+											{hotel.tel && (
+												<a
+													href={`tel:${hotel.telHref}`}
+													class="inline-flex items-center gap-1.5 transition hover:text-clay"
+												>
+													<Icon name="mdi:phone" class="h-3.5 w-3.5" />
+													{hotel.tel}
+												</a>
+											)}
+											{hotel.whatsapp && (
+												<a
+													href={`https://wa.me/${hotel.whatsapp}`}
+													target="_blank"
+													rel="noopener noreferrer"
+													class="inline-flex items-center gap-1.5 transition hover:text-clay"
+												>
+													<Icon name="mdi:whatsapp" class="h-3.5 w-3.5" />
+													WhatsApp
+												</a>
+											)}
+											{hotel.web && (
+												<a
+													href={`https://${hotel.web}`}
+													target="_blank"
+													rel="noopener noreferrer"
+													class="inline-flex items-center gap-1.5 transition hover:text-clay"
+												>
+													<Icon name="mdi:web" class="h-3.5 w-3.5" />
+													{hotel.web}
+												</a>
+											)}
+											{hotel.email && (
+												<a
+													href={`mailto:${hotel.email}`}
+													class="inline-flex items-center gap-1.5 break-all transition hover:text-clay"
+												>
+													<Icon name="mdi:email-outline" class="h-3.5 w-3.5" />
+													{hotel.email}
+												</a>
+											)}
 										</span>
 									</span>
 								</li>

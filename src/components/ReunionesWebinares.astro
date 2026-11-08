@@ -1,14 +1,97 @@
 ---
 import { Icon } from "astro-icon/components";
+import { getEmDashCollection } from "emdash";
+import { Image as EmDashImage } from "emdash/ui";
 import { getStrings } from "../i18n/strings";
 
+interface Props {
+	previewEntry?: { data: WebinarData } | null;
+}
+
+const { previewEntry } = Astro.props;
 const s = getStrings(Astro.currentLocale);
-const reuniones: { tematica: string; expositor: string; fecha: string; youtube?: string }[] =
-	s.reuniones.items;
+const locale = Astro.currentLocale ?? "es";
+
+type WebinarData = {
+	title: string;
+	speaker: string;
+	event_date: string | Date;
+	date_label?: string | null;
+	description?: string | null;
+	youtube_url?: string | null;
+	order?: number | null;
+	image?: {
+		id?: string;
+		src?: string;
+		alt?: string;
+		width?: number;
+		height?: number;
+		provider?: string;
+		meta?: Record<string, unknown>;
+	} | null;
+};
+
+const queryWebinars = (queryLocale: string) =>
+	getEmDashCollection("webinars", {
+		locale: queryLocale,
+		orderBy: { order: "asc", event_date: "asc" },
+	});
+
+let { entries: reuniones, error } = await queryWebinars(locale);
+
+// Si todavía no hay traducciones para este idioma, mostramos el contenido
+// publicado en español en lugar de dejar la sección vacía.
+if (!error && reuniones.length === 0 && locale !== "es") {
+	({ entries: reuniones, error } = await queryWebinars("es"));
+}
+
+if (error) {
+	console.error("[emdash] No se pudieron cargar los webinares:", error);
+	reuniones = [];
+}
+
+const formatDate = (value: string | Date) => {
+	const date = value instanceof Date ? value : new Date(value);
+	if (Number.isNaN(date.getTime())) return "";
+
+	return new Intl.DateTimeFormat(locale, {
+		day: "numeric",
+		month: "short",
+		year: "numeric",
+		hour: "2-digit",
+		minute: "2-digit",
+		timeZone: "America/Argentina/Buenos_Aires",
+	}).format(date);
+};
+
+const toWebinar = (data: WebinarData) => ({
+	tematica: data.title,
+	expositor: data.speaker,
+	fecha: data.date_label || formatDate(data.event_date),
+	descripcion: data.description,
+	youtube: data.youtube_url || undefined,
+	imagenMedia: data.image ?? null,
+	imagenAlt: data.image?.alt || `${s.reuniones.webinar}: ${data.title}`,
+	imagenFallback: "/img/webinar-default.svg",
+});
+
+const webinars = reuniones.map((entry) => toWebinar(entry.data as WebinarData));
+
+if (previewEntry) {
+	webinars.unshift(toWebinar(previewEntry.data));
+}
 ---
 
 <section id="reuniones" class="scroll-mt-24 border-t border-sand bg-paper">
 	<div class="mx-auto max-w-6xl px-5 py-20 md:px-8">
+		{
+			previewEntry && (
+				<p class="mb-8 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold-soft px-4 py-2 text-sm font-semibold text-ink">
+					<Icon name="mdi:eye-outline" class="h-4 w-4" />
+					Vista previa · este webinar todavía es un borrador
+				</p>
+			)
+		}
 		<p data-reveal class="text-sm font-semibold tracking-widest text-sage uppercase">
 			{s.reuniones.label}
 		</p>
@@ -27,45 +110,69 @@ const reuniones: { tematica: string; expositor: string; fecha: string; youtube?:
 			{s.reuniones.intro}
 		</p>
 		{
-			reuniones.length ? (
+			webinars.length ? (
 				<ul class="mt-12 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3">
-					{reuniones.map((reunion, i) => (
+					{webinars.map((reunion, i) => (
 						<li
 							data-reveal
 							style={`--reveal-delay: ${i * 60}ms`}
-							class="flex flex-col rounded-3xl border border-sand bg-cream p-6"
+							class="flex flex-col overflow-hidden rounded-3xl border border-sand bg-cream"
 						>
-							<div class="flex items-center justify-between gap-3">
-								<span class="inline-flex items-center gap-1.5 rounded-full bg-gold-soft px-3 py-1 text-xs font-semibold text-ink/80">
-									<Icon name="mdi:calendar-month" class="h-4 w-4" />
-									{reunion.fecha}
-								</span>
-								<span class="text-xs font-semibold tracking-widest text-muted uppercase">
-									{s.reuniones.webinar}
-								</span>
-							</div>
-							<h3 class="mt-4 font-display text-xl leading-snug">{reunion.tematica}</h3>
-							<p class="mt-3 flex items-center gap-2 text-sm text-muted">
-								<Icon name="mdi:account" class="h-4 w-4 shrink-0 text-clay" />
-								{reunion.expositor}
-							</p>
-							<div class="mt-auto pt-6">
-								{reunion.youtube ? (
-									<a
-										href={reunion.youtube}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="inline-flex items-center gap-2 rounded-full bg-clay px-4 py-2 text-sm font-semibold text-paper transition hover:bg-clay-deep"
-									>
-										<Icon name="mdi:youtube" class="h-5 w-5" />
-										{s.reuniones.live}
-									</a>
+							<div class="aspect-[16/9] w-full overflow-hidden border-b border-sand bg-sand">
+								{reunion.imagenMedia ? (
+									<EmDashImage
+										image={reunion.imagenMedia}
+										alt={reunion.imagenAlt}
+										class="h-full w-full object-cover"
+									/>
 								) : (
-									<span class="inline-flex items-center gap-2 rounded-full border border-dashed border-sand px-4 py-2 text-sm font-medium text-muted">
-										<Icon name="mdi:youtube" class="h-5 w-5" />
-										{s.reuniones.soon}
-									</span>
+									<img
+										src={reunion.imagenFallback}
+										alt={reunion.imagenAlt}
+										width="1200"
+										height="675"
+										loading="lazy"
+										decoding="async"
+										class="h-full w-full object-cover"
+									/>
 								)}
+							</div>
+							<div class="flex flex-1 flex-col p-6">
+								<div class="flex items-center justify-between gap-3">
+									<span class="inline-flex items-center gap-1.5 rounded-full bg-gold-soft px-3 py-1 text-xs font-semibold text-ink/80">
+										<Icon name="mdi:calendar-month" class="h-4 w-4" />
+										{reunion.fecha}
+									</span>
+									<span class="text-xs font-semibold tracking-widest text-muted uppercase">
+										{s.reuniones.webinar}
+									</span>
+								</div>
+								<h3 class="mt-4 font-display text-xl leading-snug">{reunion.tematica}</h3>
+								<p class="mt-3 flex items-center gap-2 text-sm text-muted">
+									<Icon name="mdi:account" class="h-4 w-4 shrink-0 text-clay" />
+									{reunion.expositor}
+								</p>
+								{reunion.descripcion && (
+									<p class="mt-3 text-sm leading-relaxed text-muted">{reunion.descripcion}</p>
+								)}
+								<div class="mt-auto pt-6">
+									{reunion.youtube ? (
+										<a
+											href={reunion.youtube}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="inline-flex items-center gap-2 rounded-full bg-clay px-4 py-2 text-sm font-semibold text-paper transition hover:bg-clay-deep"
+										>
+											<Icon name="mdi:youtube" class="h-5 w-5" />
+											{s.reuniones.live}
+										</a>
+									) : (
+										<span class="inline-flex items-center gap-2 rounded-full border border-dashed border-sand px-4 py-2 text-sm font-medium text-muted">
+											<Icon name="mdi:youtube" class="h-5 w-5" />
+											{s.reuniones.soon}
+										</span>
+									)}
+								</div>
 							</div>
 						</li>
 					))}

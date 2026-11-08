@@ -1,0 +1,1384 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "defaultLocale": "es",
+  "meta": {
+    "name": "FSMET",
+    "description": "Webinares del Foro Social Mundial de las Economías Transformadoras",
+    "author": "FSMET"
+  },
+  "settings": {
+    "title": "FSMET",
+    "tagline": "Foro Social Mundial de las Economías Transformadoras",
+    "url": "https://fsmet.com.ar",
+    "timezone": "America/Argentina/Buenos_Aires",
+    "dateFormat": "d 'de' MMMM 'de' yyyy",
+    "postsPerPage": 12
+  },
+  "collections": [
+    {
+      "slug": "webinars",
+      "label": "Webinares",
+      "labelSingular": "Webinar",
+      "description": "Ciclo de encuentros virtuales del FSMET. Cada webinar publicado aparece en la sección «Reuniones webinares» del sitio.",
+      "icon": "calendar-blank",
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview",
+        "scheduling",
+        "search"
+      ],
+      "routable": false,
+      "titleField": "title",
+      "dateField": "event_date",
+      "admin": {
+        "listColumns": [
+          "event_date",
+          "speaker"
+        ]
+      },
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Temática",
+          "type": "string",
+          "required": true,
+          "searchable": true,
+          "validation": {
+            "maxLength": 200
+          }
+        },
+        {
+          "slug": "speaker",
+          "label": "Expositor/a",
+          "type": "string",
+          "required": true,
+          "searchable": true,
+          "validation": {
+            "maxLength": 200
+          }
+        },
+        {
+          "slug": "event_date",
+          "label": "Fecha y hora",
+          "type": "datetime",
+          "required": true,
+          "indexed": true
+        },
+        {
+          "slug": "date_label",
+          "label": "Fecha visible (opcional)",
+          "type": "string",
+          "validation": {
+            "maxLength": 100
+          }
+        },
+        {
+          "slug": "description",
+          "label": "Descripción (opcional)",
+          "type": "text",
+          "options": {
+            "rows": 3
+          },
+          "validation": {
+            "maxLength": 500
+          }
+        },
+        {
+          "slug": "image",
+          "label": "Imagen o banner (opcional)",
+          "type": "image",
+          "translatable": false,
+          "validation": {
+            "allowedMimeTypes": [
+              "image/jpeg",
+              "image/png",
+              "image/webp",
+              "image/avif"
+            ]
+          }
+        },
+        {
+          "slug": "youtube_url",
+          "label": "Enlace de YouTube (en vivo o grabación)",
+          "type": "url"
+        },
+        {
+          "slug": "order",
+          "label": "Orden",
+          "type": "integer",
+          "indexed": true,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slug": "hero",
+      "label": "Hero",
+      "labelSingular": "Hero",
+      "description": "Portada principal: textos, botones y cuenta regresiva.",
+      "icon": "house",
+      "group": "Secciones de la página",
+      "sortOrder": 10,
+      "titleField": "title",
+      "admin": {
+        "listColumns": [
+          "badge"
+        ]
+      },
+      "fields": [
+        {
+          "slug": "badge",
+          "label": "Etiqueta superior",
+          "type": "string"
+        },
+        {
+          "slug": "title",
+          "label": "Título",
+          "type": "text",
+          "required": true
+        },
+        {
+          "slug": "text",
+          "label": "Texto",
+          "type": "text"
+        },
+        {
+          "slug": "cta_primary_label",
+          "label": "Botón principal · texto",
+          "type": "string"
+        },
+        {
+          "slug": "cta_primary_url",
+          "label": "Botón principal · enlace",
+          "type": "url"
+        },
+        {
+          "slug": "cta_secondary_label",
+          "label": "Botón secundario · texto",
+          "type": "string"
+        },
+        {
+          "slug": "cta_secondary_url",
+          "label": "Botón secundario · enlace",
+          "type": "url"
+        },
+        {
+          "slug": "subtitle",
+          "label": "Subtítulo",
+          "type": "string"
+        },
+        {
+          "slug": "logo_alt",
+          "label": "Texto alternativo del logo",
+          "type": "string"
+        },
+        {
+          "slug": "countdown_label",
+          "label": "Cuenta regresiva · etiqueta",
+          "type": "string"
+        },
+        {
+          "slug": "countdown_units",
+          "label": "Cuenta regresiva · unidades (separadas por coma)",
+          "type": "string"
+        },
+        {
+          "slug": "countdown_target",
+          "label": "Cuenta regresiva · fecha y hora",
+          "type": "datetime"
+        },
+        {
+          "slug": "countdown_date",
+          "label": "Cuenta regresiva · texto de fecha",
+          "type": "string"
+        },
+        {
+          "slug": "background_image",
+          "label": "Imagen de fondo (opcional)",
+          "type": "image",
+          "translatable": false
+        }
+      ],
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview"
+      ],
+      "routable": false
+    },
+    {
+      "slug": "about",
+      "label": "Quiénes somos",
+      "labelSingular": "Quiénes somos",
+      "description": "Texto de presentación y los seis ejes temáticos.",
+      "icon": "users",
+      "group": "Secciones de la página",
+      "sortOrder": 20,
+      "titleField": "heading",
+      "admin": {
+        "listColumns": [
+          "heading"
+        ]
+      },
+      "fields": [
+        {
+          "slug": "label",
+          "label": "Etiqueta",
+          "type": "string"
+        },
+        {
+          "slug": "heading",
+          "label": "Título",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "paragraph_1",
+          "label": "Párrafo 1",
+          "type": "text"
+        },
+        {
+          "slug": "paragraph_2",
+          "label": "Párrafo 2",
+          "type": "text"
+        },
+        {
+          "slug": "quote",
+          "label": "Cita",
+          "type": "string"
+        },
+        {
+          "slug": "quote_caption",
+          "label": "Texto de la cita",
+          "type": "text"
+        },
+        {
+          "slug": "axes_title",
+          "label": "Título de los ejes",
+          "type": "string"
+        },
+        {
+          "slug": "axes",
+          "label": "Ejes temáticos",
+          "type": "repeater",
+          "validation": {
+            "minItems": 1,
+            "maxItems": 12,
+            "subFields": [
+              {
+                "slug": "number",
+                "label": "Número",
+                "type": "string"
+              },
+              {
+                "slug": "title",
+                "label": "Título",
+                "type": "string",
+                "required": true
+              },
+              {
+                "slug": "text",
+                "label": "Descripción",
+                "type": "text"
+              },
+              {
+                "slug": "topics",
+                "label": "Temas (separados por coma)",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      ],
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview"
+      ],
+      "routable": false
+    },
+    {
+      "slug": "agenda",
+      "label": "Agenda global",
+      "labelSingular": "Agenda global",
+      "description": "Otros encuentros del ecosistema.",
+      "icon": "calendar-blank",
+      "group": "Secciones de la página",
+      "sortOrder": 30,
+      "titleField": "heading",
+      "admin": {
+        "listColumns": [
+          "heading"
+        ]
+      },
+      "fields": [
+        {
+          "slug": "label",
+          "label": "Etiqueta",
+          "type": "string"
+        },
+        {
+          "slug": "heading",
+          "label": "Título",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "intro",
+          "label": "Introducción",
+          "type": "text"
+        },
+        {
+          "slug": "items",
+          "label": "Encuentros",
+          "type": "repeater",
+          "validation": {
+            "minItems": 0,
+            "maxItems": 12,
+            "subFields": [
+              {
+                "slug": "icon",
+                "label": "Ícono",
+                "type": "string"
+              },
+              {
+                "slug": "logo",
+                "label": "Logo · URL o ruta",
+                "type": "string"
+              },
+              {
+                "slug": "logo_image",
+                "label": "Logo · subir imagen",
+                "type": "image"
+              },
+              {
+                "slug": "meta",
+                "label": "Fecha y lugar",
+                "type": "string"
+              },
+              {
+                "slug": "title",
+                "label": "Título",
+                "type": "string",
+                "required": true
+              },
+              {
+                "slug": "text",
+                "label": "Descripción",
+                "type": "text"
+              },
+              {
+                "slug": "cta",
+                "label": "Botón · texto",
+                "type": "string"
+              },
+              {
+                "slug": "url",
+                "label": "Botón · enlace",
+                "type": "url"
+              }
+            ]
+          }
+        }
+      ],
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview"
+      ],
+      "routable": false
+    },
+    {
+      "slug": "info",
+      "label": "Información útil",
+      "labelSingular": "Información útil",
+      "description": "Datos prácticos, bloques de información y hospedajes.",
+      "icon": "map-pin",
+      "group": "Secciones de la página",
+      "sortOrder": 40,
+      "titleField": "heading",
+      "admin": {
+        "listColumns": [
+          "heading"
+        ]
+      },
+      "fields": [
+        {
+          "slug": "label",
+          "label": "Etiqueta",
+          "type": "string"
+        },
+        {
+          "slug": "heading",
+          "label": "Título",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "intro",
+          "label": "Introducción",
+          "type": "text"
+        },
+        {
+          "slug": "pending_label",
+          "label": "Etiqueta «Por confirmar»",
+          "type": "string"
+        },
+        {
+          "slug": "blocks",
+          "label": "Bloques de información",
+          "type": "repeater",
+          "validation": {
+            "minItems": 0,
+            "maxItems": 12,
+            "subFields": [
+              {
+                "slug": "icon",
+                "label": "Ícono",
+                "type": "string"
+              },
+              {
+                "slug": "title",
+                "label": "Título",
+                "type": "string",
+                "required": true
+              },
+              {
+                "slug": "items",
+                "label": "Ítems (uno por línea)",
+                "type": "text"
+              },
+              {
+                "slug": "pending_items",
+                "label": "Ítems por confirmar (uno por línea)",
+                "type": "text"
+              }
+            ]
+          }
+        },
+        {
+          "slug": "lodging_title",
+          "label": "Hospedaje · título",
+          "type": "string"
+        },
+        {
+          "slug": "lodging_text",
+          "label": "Hospedaje · texto",
+          "type": "text"
+        },
+        {
+          "slug": "lodging_pending_items",
+          "label": "Hospedaje · pendientes (uno por línea)",
+          "type": "text"
+        },
+        {
+          "slug": "lodging_legend_hotel",
+          "label": "Hospedaje · leyenda hotel",
+          "type": "string"
+        },
+        {
+          "slug": "lodging_legend_city",
+          "label": "Hospedaje · leyenda ciudad",
+          "type": "string"
+        },
+        {
+          "slug": "lodging_list_title",
+          "label": "Hospedaje · título de la lista",
+          "type": "string"
+        },
+        {
+          "slug": "hotels",
+          "label": "Hospedajes",
+          "type": "repeater",
+          "validation": {
+            "minItems": 0,
+            "maxItems": 40,
+            "subFields": [
+              {
+                "slug": "name",
+                "label": "Nombre",
+                "type": "string",
+                "required": true
+              },
+              {
+                "slug": "detail",
+                "label": "Detalle",
+                "type": "text"
+              },
+              {
+                "slug": "lat",
+                "label": "Latitud",
+                "type": "number",
+                "required": true
+              },
+              {
+                "slug": "lng",
+                "label": "Longitud",
+                "type": "number",
+                "required": true
+              },
+              {
+                "slug": "phone",
+                "label": "Teléfono",
+                "type": "string"
+              },
+              {
+                "slug": "whatsapp",
+                "label": "WhatsApp",
+                "type": "string"
+              },
+              {
+                "slug": "email",
+                "label": "Email",
+                "type": "string"
+              },
+              {
+                "slug": "web",
+                "label": "Web",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      ],
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview"
+      ],
+      "routable": false
+    }
+  ],
+  "content": {
+    "hero": [
+      {
+        "id": "hero-es",
+        "status": "published",
+        "locale": "es",
+        "data": {
+          "badge": "Foro Social Mundial · proceso territorial",
+          "title": "De las alternativas dispersas a las convergencias territoriales",
+          "text": "El Foro Social Mundial de las Economías Transformadoras es un espacio temático del FSM. La próxima edición se construye en Argentina, con Jujuy y Salta como provincias anfitrionas.",
+          "cta_primary_label": "Conocer el proceso",
+          "cta_primary_url": "#quienes-somos",
+          "cta_secondary_label": "Sumarse",
+          "cta_secondary_url": "#inscripcion",
+          "subtitle": "FSMET 2027 · Jujuy y Salta",
+          "logo_alt": "Identidad visual del FSMET: territorio, encuentro y red",
+          "countdown_label": "El encuentro principal comienza en",
+          "countdown_units": "días, horas, min, seg",
+          "countdown_target": "2027-04-07T00:00:00-03:00",
+          "countdown_date": "7, 8 y 9 de abril de 2027 · Jujuy y Salta"
+        }
+      },
+      {
+        "id": "hero-en",
+        "status": "published",
+        "locale": "en",
+        "translationOf": "hero-es",
+        "data": {
+          "badge": "World Social Forum · territorial process",
+          "title": "From scattered alternatives to territorial convergences",
+          "text": "The World Social Forum of Transformative Economies is a thematic space of the WSF. The next edition is being built in Argentina, with Jujuy and Salta as host provinces.",
+          "cta_primary_label": "Learn about the process",
+          "cta_primary_url": "#quienes-somos",
+          "cta_secondary_label": "Join us",
+          "cta_secondary_url": "#inscripcion",
+          "subtitle": "FSMET 2027 · Jujuy & Salta",
+          "logo_alt": "FSMET visual identity: territory, gathering and network",
+          "countdown_label": "The main gathering begins in",
+          "countdown_units": "days, hours, min, sec",
+          "countdown_target": "2027-04-07T00:00:00-03:00",
+          "countdown_date": "April 7–9, 2027 · Jujuy and Salta"
+        }
+      },
+      {
+        "id": "hero-pt",
+        "status": "published",
+        "locale": "pt",
+        "translationOf": "hero-es",
+        "data": {
+          "badge": "Fórum Social Mundial · processo territorial",
+          "title": "Das alternativas dispersas às convergências territoriais",
+          "text": "O Fórum Social Mundial das Economias Transformadoras é um espaço temático do FSM. A próxima edição se constrói na Argentina, com Jujuy e Salta como províncias anfitriãs.",
+          "cta_primary_label": "Conhecer o processo",
+          "cta_primary_url": "#quienes-somos",
+          "cta_secondary_label": "Somar-se",
+          "cta_secondary_url": "#inscripcion",
+          "subtitle": "FSMET 2027 · Jujuy e Salta",
+          "logo_alt": "Identidade visual do FSMET: território, encontro e rede",
+          "countdown_label": "O encontro principal começa em",
+          "countdown_units": "dias, horas, min, seg",
+          "countdown_target": "2027-04-07T00:00:00-03:00",
+          "countdown_date": "7, 8 e 9 de abril de 2027 · Jujuy e Salta"
+        }
+      },
+      {
+        "id": "hero-fr",
+        "status": "published",
+        "locale": "fr",
+        "translationOf": "hero-es",
+        "data": {
+          "badge": "Forum Social Mondial · processus territorial",
+          "title": "Des alternatives dispersées aux convergences territoriales",
+          "text": "Le Forum Social Mondial des Économies Transformatrices est un espace thématique du FSM. La prochaine édition se construit en Argentine, avec Jujuy et Salta comme provinces hôtes.",
+          "cta_primary_label": "Découvrir le processus",
+          "cta_primary_url": "#quienes-somos",
+          "cta_secondary_label": "Nous rejoindre",
+          "cta_secondary_url": "#inscripcion",
+          "subtitle": "FSMET 2027 · Jujuy et Salta",
+          "logo_alt": "Identité visuelle du FSMET : territoire, rencontre et réseau",
+          "countdown_label": "La rencontre principale commence dans",
+          "countdown_units": "jours, heures, min, s",
+          "countdown_target": "2027-04-07T00:00:00-03:00",
+          "countdown_date": "7, 8 et 9 avril 2027 · Jujuy et Salta"
+        }
+      }
+    ],
+    "about": [
+      {
+        "id": "about-es",
+        "status": "published",
+        "locale": "es",
+        "data": {
+          "label": "Quiénes somos",
+          "heading": "Un proceso colectivo, no solamente un evento",
+          "paragraph_1": "El FSMET busca conectar experiencias de economía social, solidaria, popular, comunitaria, campesina, indígena, cooperativa, agroecológica, de cuidados y de finanzas éticas. El problema no es la falta de alternativas: es que muchas siguen aisladas.",
+          "paragraph_2": "La idea es construir una minga global: un encuentro donde confluimos organizaciones de base, territorios, movimientos, comunidades e instituciones. El proceso empieza antes del encuentro principal y continúa después.",
+          "quote": "“Del proyecto al ecosistema.”",
+          "quote_caption": "Organización responsable de la preparación: Movimiento Hacia Otra Economía, Social Solidaria Popular Campesino Indígena, Afrodescendiente. Se está conformando un equipo de gobernanza para el proceso.",
+          "axes_title": "Seis ejes temáticos",
+          "axes": [
+            {
+              "number": "01",
+              "title": "Economía, Territorio y Buen Vivir",
+              "text": "Desarrollo territorial, comunidad, inclusión y sostenibilidad de la vida.",
+              "topics": "Economía transformadora, Territorio, Buen Vivir, Comunidad, Inclusión"
+            },
+            {
+              "number": "02",
+              "title": "Producción, Trabajo y Tramas",
+              "text": "Cooperativas, circuitos cortos y articulación entre productoras y productores.",
+              "topics": "Cooperativas, Redes productivas, Circuitos cortos, Trabajo, Articulación"
+            },
+            {
+              "number": "03",
+              "title": "Finanzas Éticas y Redistribución",
+              "text": "Crédito, fondos rotatorios, bancos comunitarios y educación financiera.",
+              "topics": "Crédito, Fondos rotatorios, Bancos comunitarios, Educación financiera"
+            },
+            {
+              "number": "04",
+              "title": "Agroecología y Transición Ecológica",
+              "text": "Bienes comunes, bioinsumos, ambiente y producción sustentable.",
+              "topics": "Agroecología, Bioinsumos, Bienes comunes, Soberanía alimentaria"
+            },
+            {
+              "number": "05",
+              "title": "Formación, Cultura y Sentido Común",
+              "text": "Conocimientos territoriales, investigación, comunicación y educación.",
+              "topics": "Educación, Conocimientos territoriales, Investigación, Comunicación"
+            },
+            {
+              "number": "06",
+              "title": "Políticas Públicas e Incidencia",
+              "text": "Propuestas, articulación con instituciones y marcos legislativos.",
+              "topics": "Legislación, Incidencia institucional, Propuestas, Gobiernos"
+            }
+          ]
+        }
+      },
+      {
+        "id": "about-en",
+        "status": "published",
+        "locale": "en",
+        "translationOf": "about-es",
+        "data": {
+          "label": "Who we are",
+          "heading": "A collective process, not just an event",
+          "paragraph_1": "The FSMET seeks to connect experiences of social, solidarity, popular, community, peasant, indigenous, cooperative, agroecological, care and ethical-finance economies. The problem is not a lack of alternatives: it is that many remain isolated.",
+          "paragraph_2": "The idea is to build a global minga: a gathering where grassroots organizations, territories, movements, communities and institutions converge. The process begins before the main gathering and continues afterwards.",
+          "quote": "“From project to ecosystem.”",
+          "quote_caption": "Organization responsible for the preparation: Movimiento Hacia Otra Economía, Social Solidaria Popular Campesino Indígena, Afrodescendiente. A governance team for the process is being formed.",
+          "axes_title": "Six thematic axes",
+          "axes": [
+            {
+              "number": "01",
+              "title": "Economy, Territory and Buen Vivir",
+              "text": "Territorial development, community, inclusion and the sustainability of life.",
+              "topics": "Transformative economy, Territory, Buen Vivir, Community, Inclusion"
+            },
+            {
+              "number": "02",
+              "title": "Production, Work and Networks",
+              "text": "Cooperatives, short supply chains and articulation between producers.",
+              "topics": "Cooperatives, Productive networks, Short supply chains, Work, Articulation"
+            },
+            {
+              "number": "03",
+              "title": "Ethical Finance and Redistribution",
+              "text": "Credit, rotating funds, community banks and financial education.",
+              "topics": "Credit, Rotating funds, Community banks, Financial education"
+            },
+            {
+              "number": "04",
+              "title": "Agroecology and Ecological Transition",
+              "text": "Commons, bio-inputs, environment and sustainable production.",
+              "topics": "Agroecology, Bio-inputs, Commons, Food sovereignty"
+            },
+            {
+              "number": "05",
+              "title": "Education, Culture and Common Sense",
+              "text": "Territorial knowledge, research, communication and education.",
+              "topics": "Education, Territorial knowledge, Research, Communication"
+            },
+            {
+              "number": "06",
+              "title": "Public Policy and Advocacy",
+              "text": "Proposals, articulation with institutions and legislative frameworks.",
+              "topics": "Legislation, Institutional advocacy, Proposals, Governments"
+            }
+          ]
+        }
+      },
+      {
+        "id": "about-pt",
+        "status": "published",
+        "locale": "pt",
+        "translationOf": "about-es",
+        "data": {
+          "label": "Quem somos",
+          "heading": "Um processo coletivo, não apenas um evento",
+          "paragraph_1": "O FSMET busca conectar experiências de economia social, solidária, popular, comunitária, camponesa, indígena, cooperativa, agroecológica, de cuidados e de finanças éticas. O problema não é a falta de alternativas: é que muitas seguem isoladas.",
+          "paragraph_2": "A ideia é construir uma minga global: um encontro onde confluem organizações de base, territórios, movimentos, comunidades e instituições. O processo começa antes do encontro principal e continua depois.",
+          "quote": "“Do projeto ao ecossistema.”",
+          "quote_caption": "Organização responsável pela preparação: Movimiento Hacia Otra Economía, Social Solidaria Popular Campesino Indígena, Afrodescendiente. Uma equipe de governança para o processo está se formando.",
+          "axes_title": "Seis eixos temáticos",
+          "axes": [
+            {
+              "number": "01",
+              "title": "Economia, Território e Bem Viver",
+              "text": "Desenvolvimento territorial, comunidade, inclusão e sustentabilidade da vida.",
+              "topics": "Economia transformadora, Território, Bem Viver, Comunidade, Inclusão"
+            },
+            {
+              "number": "02",
+              "title": "Produção, Trabalho e Tramas",
+              "text": "Cooperativas, circuitos curtos e articulação entre produtoras e produtores.",
+              "topics": "Cooperativas, Redes produtivas, Circuitos curtos, Trabalho, Articulação"
+            },
+            {
+              "number": "03",
+              "title": "Finanças Éticas e Redistribuição",
+              "text": "Crédito, fundos rotativos, bancos comunitários e educação financeira.",
+              "topics": "Crédito, Fundos rotativos, Bancos comunitários, Educação financeira"
+            },
+            {
+              "number": "04",
+              "title": "Agroecologia e Transição Ecológica",
+              "text": "Bens comuns, bioinsumos, meio ambiente e produção sustentável.",
+              "topics": "Agroecologia, Bioinsumos, Bens comuns, Soberania alimentar"
+            },
+            {
+              "number": "05",
+              "title": "Formação, Cultura e Senso Comum",
+              "text": "Conhecimentos territoriais, pesquisa, comunicação e educação.",
+              "topics": "Educação, Conhecimentos territoriais, Pesquisa, Comunicação"
+            },
+            {
+              "number": "06",
+              "title": "Políticas Públicas e Incidência",
+              "text": "Propostas, articulação com instituições e marcos legislativos.",
+              "topics": "Legislação, Incidência institucional, Propostas, Governos"
+            }
+          ]
+        }
+      },
+      {
+        "id": "about-fr",
+        "status": "published",
+        "locale": "fr",
+        "translationOf": "about-es",
+        "data": {
+          "label": "Qui sommes-nous",
+          "heading": "Un processus collectif, pas seulement un événement",
+          "paragraph_1": "Le FSMET cherche à relier les expériences d'économie sociale, solidaire, populaire, communautaire, paysanne, autochtone, coopérative, agroécologique, de soins et de finance éthique. Le problème n'est pas le manque d'alternatives : c'est que beaucoup restent isolées.",
+          "paragraph_2": "L'idée est de construire une minga mondiale : une rencontre où convergent organisations de base, territoires, mouvements, communautés et institutions. Le processus commence avant la rencontre principale et se poursuit après.",
+          "quote": "« Du projet à l'écosystème. »",
+          "quote_caption": "Organisation responsable de la préparation : Movimiento Hacia Otra Economía, Social Solidaria Popular Campesino Indígena, Afrodescendiente. Une équipe de gouvernance du processus est en cours de formation.",
+          "axes_title": "Six axes thématiques",
+          "axes": [
+            {
+              "number": "01",
+              "title": "Économie, Territoire et Buen Vivir",
+              "text": "Développement territorial, communauté, inclusion et durabilité de la vie.",
+              "topics": "Économie transformatrice, Territoire, Buen Vivir, Communauté, Inclusion"
+            },
+            {
+              "number": "02",
+              "title": "Production, Travail et Trames",
+              "text": "Coopératives, circuits courts et articulation entre productrices et producteurs.",
+              "topics": "Coopératives, Réseaux productifs, Circuits courts, Travail, Articulation"
+            },
+            {
+              "number": "03",
+              "title": "Finances Éthiques et Redistribution",
+              "text": "Crédit, fonds rotatifs, banques communautaires et éducation financière.",
+              "topics": "Crédit, Fonds rotatifs, Banques communautaires, Éducation financière"
+            },
+            {
+              "number": "04",
+              "title": "Agroécologie et Transition Écologique",
+              "text": "Biens communs, intrants biologiques, environnement et production durable.",
+              "topics": "Agroécologie, Intrants biologiques, Biens communs, Souveraineté alimentaire"
+            },
+            {
+              "number": "05",
+              "title": "Formation, Culture et Sens Commun",
+              "text": "Savoirs territoriaux, recherche, communication et éducation.",
+              "topics": "Éducation, Savoirs territoriaux, Recherche, Communication"
+            },
+            {
+              "number": "06",
+              "title": "Politiques Publiques et Plaidoyer",
+              "text": "Propositions, articulation avec les institutions et cadres législatifs.",
+              "topics": "Législation, Plaidoyer institutionnel, Propositions, Gouvernements"
+            }
+          ]
+        }
+      }
+    ],
+    "agenda": [
+      {
+        "id": "agenda-es",
+        "status": "published",
+        "locale": "es",
+        "data": {
+          "label": "Agenda global",
+          "heading": "Otros encuentros del ecosistema",
+          "intro": "El FSMET es parte de un ecosistema global de foros y procesos de economías transformadoras. Estos son otros encuentros que también están en marcha.",
+          "items": [
+            {
+              "icon": "mdi:earth",
+              "logo": "/img/maricagsef2027-es.webp",
+              "meta": "9–12 oct. 2027 · Maricá, Brasil",
+              "title": "MaricáGSEF2027 — Foro Global de la Economía Social y Solidaria",
+              "text": "8.ª edición del foro bienal del GSEF, coorganizado con la Prefeitura de Maricá. Reúne gobiernos locales y nacionales, redes, instituciones y actores de la ESS de todo el mundo.",
+              "cta": "Conocer el foro",
+              "url": "https://www.gsef-net.org/es/maricagsef2027"
+            }
+          ]
+        }
+      },
+      {
+        "id": "agenda-en",
+        "status": "published",
+        "locale": "en",
+        "translationOf": "agenda-es",
+        "data": {
+          "label": "Global agenda",
+          "heading": "Other gatherings in the ecosystem",
+          "intro": "The FSMET is part of a global ecosystem of transformative economy forums and processes. These are other gatherings also underway.",
+          "items": [
+            {
+              "icon": "mdi:earth",
+              "logo": "/img/maricagsef2027-en.webp",
+              "meta": "Oct 9–12, 2027 · Maricá, Brazil",
+              "title": "MaricáGSEF2027 — Global Social and Solidarity Economy Forum",
+              "text": "8th edition of the GSEF's biennial forum, co-organized with the Maricá City Hall. It brings together local and national governments, networks, institutions and SSE actors from around the world.",
+              "cta": "Learn about the forum",
+              "url": "https://www.gsef-net.org/es/maricagsef2027"
+            }
+          ]
+        }
+      },
+      {
+        "id": "agenda-pt",
+        "status": "published",
+        "locale": "pt",
+        "translationOf": "agenda-es",
+        "data": {
+          "label": "Agenda global",
+          "heading": "Outros encontros do ecossistema",
+          "intro": "O FSMET faz parte de um ecossistema global de fóruns e processos de economias transformadoras. Estes são outros encontros que também estão em marcha.",
+          "items": [
+            {
+              "icon": "mdi:earth",
+              "logo": "/img/maricagsef2027-es.webp",
+              "meta": "9–12 out. 2027 · Maricá, Brasil",
+              "title": "MaricáGSEF2027 — Fórum Global de Economia Social e Solidária",
+              "text": "8ª edição do fórum bienal do GSEF, co-organizado com a Prefeitura de Maricá. Reúne governos locais e nacionais, redes, instituições e atores da ESS do mundo todo.",
+              "cta": "Conhecer o fórum",
+              "url": "https://www.gsef-net.org/es/maricagsef2027"
+            }
+          ]
+        }
+      },
+      {
+        "id": "agenda-fr",
+        "status": "published",
+        "locale": "fr",
+        "translationOf": "agenda-es",
+        "data": {
+          "label": "Agenda mondial",
+          "heading": "D'autres rencontres de l'écosystème",
+          "intro": "Le FSMET s'inscrit dans un écosystème mondial de forums et processus d'économies transformatrices. Voici d'autres rencontres également en marche.",
+          "items": [
+            {
+              "icon": "mdi:earth",
+              "logo": "/img/maricagsef2027-fr.webp",
+              "meta": "9–12 oct. 2027 · Maricá, Brésil",
+              "title": "MaricáGSEF2027 — Forum Global de l'Économie Sociale et Solidaire",
+              "text": "8e édition du forum biennal du GSEF, co-organisé avec la mairie de Maricá. Il réunit collectivités locales et nationales, réseaux, institutions et acteurs de l'ESS du monde entier.",
+              "cta": "Découvrir le forum",
+              "url": "https://www.gsef-net.org/es/maricagsef2027"
+            }
+          ]
+        }
+      }
+    ],
+    "info": [
+      {
+        "id": "info-es",
+        "status": "published",
+        "locale": "es",
+        "data": {
+          "label": "Información útil",
+          "heading": "Llegar y quedarse en el territorio",
+          "intro": "Datos prácticos para planear el viaje a Jujuy y Salta. Esta sección se completa a medida que se confirmen sedes, logística y alojamientos.",
+          "pending_label": "Por confirmar",
+          "blocks": [
+            {
+              "icon": "mdi:airplane",
+              "title": "Cómo llegar",
+              "items": "Aeropuerto Gdor. Horacio Guzmán (JUJ), en El Cadillal, a ~33 km de San Salvador de Jujuy.\nAeropuerto Martín Miguel de Güemes (SLA), a ~10 km de la ciudad de Salta.\nAmbas capitales cuentan con terminales de ómnibus con conexiones desde todo el país.",
+              "pending_items": ""
+            },
+            {
+              "icon": "mdi:routes",
+              "title": "Rutas y traslados",
+              "items": "San Salvador de Jujuy ↔ Salta capital: ~90 km por RN9 (cornisa) o RN34.",
+              "pending_items": "Traslados oficiales entre sedes y horarios sugeridos."
+            },
+            {
+              "icon": "mdi:terrain",
+              "title": "Altura y clima",
+              "items": "San Salvador de Jujuy y Salta capital están a ~1.200 msnm; abril es templado y seco.\nSi recorrés la Quebrada de Humahuaca o la Puna (2.000 a 3.700 msnm), prevé un día de aclimatación.",
+              "pending_items": ""
+            }
+          ],
+          "lodging_title": "Hospedaje",
+          "lodging_text": "El mapa muestra hoteles del microcentro de San Salvador de Jujuy como referencia inicial. Convenios, tarifas especiales y distancia a la sede final se publican cuando estén confirmados.",
+          "lodging_pending_items": "Opciones solidarias y alojamiento comunitario\nHospedaje en Salta capital",
+          "lodging_legend_hotel": "Hospedaje sugerido",
+          "lodging_legend_city": "Ciudad anfitriona",
+          "lodging_list_title": "Hospedajes en el microcentro",
+          "hotels": [
+            {
+              "name": "Howard Johnson Plaza Jujuy",
+              "detail": "Güemes 864 · 4★ · salones de eventos",
+              "lat": -24.1831,
+              "lng": -65.3074,
+              "phone": "+54 388 424-9800",
+              "whatsapp": "5493883407627",
+              "email": "reservas@hjjujuy.com.ar",
+              "web": "hjjujuy.com.ar"
+            },
+            {
+              "name": "Amérian Jujuy",
+              "detail": "Av. 19 de Abril 687 · 4★ superior · frente al parque Xibi-Xibi",
+              "lat": -24.1889,
+              "lng": -65.3047,
+              "phone": "+54 9 388 515-0999",
+              "whatsapp": "5493885150999",
+              "email": "info@amerian.com",
+              "web": "amerian.com"
+            },
+            {
+              "name": "Ohasis Hotel Spa",
+              "detail": "Ramírez de Velazco 244 · spa · salón de convenciones",
+              "lat": -24.1864,
+              "lng": -65.3101,
+              "phone": "+54 388 424-1017",
+              "whatsapp": "5493885055080",
+              "email": "reservas@ohasishoteljujuy.com",
+              "web": "ohasishoteljujuy.com"
+            },
+            {
+              "name": "El Arribo Hotel",
+              "detail": "Belgrano 1263 · 3★ · microcentro",
+              "lat": -24.1857,
+              "lng": -65.3105,
+              "phone": "+54 388 422-2539",
+              "whatsapp": "5493886056908",
+              "email": "info@elarribo.com",
+              "web": "elarribo.com"
+            },
+            {
+              "name": "Hotel Gregorio I",
+              "detail": "Boutique · a metros de Plaza Belgrano y la Catedral",
+              "lat": -24.1877,
+              "lng": -65.3044,
+              "phone": "+54 388 424-4545",
+              "whatsapp": "5493885828822",
+              "email": "info@gregoriohotel.com",
+              "web": "gregoriohotel.com"
+            },
+            {
+              "name": "Hotel ICONICO JUJUY Centro",
+              "detail": "Alvear 627 · desayuno incluido · a 300 m del Cabildo",
+              "lat": -24.1839,
+              "lng": -65.302,
+              "phone": "+54 388 422-2982",
+              "whatsapp": "5493885843456",
+              "email": "jujuyhotel627@gmail.com",
+              "web": "alojarjujuy.com"
+            },
+            {
+              "name": "Hotel Munay Jujuy",
+              "detail": "Alvear 1230 · opción económica · desayuno y Wi-Fi",
+              "lat": -24.1845,
+              "lng": -65.31,
+              "phone": "+54 388 422-8435",
+              "whatsapp": "5493884174629",
+              "email": "jujuy@munayhotel.com.ar",
+              "web": "munayhotel.com.ar"
+            }
+          ]
+        }
+      },
+      {
+        "id": "info-en",
+        "status": "published",
+        "locale": "en",
+        "translationOf": "info-es",
+        "data": {
+          "label": "Useful information",
+          "heading": "Getting to and staying in the territory",
+          "intro": "Practical details for planning the trip to Jujuy and Salta. This section is completed as venues, logistics and accommodation are confirmed.",
+          "pending_label": "To be confirmed",
+          "blocks": [
+            {
+              "icon": "mdi:airplane",
+              "title": "Getting there",
+              "items": "Gdor. Horacio Guzmán Airport (JUJ), in El Cadillal, ~33 km from San Salvador de Jujuy.\nMartín Miguel de Güemes Airport (SLA), ~10 km from the city of Salta.\nBoth capitals have long-distance bus terminals with connections from across the country.",
+              "pending_items": ""
+            },
+            {
+              "icon": "mdi:routes",
+              "title": "Routes and transfers",
+              "items": "San Salvador de Jujuy ↔ Salta city: ~90 km via RN9 (corniche) or RN34.",
+              "pending_items": "Official transfers between venues and suggested times."
+            },
+            {
+              "icon": "mdi:terrain",
+              "title": "Altitude and climate",
+              "items": "San Salvador de Jujuy and Salta city sit at ~1,200 masl; April is mild and dry.\nIf you travel through the Quebrada de Humahuaca or the Puna (2,000–3,700 masl), plan a day to acclimatize.",
+              "pending_items": ""
+            }
+          ],
+          "lodging_title": "Accommodation",
+          "lodging_text": "The map shows hotels in downtown San Salvador de Jujuy as an initial reference. Agreements, special rates and distance to the final venue will be published once confirmed.",
+          "lodging_pending_items": "Solidarity options and community accommodation\nAccommodation in Salta city",
+          "lodging_legend_hotel": "Suggested accommodation",
+          "lodging_legend_city": "Host city",
+          "lodging_list_title": "Accommodation in the city center",
+          "hotels": [
+            {
+              "name": "Howard Johnson Plaza Jujuy",
+              "detail": "Güemes 864 · 4★ · event halls",
+              "lat": -24.1831,
+              "lng": -65.3074,
+              "phone": "+54 388 424-9800",
+              "whatsapp": "5493883407627",
+              "email": "reservas@hjjujuy.com.ar",
+              "web": "hjjujuy.com.ar"
+            },
+            {
+              "name": "Amérian Jujuy",
+              "detail": "Av. 19 de Abril 687 · superior 4★ · facing Xibi-Xibi park",
+              "lat": -24.1889,
+              "lng": -65.3047,
+              "phone": "+54 9 388 515-0999",
+              "whatsapp": "5493885150999",
+              "email": "info@amerian.com",
+              "web": "amerian.com"
+            },
+            {
+              "name": "Ohasis Hotel Spa",
+              "detail": "Ramírez de Velazco 244 · spa · convention hall",
+              "lat": -24.1864,
+              "lng": -65.3101,
+              "phone": "+54 388 424-1017",
+              "whatsapp": "5493885055080",
+              "email": "reservas@ohasishoteljujuy.com",
+              "web": "ohasishoteljujuy.com"
+            },
+            {
+              "name": "El Arribo Hotel",
+              "detail": "Belgrano 1263 · 3★ · city center",
+              "lat": -24.1857,
+              "lng": -65.3105,
+              "phone": "+54 388 422-2539",
+              "whatsapp": "5493886056908",
+              "email": "info@elarribo.com",
+              "web": "elarribo.com"
+            },
+            {
+              "name": "Hotel Gregorio I",
+              "detail": "Boutique · steps from Plaza Belgrano and the Cathedral",
+              "lat": -24.1877,
+              "lng": -65.3044,
+              "phone": "+54 388 424-4545",
+              "whatsapp": "5493885828822",
+              "email": "info@gregoriohotel.com",
+              "web": "gregoriohotel.com"
+            },
+            {
+              "name": "Hotel ICONICO JUJUY Centro",
+              "detail": "Alvear 627 · breakfast included · 300 m from the Cabildo",
+              "lat": -24.1839,
+              "lng": -65.302,
+              "phone": "+54 388 422-2982",
+              "whatsapp": "5493885843456",
+              "email": "jujuyhotel627@gmail.com",
+              "web": "alojarjujuy.com"
+            },
+            {
+              "name": "Hotel Munay Jujuy",
+              "detail": "Alvear 1230 · budget option · breakfast and Wi-Fi",
+              "lat": -24.1845,
+              "lng": -65.31,
+              "phone": "+54 388 422-8435",
+              "whatsapp": "5493884174629",
+              "email": "jujuy@munayhotel.com.ar",
+              "web": "munayhotel.com.ar"
+            }
+          ]
+        }
+      },
+      {
+        "id": "info-pt",
+        "status": "published",
+        "locale": "pt",
+        "translationOf": "info-es",
+        "data": {
+          "label": "Informações úteis",
+          "heading": "Chegar e ficar no território",
+          "intro": "Dados práticos para planejar a viagem a Jujuy e Salta. Esta seção é completada à medida que se confirmem sedes, logística e hospedagens.",
+          "pending_label": "A confirmar",
+          "blocks": [
+            {
+              "icon": "mdi:airplane",
+              "title": "Como chegar",
+              "items": "Aeroporto Gdor. Horacio Guzmán (JUJ), em El Cadillal, a ~33 km de San Salvador de Jujuy.\nAeroporto Martín Miguel de Güemes (SLA), a ~10 km da cidade de Salta.\nAmbas as capitais contam com terminais rodoviários com conexões de todo o país.",
+              "pending_items": ""
+            },
+            {
+              "icon": "mdi:routes",
+              "title": "Rotas e traslados",
+              "items": "San Salvador de Jujuy ↔ Salta capital: ~90 km pela RN9 (cornisa) ou RN34.",
+              "pending_items": "Traslados oficiais entre sedes e horários sugeridos."
+            },
+            {
+              "icon": "mdi:terrain",
+              "title": "Altitude e clima",
+              "items": "San Salvador de Jujuy e Salta capital estão a ~1.200 msnm; abril é ameno e seco.\nSe você percorrer a Quebrada de Humahuaca ou a Puna (2.000 a 3.700 msnm), preveja um dia de aclimatação.",
+              "pending_items": ""
+            }
+          ],
+          "lodging_title": "Hospedagem",
+          "lodging_text": "O mapa mostra hotéis do miocentro de San Salvador de Jujuy como referência inicial. Convênios, tarifas especiais e distância até a sede final serão publicados quando confirmados.",
+          "lodging_pending_items": "Opções solidárias e hospedagem comunitária\nHospedagem em Salta capital",
+          "lodging_legend_hotel": "Hospedagem sugerida",
+          "lodging_legend_city": "Cidade anfitriã",
+          "lodging_list_title": "Hospedagens no microcentro",
+          "hotels": [
+            {
+              "name": "Howard Johnson Plaza Jujuy",
+              "detail": "Güemes 864 · 4★ · salões de eventos",
+              "lat": -24.1831,
+              "lng": -65.3074,
+              "phone": "+54 388 424-9800",
+              "whatsapp": "5493883407627",
+              "email": "reservas@hjjujuy.com.ar",
+              "web": "hjjujuy.com.ar"
+            },
+            {
+              "name": "Amérian Jujuy",
+              "detail": "Av. 19 de Abril 687 · 4★ superior · em frente ao parque Xibi-Xibi",
+              "lat": -24.1889,
+              "lng": -65.3047,
+              "phone": "+54 9 388 515-0999",
+              "whatsapp": "5493885150999",
+              "email": "info@amerian.com",
+              "web": "amerian.com"
+            },
+            {
+              "name": "Ohasis Hotel Spa",
+              "detail": "Ramírez de Velazco 244 · spa · salão de convenções",
+              "lat": -24.1864,
+              "lng": -65.3101,
+              "phone": "+54 388 424-1017",
+              "whatsapp": "5493885055080",
+              "email": "reservas@ohasishoteljujuy.com",
+              "web": "ohasishoteljujuy.com"
+            },
+            {
+              "name": "El Arribo Hotel",
+              "detail": "Belgrano 1263 · 3★ · microcentro",
+              "lat": -24.1857,
+              "lng": -65.3105,
+              "phone": "+54 388 422-2539",
+              "whatsapp": "5493886056908",
+              "email": "info@elarribo.com",
+              "web": "elarribo.com"
+            },
+            {
+              "name": "Hotel Gregorio I",
+              "detail": "Boutique · a poucos metros da Plaza Belgrano e da Catedral",
+              "lat": -24.1877,
+              "lng": -65.3044,
+              "phone": "+54 388 424-4545",
+              "whatsapp": "5493885828822",
+              "email": "info@gregoriohotel.com",
+              "web": "gregoriohotel.com"
+            },
+            {
+              "name": "Hotel ICONICO JUJUY Centro",
+              "detail": "Alvear 627 · café da manhã incluído · a 300 m do Cabildo",
+              "lat": -24.1839,
+              "lng": -65.302,
+              "phone": "+54 388 422-2982",
+              "whatsapp": "5493885843456",
+              "email": "jujuyhotel627@gmail.com",
+              "web": "alojarjujuy.com"
+            },
+            {
+              "name": "Hotel Munay Jujuy",
+              "detail": "Alvear 1230 · opção econômica · café da manhã e Wi-Fi",
+              "lat": -24.1845,
+              "lng": -65.31,
+              "phone": "+54 388 422-8435",
+              "whatsapp": "5493884174629",
+              "email": "jujuy@munayhotel.com.ar",
+              "web": "munayhotel.com.ar"
+            }
+          ]
+        }
+      },
+      {
+        "id": "info-fr",
+        "status": "published",
+        "locale": "fr",
+        "translationOf": "info-es",
+        "data": {
+          "label": "Informations utiles",
+          "heading": "Arriver et séjourner sur le territoire",
+          "intro": "Informations pratiques pour préparer le voyage à Jujuy et Salta. Cette section se complète au fur et à mesure que les lieux, la logistique et les hébergements sont confirmés.",
+          "pending_label": "À confirmer",
+          "blocks": [
+            {
+              "icon": "mdi:airplane",
+              "title": "Comment arriver",
+              "items": "Aéroport Gdor. Horacio Guzmán (JUJ), à El Cadillal, à ~33 km de San Salvador de Jujuy.\nAéroport Martín Miguel de Güemes (SLA), à ~10 km de la ville de Salta.\nLes deux capitales disposent de terminaux de bus avec des liaisons depuis tout le pays.",
+              "pending_items": ""
+            },
+            {
+              "icon": "mdi:routes",
+              "title": "Routes et transferts",
+              "items": "San Salvador de Jujuy ↔ Salta capitale : ~90 km par la RN9 (corniche) ou la RN34.",
+              "pending_items": "Transferts officiels entre les lieux et horaires suggérés."
+            },
+            {
+              "icon": "mdi:terrain",
+              "title": "Altitude et climat",
+              "items": "San Salvador de Jujuy et Salta capitale sont à ~1 200 m d'altitude ; avril est tempéré et sec.\nSi vous parcourez la Quebrada de Humahuaca ou la Puna (2 000 à 3 700 m), prévoyez un jour d'acclimatation.",
+              "pending_items": ""
+            }
+          ],
+          "lodging_title": "Hébergement",
+          "lodging_text": "La carte montre des hôtels du microcentre de San Salvador de Jujuy comme référence initiale. Conventions, tarifs spéciaux et distance au lieu final seront publiés une fois confirmés.",
+          "lodging_pending_items": "Options solidaires et hébergement communautaire\nHébergement à Salta capitale",
+          "lodging_legend_hotel": "Hébergement suggéré",
+          "lodging_legend_city": "Ville hôte",
+          "lodging_list_title": "Hébergements dans le microcentre",
+          "hotels": [
+            {
+              "name": "Howard Johnson Plaza Jujuy",
+              "detail": "Güemes 864 · 4★ · salles d'événements",
+              "lat": -24.1831,
+              "lng": -65.3074,
+              "phone": "+54 388 424-9800",
+              "whatsapp": "5493883407627",
+              "email": "reservas@hjjujuy.com.ar",
+              "web": "hjjujuy.com.ar"
+            },
+            {
+              "name": "Amérian Jujuy",
+              "detail": "Av. 19 de Abril 687 · 4★ supérieur · face au parc Xibi-Xibi",
+              "lat": -24.1889,
+              "lng": -65.3047,
+              "phone": "+54 9 388 515-0999",
+              "whatsapp": "5493885150999",
+              "email": "info@amerian.com",
+              "web": "amerian.com"
+            },
+            {
+              "name": "Ohasis Hotel Spa",
+              "detail": "Ramírez de Velazco 244 · spa · salle de conventions",
+              "lat": -24.1864,
+              "lng": -65.3101,
+              "phone": "+54 388 424-1017",
+              "whatsapp": "5493885055080",
+              "email": "reservas@ohasishoteljujuy.com",
+              "web": "ohasishoteljujuy.com"
+            },
+            {
+              "name": "El Arribo Hotel",
+              "detail": "Belgrano 1263 · 3★ · microcentre",
+              "lat": -24.1857,
+              "lng": -65.3105,
+              "phone": "+54 388 422-2539",
+              "whatsapp": "5493886056908",
+              "email": "info@elarribo.com",
+              "web": "elarribo.com"
+            },
+            {
+              "name": "Hotel Gregorio I",
+              "detail": "Boutique · à quelques pas de la Plaza Belgrano et de la Cathédrale",
+              "lat": -24.1877,
+              "lng": -65.3044,
+              "phone": "+54 388 424-4545",
+              "whatsapp": "5493885828822",
+              "email": "info@gregoriohotel.com",
+              "web": "gregoriohotel.com"
+            },
+            {
+              "name": "Hotel ICONICO JUJUY Centro",
+              "detail": "Alvear 627 · petit-déjeuner inclus · à 300 m du Cabildo",
+              "lat": -24.1839,
+              "lng": -65.302,
+              "phone": "+54 388 422-2982",
+              "whatsapp": "5493885843456",
+              "email": "jujuyhotel627@gmail.com",
+              "web": "alojarjujuy.com"
+            },
+            {
+              "name": "Hotel Munay Jujuy",
+              "detail": "Alvear 1230 · option économique · petit-déjeuner et Wi-Fi",
+              "lat": -24.1845,
+              "lng": -65.31,
+              "phone": "+54 388 422-8435",
+              "whatsapp": "5493884174629",
+              "email": "jujuy@munayhotel.com.ar",
+              "web": "munayhotel.com.ar"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

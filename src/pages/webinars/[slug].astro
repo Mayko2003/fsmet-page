@@ -1,0 +1,42 @@
+---
+import { getEmDashEntry } from "emdash";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ReunionesWebinares from "../../components/ReunionesWebinares.astro";
+
+const slug = Astro.params.slug;
+
+if (!slug) {
+	return Astro.rewrite("/404");
+}
+
+const { entry, isPreview, error } = await getEmDashEntry("webinars", slug, {
+	locale: Astro.currentLocale,
+});
+
+if (error) {
+	console.error("[emdash] No se pudo cargar el webinar en preview:", error);
+	return new Response("No se pudo cargar el webinar", { status: 500 });
+}
+
+if (!entry) {
+	return Astro.rewrite("/404");
+}
+
+// La ruta solo existe para previews con token. Si alguien entra sin token a
+// una entrada publicada, lo mandamos a la sección real de la home.
+if (!isPreview) {
+	return Astro.redirect("/#reuniones");
+}
+
+const title = (entry.data as { title?: string }).title ?? "Webinar";
+---
+
+<Layout title={`Vista previa · ${title}`}>
+	<Header />
+	<main id="contenido">
+		<ReunionesWebinares previewEntry={entry} />
+	</main>
+	<Footer />
+</Layout>

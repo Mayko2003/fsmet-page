@@ -1,0 +1,275 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/global.css";
+
+const user = (Astro.locals as any).user as
+	| { id: string; email: string; name?: string; role: number }
+	| undefined;
+
+if (!user) {
+	return Astro.redirect(`/_emdash/admin/login?redirect=${encodeURIComponent("/admin/invites")}`);
+}
+
+if (user.role < 50) {
+	return Astro.rewrite("/404");
+}
+
+const db = (Astro.locals as any).emdash?.db as any;
+
+const rows = db
+	? await db
+			.selectFrom("auth_tokens")
+			.select(["email", "role", "expires_at", "created_at"])
+			.where("type", "=", "invite")
+			.orderBy("created_at", "desc")
+			.execute()
+	: [];
+
+const invites = rows.map((row: any) => ({
+	email: String(row.email ?? ""),
+	role: Number(row.role ?? 0),
+	expiresAt: String(row.expires_at ?? ""),
+	createdAt: String(row.created_at ?? ""),
+}));
+
+const roleLabels: Record<number, string> = {
+	10: "Suscriptor",
+	20: "Colaborador",
+	30: "Autor",
+	40: "Editor",
+	50: "Administrador",
+};
+
+const dateFormatter = new Intl.DateTimeFormat("es-AR", {
+	dateStyle: "medium",
+	timeStyle: "short",
+});
+
+const formatDate = (value: string) => {
+	const date = new Date(value);
+	return Number.isNaN(date.getTime()) ? "—" : dateFormatter.format(date);
+};
+---
+
+<Layout title="Invitaciones · FSMET" noindex>
+	<main class="mx-auto min-h-screen max-w-4xl px-5 py-14 md:px-8">
+		<div class="flex flex-wrap items-start justify-between gap-4">
+			<div>
+				<p class="text-sm font-semibold tracking-widest text-clay uppercase">Administración</p>
+				<h1 class="mt-2 font-display text-4xl font-semibold">Invitaciones</h1>
+				<p class="mt-3 max-w-2xl leading-relaxed text-muted">
+					Generá links de invitación y compartilos manualmente. Solo los administradores
+					pueden ver esta página. Al generar un link nuevo, se revoca el anterior del mismo correo.
+				</p>
+			</div>
+			<a
+				href="/_emdash/admin/"
+				class="rounded-full border border-sand bg-paper px-4 py-2 text-sm font-semibold text-ink transition hover:border-clay hover:text-clay"
+			>
+				Volver al admin
+			</a>
+		</div>
+
+		<div class="mt-10 rounded-3xl border border-sand bg-paper p-6 md:p-8">
+			<h2 class="font-display text-2xl font-semibold">Nuevo link</h2>
+			<form id="invite-form" class="mt-5 grid gap-4 md:grid-cols-[1fr_220px_auto] md:items-end">
+				<label class="grid gap-2 text-sm font-semibold text-ink">
+					Correo
+					<input
+						id="invite-email"
+						type="email"
+						required
+						placeholder="persona@ejemplo.com"
+						class="w-full rounded-2xl border border-sand bg-cream px-4 py-3 text-base font-normal text-ink outline-none transition focus:border-clay"
+					/>
+				</label>
+				<label class="grid gap-2 text-sm font-semibold text-ink">
+					Rol
+					<select
+						id="invite-role"
+						class="w-full rounded-2xl border border-sand bg-cream px-4 py-3 text-base font-normal text-ink outline-none transition focus:border-clay"
+					>
+						<option value="20">Colaborador</option>
+						<option value="30" selected>Autor</option>
+						<option value="40">Editor</option>
+						<option value="50">Administrador</option>
+					</select>
+				</label>
+				<button
+					type="submit"
+					class="rounded-full bg-clay px-6 py-3 text-sm font-semibold text-paper transition hover:bg-clay-deep"
+				>
+					Generar link
+				</button>
+			</form>
+			<p id="invite-status" class="mt-4 min-h-6 text-sm text-muted" role="status" aria-live="polite"></p>
+
+			<div id="invite-result" class="mt-2 hidden rounded-2xl border border-gold/40 bg-gold-soft p-4">
+				<p class="text-sm font-semibold text-ink">
+					Link para <span id="invite-result-email"></span>
+				</p>
+				<div class="mt-3 flex flex-wrap items-center gap-3">
+					<a
+						id="invite-result-link"
+						href="#"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="min-w-0 flex-1 break-all rounded-xl bg-paper px-3 py-2 text-sm text-clay underline decoration-clay/40 underline-offset-4"
+					></a>
+					<button
+						id="copy-invite"
+						type="button"
+						class="rounded-full bg-ink px-4 py-2 text-sm font-semibold text-cream transition hover:bg-clay"
+					>
+						Copiar
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="mt-8">
+			<h2 class="font-display text-2xl font-semibold">Invitaciones pendientes</h2>
+			{
+				invites.length ? (
+					<ul class="mt-4 grid gap-3">
+						{invites.map((invite) => (
+							<li class="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-sand bg-paper px-5 py-4">
+								<div class="min-w-0">
+									<p class="truncate font-semibold text-ink">{invite.email}</p>
+									<p class="mt-1 text-sm text-muted">
+										{roleLabels[invite.role] ?? `Rol ${invite.role}`} · vence {formatDate(invite.expiresAt)}
+									</p>
+								</div>
+								<div class="flex flex-wrap gap-2">
+									<button
+										type="button"
+										data-generate
+										data-email={invite.email}
+										data-role={invite.role}
+										class="rounded-full border border-sand bg-cream px-4 py-2 text-sm font-semibold text-ink transition hover:border-clay hover:text-clay"
+									>
+										Generar nuevo link
+									</button>
+									<button
+										type="button"
+										data-revoke
+										data-email={invite.email}
+										class="rounded-full border border-clay/30 bg-paper px-4 py-2 text-sm font-semibold text-clay transition hover:bg-clay hover:text-paper"
+									>
+										Revocar
+									</button>
+								</div>
+							</li>
+						))}
+					</ul>
+				) : (
+					<p class="mt-4 rounded-2xl border border-dashed border-sand bg-cream px-5 py-8 text-center text-muted">
+						No hay invitaciones pendientes.
+					</p>
+				)
+			}
+		</div>
+
+		<p class="mt-10 text-sm text-muted">
+			Sesión: <strong class="text-ink">{user.email}</strong>
+		</p>
+	</main>
+
+	<script>
+		const form = document.getElementById("invite-form") as HTMLFormElement | null;
+		const emailInput = document.getElementById("invite-email") as HTMLInputElement | null;
+		const roleSelect = document.getElementById("invite-role") as HTMLSelectElement | null;
+		const statusEl = document.getElementById("invite-status");
+		const resultEl = document.getElementById("invite-result");
+		const resultEmail = document.getElementById("invite-result-email");
+		const resultLink = document.getElementById("invite-result-link") as HTMLAnchorElement | null;
+		const copyButton = document.getElementById("copy-invite");
+
+		function setStatus(message: string, kind: "ok" | "error" | "info" = "info") {
+			if (!statusEl) return;
+			statusEl.textContent = message;
+			statusEl.className =
+				kind === "error"
+					? "mt-4 min-h-6 text-sm font-medium text-clay"
+					: kind === "ok"
+						? "mt-4 min-h-6 text-sm font-medium text-sage"
+						: "mt-4 min-h-6 text-sm text-muted";
+		}
+
+		async function createInvite(email: string, role: string) {
+			setStatus("Generando link…");
+			const response = await fetch("/api/admin/invites/create", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email, role: Number(role) }),
+			});
+			const data = await response.json();
+
+			if (!response.ok || !data.success) {
+				throw new Error(data.error || "No se pudo generar el link.");
+			}
+
+			if (resultEl) resultEl.classList.remove("hidden");
+			if (resultEmail) resultEmail.textContent = data.email;
+			if (resultLink) {
+				resultLink.href = data.url;
+				resultLink.textContent = data.url;
+			}
+			setStatus("Link generado. Copialo y compartilo.", "ok");
+			if (resultEl) resultEl.scrollIntoView({ behavior: "smooth", block: "center" });
+		}
+
+		form?.addEventListener("submit", async (event) => {
+			event.preventDefault();
+			if (!emailInput || !roleSelect) return;
+			try {
+				await createInvite(emailInput.value, roleSelect.value);
+			} catch (error) {
+				setStatus(error instanceof Error ? error.message : "No se pudo generar el link.", "error");
+			}
+		});
+
+		copyButton?.addEventListener("click", async () => {
+			if (!resultLink?.textContent) return;
+			try {
+				await navigator.clipboard.writeText(resultLink.textContent);
+				setStatus("Link copiado al portapapeles.", "ok");
+			} catch {
+				setStatus("No se pudo copiar. Seleccioná el link manualmente.", "error");
+			}
+		});
+
+		document.querySelectorAll<HTMLButtonElement>("[data-generate]").forEach((button) => {
+			button.addEventListener("click", async () => {
+				const email = button.dataset.email ?? "";
+				const role = button.dataset.role ?? "30";
+				if (emailInput) emailInput.value = email;
+				if (roleSelect) roleSelect.value = role;
+				try {
+					await createInvite(email, role);
+				} catch (error) {
+					setStatus(error instanceof Error ? error.message : "No se pudo generar el link.", "error");
+				}
+			});
+		});
+
+		document.querySelectorAll<HTMLButtonElement>("[data-revoke]").forEach((button) => {
+			button.addEventListener("click", async () => {
+				const email = button.dataset.email ?? "";
+				if (!email || !confirm(`¿Revocar la invitación de ${email}?`)) return;
+				setStatus("Revocando…");
+				const response = await fetch("/api/admin/invites/revoke", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ email }),
+				});
+				const data = await response.json();
+				if (!response.ok || !data.success) {
+					setStatus(data.error || "No se pudo revocar la invitación.", "error");
+					return;
+				}
+				window.location.reload();
+			});
+		});
+	</script>
+</Layout>

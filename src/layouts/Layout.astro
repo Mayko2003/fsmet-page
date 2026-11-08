@@ -3,11 +3,12 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { getStrings, LOCALES } from "../i18n/strings";
 
 const s = getStrings(Astro.currentLocale);
-const { title = s.meta.title, description = s.meta.description } = Astro.props;
+const { title = s.meta.title, description = s.meta.description, noindex = false } = Astro.props;
 
 interface Props {
 	title?: string;
 	description?: string;
+	noindex?: boolean;
 }
 ---
 
@@ -19,6 +20,7 @@ interface Props {
 		<link rel="icon" type="image/png" href="/img/favicon.png" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
 		<meta name="theme-color" content="#2a221c" />
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content={s.meta.ogLocale} />

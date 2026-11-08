@@ -1,14 +1,53 @@
 ---
-import CardsSection from "./CardsSection.astro";
+import CardsSection, { type CardItem } from "./CardsSection.astro";
 import { getStrings } from "../i18n/strings";
+import { getSection } from "../lib/emdash-section";
 
+type AgendaItemData = {
+	icon?: string;
+	logo?: string;
+	logo_image?: CardItem["logoImage"];
+	meta?: string;
+	title?: string;
+	text?: string;
+	cta?: string;
+	url?: string;
+};
+
+type AgendaData = {
+	label?: string;
+	heading?: string;
+	intro?: string;
+	items?: AgendaItemData[];
+};
+
+interface Props {
+	previewEntry?: { data: AgendaData } | null;
+}
+
+const { previewEntry } = Astro.props;
 const s = getStrings(Astro.currentLocale);
+const cms = previewEntry?.data ?? (await getSection<AgendaData>("agenda", Astro.currentLocale));
+
+const items: CardItem[] =
+	cms?.items?.length ?
+		cms.items.map((item) => ({
+			icon: item.icon || "mdi:earth",
+			logo: item.logo || undefined,
+			logoImage: item.logo_image ?? null,
+			meta: item.meta || "",
+			title: item.title || "",
+			text: item.text || "",
+			cta: item.cta || "",
+			url: item.url || "",
+		}))
+	: s.agenda.items.map((item) => ({ ...item, logoImage: null }));
 ---
 
 <CardsSection
 	id="agenda-global"
-	label={s.agenda.label}
-	h2={s.agenda.h2}
-	intro={s.agenda.intro}
-	items={s.agenda.items}
+	label={cms?.label || s.agenda.label}
+	h2={cms?.heading || s.agenda.h2}
+	intro={cms?.intro || s.agenda.intro}
+	items={items}
 />
