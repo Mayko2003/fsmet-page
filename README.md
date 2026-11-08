@@ -216,9 +216,9 @@ no lo subas al repositorio.
   URL para que `pg` no descarte esa CA.
 
   El rol debe poder crear y alterar tablas en `public`. El usuario `postgres` de
-  Supabase ya tiene esos permisos. El `pg.Pool` local está limitado a 5
-  conexiones por instancia; si el plan de Supabase es chico, se puede bajar ese
-  valor en `astro.config.mjs`.
+  Supabase ya tiene esos permisos. El `pg.Pool` está limitado a **1 conexión por
+  instancia** porque el Session Pooler de Supabase permite 15 clientes en total;
+  con `max: 5` el admin agota el pool y devuelve 500 en dashboard y contenido.
 
 - **Imágenes:** Supabase Storage expone un endpoint S3-compatible. Habilitar
   **Storage → Settings → S3 protocol**, generar un par de credenciales y crear un

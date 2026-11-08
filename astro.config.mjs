@@ -58,7 +58,7 @@ const database = databaseUrl
   ? postgres(
       /** @type {any} */ ({
         connectionString: databaseConnectionString,
-        pool: { max: 5, connectionTimeoutMillis: 10_000 },
+        pool: { max: 1, connectionTimeoutMillis: 10_000, idleTimeoutMillis: 5_000 },
         ...(supabaseCa ? { ssl: { ca: supabaseCa, rejectUnauthorized: true } } : {}),
       }),
     )
