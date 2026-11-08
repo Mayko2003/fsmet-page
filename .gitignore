@@ -43,3 +43,4 @@ pwd.bd
 
 # Agent skill registry cache
 .atl/
+.vercel
