@@ -118,12 +118,18 @@ if (previewEntry) {
 							style={`--reveal-delay: ${i * 60}ms`}
 							class="flex flex-col overflow-hidden rounded-3xl border border-sand bg-cream"
 						>
-							<div class="aspect-[16/9] w-full overflow-hidden border-b border-sand bg-sand">
+							<button
+								type="button"
+								data-webinar-zoom
+								data-title={reunion.tematica}
+								aria-label={`${s.reuniones.zoom}: ${reunion.tematica}`}
+								class="group relative block aspect-[16/9] w-full cursor-zoom-in overflow-hidden border-b border-sand bg-sand"
+							>
 								{reunion.imagenMedia ? (
 									<EmDashImage
 										image={reunion.imagenMedia}
 										alt={reunion.imagenAlt}
-										class="h-full w-full object-cover"
+										class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
 									/>
 								) : (
 									<img
@@ -133,10 +139,15 @@ if (previewEntry) {
 										height="675"
 										loading="lazy"
 										decoding="async"
-										class="h-full w-full object-cover"
+										class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
 									/>
 								)}
-							</div>
+								<span class="pointer-events-none absolute inset-0 flex items-end justify-end bg-gradient-to-t from-ink/25 to-transparent p-3 opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
+									<span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-ink/75 text-paper ring-1 ring-paper/30 backdrop-blur-sm">
+										<Icon name="mdi:magnify-plus-outline" class="h-5 w-5" />
+									</span>
+								</span>
+							</button>
 							<div class="flex flex-1 flex-col p-6">
 								<div class="flex items-center justify-between gap-3">
 									<span class="inline-flex items-center gap-1.5 rounded-full bg-gold-soft px-3 py-1 text-xs font-semibold text-ink/80">
@@ -192,3 +203,92 @@ if (previewEntry) {
 		}
 	</div>
 </section>
+
+<dialog
+	id="webinar-lightbox"
+	aria-label={s.reuniones.zoom}
+	class="m-auto w-full max-w-6xl bg-transparent p-0 text-paper"
+>
+	<div class="relative flex max-h-[92vh] w-full max-w-[94vw] flex-col items-center justify-center">
+		<button
+			type="button"
+			data-close-lightbox
+			aria-label={s.reuniones.close}
+			class="fixed top-4 right-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-paper/10 text-paper ring-1 ring-paper/30 backdrop-blur transition hover:bg-paper/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+		>
+			<Icon name="mdi:close" class="h-6 w-6" />
+		</button>
+		<img
+			id="webinar-lightbox-image"
+			alt=""
+			class="max-h-[82vh] w-auto max-w-full rounded-2xl bg-ink/20 object-contain shadow-2xl ring-1 ring-paper/20"
+		/>
+		<p id="webinar-lightbox-caption" class="mt-4 max-w-2xl text-center text-sm font-medium text-paper/85"></p>
+	</div>
+</dialog>
+
+<style>
+	#webinar-lightbox::backdrop {
+		background: rgb(42 34 28 / 0.82);
+		backdrop-filter: blur(6px);
+	}
+</style>
+
+<script>
+	const lightbox = document.getElementById("webinar-lightbox") as HTMLDialogElement | null;
+	const lightboxImage = document.getElementById("webinar-lightbox-image") as HTMLImageElement | null;
+	const lightboxCaption = document.getElementById("webinar-lightbox-caption");
+
+	document.querySelectorAll<HTMLButtonElement>("[data-webinar-zoom]").forEach((button) => {
+		button.addEventListener("click", () => {
+			const image = button.querySelector("img");
+			if (!lightbox || !lightboxImage || !image) return;
+
+			// Huge 2x candidates (e.g. 9940w) are rejected or very slow in the
+			// image optimizer, so cap the lightbox source at a sane width.
+			const MAX_LIGHTBOX_WIDTH = 2560;
+			const srcset = image.getAttribute("srcset");
+			const candidates = srcset
+				? srcset
+						.split(",")
+						.map((part) => {
+							const [url, descriptor = ""] = part.trim().split(/\s+/);
+							const width = Number.parseInt(descriptor, 10);
+							return url ? { url, width: Number.isFinite(width) ? width : 0 } : null;
+						})
+						.filter((candidate): candidate is { url: string; width: number } => candidate !== null)
+				: [];
+			const largestWithinLimit = candidates
+				.filter((candidate) => candidate.width > 0 && candidate.width <= MAX_LIGHTBOX_WIDTH)
+				.at(-1);
+			const bestCandidate = largestWithinLimit ?? candidates.at(-1);
+
+			// `currentSrc` is "" (not null) while a lazy image has not loaded yet,
+			// so `||` is required to fall back to the `src` attribute.
+			lightboxImage.src = bestCandidate?.url || image.currentSrc || image.src;
+			lightboxImage.alt = image.alt || "";
+			if (lightboxCaption) {
+				lightboxCaption.textContent = button.dataset.title || image.alt || "";
+			}
+
+			document.documentElement.classList.add("overflow-hidden");
+			lightbox.showModal();
+		});
+	});
+
+	document.querySelector("[data-close-lightbox]")?.addEventListener("click", () => {
+		lightbox?.close();
+	});
+
+	lightbox?.addEventListener("click", (event) => {
+		if (event.target === lightbox) lightbox.close();
+	});
+
+	lightbox?.addEventListener("close", () => {
+		document.documentElement.classList.remove("overflow-hidden");
+		if (lightboxImage) {
+			lightboxImage.removeAttribute("src");
+			lightboxImage.alt = "";
+		}
+	});
+</script>
