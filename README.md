@@ -278,3 +278,8 @@ on-demand; el endpoint `api/inscripcion` mantiene `prerender = false`.
 Con `output: "server"`, el HTML se genera en cada request. Si más adelante se
 quiere volver a estático para el resto de la página, se puede evaluar cachear la
 home o prerenderizar secciones que no dependan del CMS.
+
+> **Vercel Hobby:** el autor de los commits debe usar el mismo email de la cuenta
+> dueña del proyecto (`elbio.lamas18@gmail.com`). Si el commit author no coincide,
+> Vercel bloquea el deploy con `commit author doesn't have permission`.
+
