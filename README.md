@@ -202,12 +202,14 @@ con la CLI (`supabase link`). El estado local de la CLI queda en `supabase/.temp
 (ignorado por git). Las credenciales locales están en `pwd.bd`, también ignorado:
 no lo subas al repositorio.
 
-- **Base de datos:** usar la cadena del **Session Pooler** (puerto `5432`), no la
-  conexión directa (que es solo IPv6) ni el transaction pooler (`6543`). EmDash
-  corre migraciones y advisory locks, y el modo sesión evita sorpresas:
+- **Base de datos:** usar el **Transaction Pooler** (puerto `6543`) en Vercel.
+  El **Session Pooler** (`5432`) tiene un límite de 15 clientes y se satura
+  cuando Vercel levanta varias instancias serverless. El transaction pooler
+  soporta queries parametrizadas y advisory locks transaccionales, que es lo que
+  usa EmDash:
 
   ```env
-  DATABASE_URL=postgresql://postgres.<project-ref>:<password-url-encoded>@aws-1-<region>.pooler.supabase.com:5432/postgres
+  DATABASE_URL=postgresql://postgres.<project-ref>:<password-url-encoded>@aws-1-<region>.pooler.supabase.com:6543/postgres
   ```
 
   Si la contraseña tiene caracteres especiales (`@ : / ? # & +`), hay que
@@ -217,8 +219,8 @@ no lo subas al repositorio.
 
   El rol debe poder crear y alterar tablas en `public`. El usuario `postgres` de
   Supabase ya tiene esos permisos. El `pg.Pool` está limitado a **1 conexión por
-  instancia** porque el Session Pooler de Supabase permite 15 clientes en total;
-  con `max: 5` el admin agota el pool y devuelve 500 en dashboard y contenido.
+  instancia**; con el transaction pooler cada conexión se libera al terminar la
+  transacción y no se agota el límite de 15 del session pooler.
 
 - **Imágenes:** Supabase Storage expone un endpoint S3-compatible. Habilitar
   **Storage → Settings → S3 protocol**, generar un par de credenciales y crear un
