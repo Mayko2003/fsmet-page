@@ -280,6 +280,6 @@ quiere volver a estático para el resto de la página, se puede evaluar cachear 
 home o prerenderizar secciones que no dependan del CMS.
 
 > **Vercel Hobby:** el autor de los commits debe coincidir con la cuenta de GitHub
-> vinculada a Vercel (`crafter4411`). Si no coincide, Vercel bloquea el deploy con
+> vinculada a la cuenta de Vercel. Si no coincide, Vercel bloquea el deploy con
 > `commit author doesn't have permission`.
 
