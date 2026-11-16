@@ -7,8 +7,12 @@ import { getStrings } from "../i18n/strings";
 const s = getStrings(Astro.currentLocale);
 const anio = new Date().getFullYear();
 
-const redes = [
-	{ icon: "mdi:facebook-box", label: "Facebook" },
+const redes: { icon: string; label: string; href?: string }[] = [
+	{
+		icon: "mdi:facebook-box",
+		label: "Facebook",
+		href: "https://www.facebook.com/fsmet.2024/",
+	},
 	{ icon: "mdi:instagram", label: "Instagram" },
 	{ icon: "mdi:whatsapp", label: "WhatsApp" },
 	{ icon: "mdi:youtube", label: "YouTube" },
@@ -46,13 +50,26 @@ const redes = [
 				{
 					redes.map((red) => (
 						<li>
-							<span
-								title={`${red.label}: ${s.footer.soon}`}
-								class="inline-flex opacity-50"
-								aria-label={`${red.label} (${s.footer.soon})`}
-							>
-								<Icon name={red.icon} class="size-8" />
-							</span>
+							{red.href ? (
+								<a
+									href={red.href}
+									target="_blank"
+									rel="noopener noreferrer"
+									title={red.label}
+									aria-label={red.label}
+									class="inline-flex transition-colors hover:text-gold-soft"
+								>
+									<Icon name={red.icon} class="size-8" />
+								</a>
+							) : (
+								<span
+									title={`${red.label}: ${s.footer.soon}`}
+									class="inline-flex opacity-50"
+									aria-label={`${red.label} (${s.footer.soon})`}
+								>
+									<Icon name={red.icon} class="size-8" />
+								</span>
+							)}
 						</li>
 					))
 				}
