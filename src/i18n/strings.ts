@@ -56,6 +56,7 @@ const es = {
 		quoteCaption:
 			"Organización responsable de la preparación: Movimiento Hacia Otra Economía, Social Solidaria Popular Campesino Indígena, Afrodescendiente. Se está conformando un equipo de gobernanza para el proceso.",
 		ejesTitle: "Seis ejes temáticos",
+		linkLabel: "Conocer más",
 		ejes: [
 			{
 				n: "01",
@@ -454,6 +455,7 @@ const en: Strings = {
 		quoteCaption:
 			"Organization responsible for the preparation: Movimiento Hacia Otra Economía, Social Solidaria Popular Campesino Indígena, Afrodescendiente. A governance team for the process is being formed.",
 		ejesTitle: "Six thematic axes",
+		linkLabel: "Learn more",
 		ejes: [
 			{
 				n: "01",
@@ -850,6 +852,7 @@ const pt: Strings = {
 		quoteCaption:
 			"Organização responsável pela preparação: Movimiento Hacia Otra Economía, Social Solidaria Popular Campesino Indígena, Afrodescendiente. Uma equipe de governança para o processo está se formando.",
 		ejesTitle: "Seis eixos temáticos",
+		linkLabel: "Saiba mais",
 		ejes: [
 			{
 				n: "01",
@@ -1246,6 +1249,7 @@ const fr: Strings = {
 		quoteCaption:
 			"Organisation responsable de la préparation : Movimiento Hacia Otra Economía, Social Solidaria Popular Campesino Indígena, Afrodescendiente. Une équipe de gouvernance du processus est en cours de formation.",
 		ejesTitle: "Six axes thématiques",
+		linkLabel: "En savoir plus",
 		ejes: [
 			{
 				n: "01",

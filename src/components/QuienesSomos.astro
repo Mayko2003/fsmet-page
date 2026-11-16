@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import { getStrings } from "../i18n/strings";
 import { commas, getSection } from "../lib/emdash-section";
 
@@ -14,6 +15,8 @@ type AboutData = {
 	heading?: string;
 	paragraph_1?: string;
 	paragraph_2?: string;
+	link_label?: string;
+	link_url?: string;
 	quote?: string;
 	quote_caption?: string;
 	axes_title?: string;
@@ -43,6 +46,8 @@ const about = {
 	h2: cms?.heading || s.quienes.h2,
 	p1: cms?.paragraph_1 || s.quienes.p1,
 	p2: cms?.paragraph_2 || s.quienes.p2,
+	linkUrl: cms?.link_url || "",
+	linkLabel: cms?.link_label || s.quienes.linkLabel,
 	quote: cms?.quote || s.quienes.quote,
 	quoteCaption: cms?.quote_caption || s.quienes.quoteCaption,
 	ejesTitle: cms?.axes_title || s.quienes.ejesTitle,
@@ -63,6 +68,20 @@ const about = {
 				{about.p2}
 			</p>
 		</div>
+		{
+			about.linkUrl && (
+				<a
+					data-reveal
+					href={about.linkUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="mt-8 inline-flex items-center gap-2 rounded-full bg-clay px-5 py-2.5 text-sm font-semibold text-paper transition hover:bg-clay-deep"
+				>
+					{about.linkLabel}
+					<Icon name="mdi:open-in-new" class="h-4 w-4" />
+				</a>
+			)
+		}
 		<div data-reveal class="mt-12 rounded-3xl bg-sand/70 p-6 md:p-8">
 			<p class="font-display text-2xl leading-snug text-ink md:text-3xl">
 				{about.quote}

@@ -43,6 +43,8 @@ export interface About {
   quote_caption?: string;
   axes_title?: string;
   axes?: { "number"?: string | null; "title": string; "text"?: string | null; "topics"?: string | null }[];
+  link_label?: string;
+  link_url?: string;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;

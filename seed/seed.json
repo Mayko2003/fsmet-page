@@ -245,6 +245,16 @@
           "type": "text"
         },
         {
+          "slug": "link_label",
+          "label": "Enlace · texto del botón",
+          "type": "string"
+        },
+        {
+          "slug": "link_url",
+          "label": "Enlace · URL",
+          "type": "url"
+        },
+        {
           "slug": "quote",
           "label": "Cita",
           "type": "string"
