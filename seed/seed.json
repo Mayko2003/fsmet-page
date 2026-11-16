@@ -301,9 +301,9 @@
     },
     {
       "slug": "agenda",
-      "label": "Agenda global",
-      "labelSingular": "Agenda global",
-      "description": "Otros encuentros del ecosistema.",
+      "label": "Otros encuentros",
+      "labelSingular": "Otros encuentros",
+      "description": "Agenda global: otros encuentros del ecosistema que se muestran en la página.",
       "icon": "calendar-blank",
       "group": "Secciones de la página",
       "sortOrder": 30,
