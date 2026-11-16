@@ -83,6 +83,9 @@ export interface Info {
   lodging_legend_city?: string;
   lodging_list_title?: string;
   hotels?: { "name": string; "detail"?: string | null; "lat": number; "lng": number; "phone"?: string | null; "whatsapp"?: string | null; "email"?: string | null; "web"?: string | null }[];
+  program_title?: string;
+  program_subtitle?: string;
+  program_days?: { "day": string; "place"?: string | null; "items"?: string | null }[];
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;

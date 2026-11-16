@@ -164,7 +164,7 @@ const es = {
 			{
 				when: "7–9 de abril de 2027",
 				where: "Jujuy y Salta",
-				text: "Encuentro principal del FSMET 2027: tres jornadas. Sedes y cronograma de cada fecha por confirmar.",
+				text: "Encuentro principal del FSMET 2027: tres jornadas, el 7 y el 8 en Jujuy y el 9 en Salta. Sedes por confirmar.",
 			},
 		],
 	},
@@ -248,6 +248,41 @@ const es = {
 				],
 			},
 		],
+		programa: {
+			title: "Programa general",
+			subtitle: "7, 8 y 9 de abril de 2027 · Jujuy y Salta",
+			dias: [
+				{
+					day: "Miércoles 7 de abril",
+					place: "Jujuy",
+					items: [
+						{ time: "14:00–15:00", text: "Apertura" },
+						{ time: "15:00–17:00", text: "Disertaciones" },
+						{ time: "17:00–20:00", text: "Mesas de debate" },
+					],
+				},
+				{
+					day: "Jueves 8 de abril",
+					place: "Jujuy",
+					items: [
+						{ time: "08:00–13:00", text: "Visitas a experiencias territoriales" },
+						{ time: "09:00–12:00", text: "Disertaciones" },
+						{ time: "14:00–16:00", text: "Disertaciones" },
+						{ time: "16:00–20:00", text: "Mesa de debate" },
+					],
+				},
+				{
+					day: "Viernes 9 de abril",
+					place: "Salta",
+					items: [
+						{ time: "Desde las 06:30", text: "Partida hacia Salta" },
+						{ time: "09:00–12:00", text: "Disertaciones y visitas a experiencias territoriales" },
+						{ time: "14:00–18:00", text: "Mesa de debate" },
+						{ time: "18:00–20:00", text: "Cierre del Foro" },
+					],
+				},
+			],
+		},
 		hospedaje: {
 			title: "Hospedaje",
 			text: "El mapa muestra hoteles del microcentro de San Salvador de Jujuy como referencia inicial. Convenios, tarifas especiales y distancia a la sede final se publican cuando estén confirmados.",
@@ -291,7 +326,7 @@ const es = {
 			},
 			{
 				q: "¿Cuándo y dónde es el encuentro?",
-				a: "El encuentro principal se realiza los días 7, 8 y 9 de abril de 2027 en Jujuy y Salta. Las sedes y el cronograma de cada jornada se anunciarán cuando estén confirmados.",
+				a: "El encuentro principal se realiza los días 7, 8 y 9 de abril de 2027: el 7 y el 8 en Jujuy y el 9 en Salta. El programa general de cada jornada está en Información útil; las sedes se anunciarán cuando estén confirmadas.",
 			},
 			{
 				q: "¿Por qué Jujuy y Salta?",
@@ -527,7 +562,7 @@ const en: Strings = {
 			{
 				when: "April 7–9, 2027",
 				where: "Jujuy and Salta",
-				text: "Main gathering of FSMET 2027: three days. Venues and the schedule for each date to be confirmed.",
+				text: "Main gathering of FSMET 2027: three days, April 7 and 8 in Jujuy and April 9 in Salta. Venues to be confirmed.",
 			},
 		],
 	},
@@ -611,6 +646,41 @@ const en: Strings = {
 				],
 			},
 		],
+		programa: {
+			title: "General programme",
+			subtitle: "April 7, 8 and 9, 2027 · Jujuy and Salta",
+			dias: [
+				{
+					day: "Wednesday, April 7",
+					place: "Jujuy",
+					items: [
+						{ time: "14:00–15:00", text: "Opening" },
+						{ time: "15:00–17:00", text: "Talks" },
+						{ time: "17:00–20:00", text: "Discussion panels" },
+					],
+				},
+				{
+					day: "Thursday, April 8",
+					place: "Jujuy",
+					items: [
+						{ time: "08:00–13:00", text: "Visits to territorial experiences" },
+						{ time: "09:00–12:00", text: "Talks" },
+						{ time: "14:00–16:00", text: "Talks" },
+						{ time: "16:00–20:00", text: "Discussion panel" },
+					],
+				},
+				{
+					day: "Friday, April 9",
+					place: "Salta",
+					items: [
+						{ time: "From 06:30", text: "Departure for Salta" },
+						{ time: "09:00–12:00", text: "Talks and visits to territorial experiences" },
+						{ time: "14:00–18:00", text: "Discussion panel" },
+						{ time: "18:00–20:00", text: "Closing of the Forum" },
+					],
+				},
+			],
+		},
 		hospedaje: {
 			title: "Accommodation",
 			text: "The map shows hotels in downtown San Salvador de Jujuy as an initial reference. Agreements, special rates and distance to the final venue will be published once confirmed.",
@@ -654,7 +724,7 @@ const en: Strings = {
 			},
 			{
 				q: "When and where is the gathering?",
-				a: "The main gathering takes place on April 7, 8 and 9, 2027 in Jujuy and Salta. Venues and the schedule for each day will be announced once confirmed.",
+				a: "The main gathering takes place on April 7, 8 and 9, 2027: April 7 and 8 in Jujuy and April 9 in Salta. The general programme for each day is under Useful information; venues will be announced once confirmed.",
 			},
 			{
 				q: "Why Jujuy and Salta?",
@@ -888,7 +958,7 @@ const pt: Strings = {
 			{
 				when: "7–9 de abril de 2027",
 				where: "Jujuy e Salta",
-				text: "Encontro principal do FSMET 2027: três jornadas. Sedes e cronograma de cada data a confirmar.",
+				text: "Encontro principal do FSMET 2027: três jornadas, 7 e 8 em Jujuy e 9 em Salta. Sedes a confirmar.",
 			},
 		],
 	},
@@ -972,6 +1042,41 @@ const pt: Strings = {
 				],
 			},
 		],
+		programa: {
+			title: "Programa geral",
+			subtitle: "7, 8 e 9 de abril de 2027 · Jujuy e Salta",
+			dias: [
+				{
+					day: "Quarta-feira, 7 de abril",
+					place: "Jujuy",
+					items: [
+						{ time: "14:00–15:00", text: "Abertura" },
+						{ time: "15:00–17:00", text: "Palestras" },
+						{ time: "17:00–20:00", text: "Mesas de debate" },
+					],
+				},
+				{
+					day: "Quinta-feira, 8 de abril",
+					place: "Jujuy",
+					items: [
+						{ time: "08:00–13:00", text: "Visitas a experiências territoriais" },
+						{ time: "09:00–12:00", text: "Palestras" },
+						{ time: "14:00–16:00", text: "Palestras" },
+						{ time: "16:00–20:00", text: "Mesa de debate" },
+					],
+				},
+				{
+					day: "Sexta-feira, 9 de abril",
+					place: "Salta",
+					items: [
+						{ time: "A partir das 06:30", text: "Partida para Salta" },
+						{ time: "09:00–12:00", text: "Palestras e visitas a experiências territoriais" },
+						{ time: "14:00–18:00", text: "Mesa de debate" },
+						{ time: "18:00–20:00", text: "Encerramento do Fórum" },
+					],
+				},
+			],
+		},
 		hospedaje: {
 			title: "Hospedagem",
 			text: "O mapa mostra hotéis do miocentro de San Salvador de Jujuy como referência inicial. Convênios, tarifas especiais e distância até a sede final serão publicados quando confirmados.",
@@ -1015,7 +1120,7 @@ const pt: Strings = {
 			},
 			{
 				q: "Quando e onde é o encontro?",
-				a: "O encontro principal acontece nos dias 7, 8 e 9 de abril de 2027 em Jujuy e Salta. As sedes e o cronograma de cada jornada serão anunciados quando confirmados.",
+				a: "O encontro principal acontece nos dias 7, 8 e 9 de abril de 2027: 7 e 8 em Jujuy e 9 em Salta. O programa geral de cada jornada está em Informações úteis; as sedes serão anunciadas quando confirmadas.",
 			},
 			{
 				q: "Por que Jujuy e Salta?",
@@ -1249,7 +1354,7 @@ const fr: Strings = {
 			{
 				when: "7–9 avril 2027",
 				where: "Jujuy et Salta",
-				text: "Rencontre principale du FSMET 2027 : trois journées. Lieux et programme de chaque date à confirmer.",
+				text: "Rencontre principale du FSMET 2027 : trois journées, les 7 et 8 à Jujuy et le 9 à Salta. Lieux à confirmer.",
 			},
 		],
 	},
@@ -1333,6 +1438,41 @@ const fr: Strings = {
 				],
 			},
 		],
+		programa: {
+			title: "Programme général",
+			subtitle: "7, 8 et 9 avril 2027 · Jujuy et Salta",
+			dias: [
+				{
+					day: "Mercredi 7 avril",
+					place: "Jujuy",
+					items: [
+						{ time: "14:00–15:00", text: "Ouverture" },
+						{ time: "15:00–17:00", text: "Conférences" },
+						{ time: "17:00–20:00", text: "Tables rondes" },
+					],
+				},
+				{
+					day: "Jeudi 8 avril",
+					place: "Jujuy",
+					items: [
+						{ time: "08:00–13:00", text: "Visites d’expériences territoriales" },
+						{ time: "09:00–12:00", text: "Conférences" },
+						{ time: "14:00–16:00", text: "Conférences" },
+						{ time: "16:00–20:00", text: "Table ronde" },
+					],
+				},
+				{
+					day: "Vendredi 9 avril",
+					place: "Salta",
+					items: [
+						{ time: "À partir de 06:30", text: "Départ pour Salta" },
+						{ time: "09:00–12:00", text: "Conférences et visites d’expériences territoriales" },
+						{ time: "14:00–18:00", text: "Table ronde" },
+						{ time: "18:00–20:00", text: "Clôture du Forum" },
+					],
+				},
+			],
+		},
 		hospedaje: {
 			title: "Hébergement",
 			text: "La carte montre des hôtels du microcentre de San Salvador de Jujuy comme référence initiale. Conventions, tarifs spéciaux et distance au lieu final seront publiés une fois confirmés.",
@@ -1376,7 +1516,7 @@ const fr: Strings = {
 			},
 			{
 				q: "Quand et où se déroule la rencontre ?",
-				a: "La rencontre principale se déroule les 7, 8 et 9 avril 2027 à Jujuy et Salta. Les lieux et le programme de chaque journée seront annoncés une fois confirmés.",
+				a: "La rencontre principale se déroule les 7, 8 et 9 avril 2027 : les 7 et 8 à Jujuy et le 9 à Salta. Le programme général de chaque journée se trouve dans Informations utiles ; les lieux seront annoncés une fois confirmés.",
 			},
 			{
 				q: "Pourquoi Jujuy et Salta ?",
