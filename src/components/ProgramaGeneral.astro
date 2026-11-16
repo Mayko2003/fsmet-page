@@ -1,0 +1,91 @@
+---
+import { Icon } from "astro-icon/components";
+import { getStrings } from "../i18n/strings";
+import { getSection, lines } from "../lib/emdash-section";
+
+type CmsProgramDay = {
+	day?: string;
+	place?: string;
+	items?: string;
+};
+
+type ProgramData = {
+	title?: string;
+	subtitle?: string;
+	days?: CmsProgramDay[];
+};
+
+interface Props {
+	previewEntry?: { data: ProgramData } | null;
+}
+
+const { previewEntry } = Astro.props;
+const s = getStrings(Astro.currentLocale);
+const cms = previewEntry?.data ?? (await getSection<ProgramData>("program", Astro.currentLocale));
+
+const cmsDias = (cms?.days ?? [])
+	.filter((dia) => Boolean(dia.day))
+	.map((dia) => ({
+		day: dia.day ?? "",
+		place: dia.place ?? "",
+		items: lines(dia.items).map((line) => {
+			const [time, ...text] = line.split("|");
+			return text.length ? { time: time.trim(), text: text.join("|").trim() } : { time: "", text: line };
+		}),
+	}));
+
+const dias = cmsDias.length ? cmsDias : s.infoutil.programa.dias;
+const sedes = [...new Set(dias.map((dia) => dia.place))];
+
+const programa = {
+	title: cms?.title || s.infoutil.programa.title,
+	subtitle: cms?.subtitle || s.infoutil.programa.subtitle,
+	dias: dias.map((dia) => ({
+		...dia,
+		accent: sedes.indexOf(dia.place) % 2 === 1,
+	})),
+};
+---
+
+<article
+	id="programa"
+	data-reveal
+	class="mt-4 scroll-mt-24 rounded-3xl border border-sand bg-paper p-6 md:p-8"
+>
+	<div class="flex items-center gap-4">
+		<span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gold-soft text-clay">
+			<Icon name="mdi:calendar-clock" class="h-6 w-6" />
+		</span>
+		<div>
+			<h3 class="font-display text-2xl">{programa.title}</h3>
+			<p class="text-sm font-semibold text-clay">{programa.subtitle}</p>
+		</div>
+	</div>
+	<div class="mt-6 grid gap-4 lg:grid-cols-3">
+		{
+			programa.dias.map((dia) => (
+				<section class="overflow-hidden rounded-2xl border border-sand bg-cream">
+					<header
+						class:list={[
+							"flex items-center justify-between gap-3 px-5 py-3 text-ink",
+							dia.accent ? "bg-clay" : "bg-gold",
+						]}
+					>
+						<h4 class="font-display text-lg font-semibold">{dia.day}</h4>
+						{dia.place && (
+							<span class="text-xs font-bold tracking-widest uppercase">{dia.place}</span>
+						)}
+					</header>
+					<dl class="divide-y divide-sand px-5">
+						{dia.items.map((item) => (
+							<div class="grid grid-cols-[7.5rem_1fr] gap-3 py-3 text-sm">
+								<dt class="font-semibold text-ink/70 tabular-nums">{item.time}</dt>
+								<dd class="text-ink/90">{item.text}</dd>
+							</div>
+						))}
+					</dl>
+				</section>
+			))
+		}
+	</div>
+</article>

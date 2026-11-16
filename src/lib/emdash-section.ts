@@ -5,7 +5,7 @@ import { getEmDashCollection } from "emdash";
  * actual y cae al español si todavía no hay traducción.
  */
 export async function getSection<T>(
-	collection: "hero" | "about" | "agenda" | "info",
+	collection: "hero" | "about" | "agenda" | "info" | "program",
 	locale: string | undefined,
 ): Promise<T | null> {
 	const current = locale ?? "es";

@@ -476,43 +476,6 @@
           }
         },
         {
-          "slug": "program_title",
-          "label": "Programa · título",
-          "type": "string"
-        },
-        {
-          "slug": "program_subtitle",
-          "label": "Programa · subtítulo",
-          "type": "string"
-        },
-        {
-          "slug": "program_days",
-          "label": "Programa · días",
-          "type": "repeater",
-          "validation": {
-            "minItems": 0,
-            "maxItems": 10,
-            "subFields": [
-              {
-                "slug": "day",
-                "label": "Día (ej. Miércoles 7 de abril)",
-                "type": "string",
-                "required": true
-              },
-              {
-                "slug": "place",
-                "label": "Sede (ej. Jujuy)",
-                "type": "string"
-              },
-              {
-                "slug": "items",
-                "label": "Actividades (una por línea: horario | actividad; ej. 14:00–15:00 | Apertura)",
-                "type": "text"
-              }
-            ]
-          }
-        },
-        {
           "slug": "lodging_title",
           "label": "Hospedaje · título",
           "type": "string"
@@ -592,6 +555,62 @@
                 "slug": "web",
                 "label": "Web",
                 "type": "string"
+              }
+            ]
+          }
+        }
+      ],
+      "supports": [
+        "drafts",
+        "revisions",
+        "preview"
+      ],
+      "routable": false
+    },
+    {
+      "slug": "program",
+      "label": "Programa general",
+      "labelSingular": "Programa general",
+      "description": "Cronograma del encuentro por día y sede. Se muestra dentro de Información útil.",
+      "icon": "clock",
+      "group": "Secciones de la página",
+      "sortOrder": 45,
+      "titleField": "title",
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Título",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "subtitle",
+          "label": "Subtítulo (ej. 7, 8 y 9 de abril de 2027 · Jujuy y Salta)",
+          "type": "string"
+        },
+        {
+          "slug": "days",
+          "label": "Días",
+          "type": "repeater",
+          "validation": {
+            "minItems": 0,
+            "maxItems": 10,
+            "subFields": [
+              {
+                "slug": "day",
+                "label": "Día (ej. Miércoles 7 de abril)",
+                "type": "string",
+                "required": true
+              },
+              {
+                "slug": "place",
+                "label": "Sede (ej. Jujuy)",
+                "type": "string"
+              },
+              {
+                "slug": "items",
+                "label": "Actividades (una por línea: horario | actividad; ej. 14:00–15:00 | Apertura)",
+                "type": "text"
               }
             ]
           }
@@ -1023,25 +1042,6 @@
               "pending_items": ""
             }
           ],
-          "program_title": "Programa general",
-          "program_subtitle": "7, 8 y 9 de abril de 2027 · Jujuy y Salta",
-          "program_days": [
-            {
-              "day": "Miércoles 7 de abril",
-              "place": "Jujuy",
-              "items": "14:00–15:00 | Apertura\n15:00–17:00 | Disertaciones\n17:00–20:00 | Mesas de debate"
-            },
-            {
-              "day": "Jueves 8 de abril",
-              "place": "Jujuy",
-              "items": "08:00–13:00 | Visitas a experiencias territoriales\n09:00–12:00 | Disertaciones\n14:00–16:00 | Disertaciones\n16:00–20:00 | Mesa de debate"
-            },
-            {
-              "day": "Viernes 9 de abril",
-              "place": "Salta",
-              "items": "Desde las 06:30 | Partida hacia Salta\n09:00–12:00 | Disertaciones y visitas a experiencias territoriales\n14:00–18:00 | Mesa de debate\n18:00–20:00 | Cierre del Foro"
-            }
-          ],
           "lodging_title": "Hospedaje",
           "lodging_text": "El mapa muestra hoteles del microcentro de San Salvador de Jujuy como referencia inicial. Convenios, tarifas especiales y distancia a la sede final se publican cuando estén confirmados.",
           "lodging_pending_items": "Opciones solidarias y alojamiento comunitario\nHospedaje en Salta capital",
@@ -1150,25 +1150,6 @@
               "title": "Altitude and climate",
               "items": "San Salvador de Jujuy and Salta city sit at ~1,200 masl; April is mild and dry.\nIf you travel through the Quebrada de Humahuaca or the Puna (2,000–3,700 masl), plan a day to acclimatize.",
               "pending_items": ""
-            }
-          ],
-          "program_title": "General programme",
-          "program_subtitle": "April 7, 8 and 9, 2027 · Jujuy and Salta",
-          "program_days": [
-            {
-              "day": "Wednesday, April 7",
-              "place": "Jujuy",
-              "items": "14:00–15:00 | Opening\n15:00–17:00 | Talks\n17:00–20:00 | Discussion panels"
-            },
-            {
-              "day": "Thursday, April 8",
-              "place": "Jujuy",
-              "items": "08:00–13:00 | Visits to territorial experiences\n09:00–12:00 | Talks\n14:00–16:00 | Talks\n16:00–20:00 | Discussion panel"
-            },
-            {
-              "day": "Friday, April 9",
-              "place": "Salta",
-              "items": "From 06:30 | Departure for Salta\n09:00–12:00 | Talks and visits to territorial experiences\n14:00–18:00 | Discussion panel\n18:00–20:00 | Closing of the Forum"
             }
           ],
           "lodging_title": "Accommodation",
@@ -1281,25 +1262,6 @@
               "pending_items": ""
             }
           ],
-          "program_title": "Programa geral",
-          "program_subtitle": "7, 8 e 9 de abril de 2027 · Jujuy e Salta",
-          "program_days": [
-            {
-              "day": "Quarta-feira, 7 de abril",
-              "place": "Jujuy",
-              "items": "14:00–15:00 | Abertura\n15:00–17:00 | Palestras\n17:00–20:00 | Mesas de debate"
-            },
-            {
-              "day": "Quinta-feira, 8 de abril",
-              "place": "Jujuy",
-              "items": "08:00–13:00 | Visitas a experiências territoriais\n09:00–12:00 | Palestras\n14:00–16:00 | Palestras\n16:00–20:00 | Mesa de debate"
-            },
-            {
-              "day": "Sexta-feira, 9 de abril",
-              "place": "Salta",
-              "items": "A partir das 06:30 | Partida para Salta\n09:00–12:00 | Palestras e visitas a experiências territoriais\n14:00–18:00 | Mesa de debate\n18:00–20:00 | Encerramento do Fórum"
-            }
-          ],
           "lodging_title": "Hospedagem",
           "lodging_text": "O mapa mostra hotéis do miocentro de San Salvador de Jujuy como referência inicial. Convênios, tarifas especiais e distância até a sede final serão publicados quando confirmados.",
           "lodging_pending_items": "Opções solidárias e hospedagem comunitária\nHospedagem em Salta capital",
@@ -1410,25 +1372,6 @@
               "pending_items": ""
             }
           ],
-          "program_title": "Programme général",
-          "program_subtitle": "7, 8 et 9 avril 2027 · Jujuy et Salta",
-          "program_days": [
-            {
-              "day": "Mercredi 7 avril",
-              "place": "Jujuy",
-              "items": "14:00–15:00 | Ouverture\n15:00–17:00 | Conférences\n17:00–20:00 | Tables rondes"
-            },
-            {
-              "day": "Jeudi 8 avril",
-              "place": "Jujuy",
-              "items": "08:00–13:00 | Visites d’expériences territoriales\n09:00–12:00 | Conférences\n14:00–16:00 | Conférences\n16:00–20:00 | Table ronde"
-            },
-            {
-              "day": "Vendredi 9 avril",
-              "place": "Salta",
-              "items": "À partir de 06:30 | Départ pour Salta\n09:00–12:00 | Conférences et visites d’expériences territoriales\n14:00–18:00 | Table ronde\n18:00–20:00 | Clôture du Forum"
-            }
-          ],
           "lodging_title": "Hébergement",
           "lodging_text": "La carte montre des hôtels du microcentre de San Salvador de Jujuy comme référence initiale. Conventions, tarifs spéciaux et distance au lieu final seront publiés une fois confirmés.",
           "lodging_pending_items": "Options solidaires et hébergement communautaire\nHébergement à Salta capitale",
@@ -1505,6 +1448,115 @@
               "whatsapp": "5493884174629",
               "email": "jujuy@munayhotel.com.ar",
               "web": "munayhotel.com.ar"
+            }
+          ]
+        }
+      }
+    ],
+    "program": [
+      {
+        "id": "program-es",
+        "status": "published",
+        "locale": "es",
+        "data": {
+          "title": "Programa general",
+          "subtitle": "7, 8 y 9 de abril de 2027 · Jujuy y Salta",
+          "days": [
+            {
+              "day": "Miércoles 7 de abril",
+              "place": "Jujuy",
+              "items": "14:00–15:00 | Apertura\n15:00–17:00 | Disertaciones\n17:00–20:00 | Mesas de debate"
+            },
+            {
+              "day": "Jueves 8 de abril",
+              "place": "Jujuy",
+              "items": "08:00–13:00 | Visitas a experiencias territoriales\n09:00–12:00 | Disertaciones\n14:00–16:00 | Disertaciones\n16:00–20:00 | Mesa de debate"
+            },
+            {
+              "day": "Viernes 9 de abril",
+              "place": "Salta",
+              "items": "Desde las 06:30 | Partida hacia Salta\n09:00–12:00 | Disertaciones y visitas a experiencias territoriales\n14:00–18:00 | Mesa de debate\n18:00–20:00 | Cierre del Foro"
+            }
+          ]
+        }
+      },
+      {
+        "id": "program-en",
+        "status": "published",
+        "locale": "en",
+        "translationOf": "program-es",
+        "data": {
+          "title": "General programme",
+          "subtitle": "April 7, 8 and 9, 2027 · Jujuy and Salta",
+          "days": [
+            {
+              "day": "Wednesday, April 7",
+              "place": "Jujuy",
+              "items": "14:00–15:00 | Opening\n15:00–17:00 | Talks\n17:00–20:00 | Discussion panels"
+            },
+            {
+              "day": "Thursday, April 8",
+              "place": "Jujuy",
+              "items": "08:00–13:00 | Visits to territorial experiences\n09:00–12:00 | Talks\n14:00–16:00 | Talks\n16:00–20:00 | Discussion panel"
+            },
+            {
+              "day": "Friday, April 9",
+              "place": "Salta",
+              "items": "From 06:30 | Departure for Salta\n09:00–12:00 | Talks and visits to territorial experiences\n14:00–18:00 | Discussion panel\n18:00–20:00 | Closing of the Forum"
+            }
+          ]
+        }
+      },
+      {
+        "id": "program-pt",
+        "status": "published",
+        "locale": "pt",
+        "translationOf": "program-es",
+        "data": {
+          "title": "Programa geral",
+          "subtitle": "7, 8 e 9 de abril de 2027 · Jujuy e Salta",
+          "days": [
+            {
+              "day": "Quarta-feira, 7 de abril",
+              "place": "Jujuy",
+              "items": "14:00–15:00 | Abertura\n15:00–17:00 | Palestras\n17:00–20:00 | Mesas de debate"
+            },
+            {
+              "day": "Quinta-feira, 8 de abril",
+              "place": "Jujuy",
+              "items": "08:00–13:00 | Visitas a experiências territoriais\n09:00–12:00 | Palestras\n14:00–16:00 | Palestras\n16:00–20:00 | Mesa de debate"
+            },
+            {
+              "day": "Sexta-feira, 9 de abril",
+              "place": "Salta",
+              "items": "A partir das 06:30 | Partida para Salta\n09:00–12:00 | Palestras e visitas a experiências territoriais\n14:00–18:00 | Mesa de debate\n18:00–20:00 | Encerramento do Fórum"
+            }
+          ]
+        }
+      },
+      {
+        "id": "program-fr",
+        "status": "published",
+        "locale": "fr",
+        "translationOf": "program-es",
+        "data": {
+          "title": "Programme général",
+          "subtitle": "7, 8 et 9 avril 2027 · Jujuy et Salta",
+          "days": [
+            {
+              "day": "Mercredi 7 avril",
+              "place": "Jujuy",
+              "items": "14:00–15:00 | Ouverture\n15:00–17:00 | Conférences\n17:00–20:00 | Tables rondes"
+            },
+            {
+              "day": "Jeudi 8 avril",
+              "place": "Jujuy",
+              "items": "08:00–13:00 | Visites d’expériences territoriales\n09:00–12:00 | Conférences\n14:00–16:00 | Conférences\n16:00–20:00 | Table ronde"
+            },
+            {
+              "day": "Vendredi 9 avril",
+              "place": "Salta",
+              "items": "À partir de 06:30 | Départ pour Salta\n09:00–12:00 | Conférences et visites d’expériences territoriales\n14:00–18:00 | Table ronde\n18:00–20:00 | Clôture du Forum"
             }
           ]
         }

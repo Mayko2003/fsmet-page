@@ -37,15 +37,15 @@ export interface About {
   status: string;
   label?: string;
   heading: string;
+  video_url?: string;
   paragraph_1?: string;
   paragraph_2?: string;
+  link_label?: string;
+  link_url?: string;
   quote?: string;
   quote_caption?: string;
   axes_title?: string;
   axes?: { "number"?: string | null; "title": string; "text"?: string | null; "topics"?: string | null }[];
-  link_label?: string;
-  link_url?: string;
-  video_url?: string;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
@@ -86,9 +86,21 @@ export interface Info {
   lodging_legend_city?: string;
   lodging_list_title?: string;
   hotels?: { "name": string; "detail"?: string | null; "lat": number; "lng": number; "phone"?: string | null; "whatsapp"?: string | null; "email"?: string | null; "web"?: string | null }[];
-  program_title?: string;
-  program_subtitle?: string;
-  program_days?: { "day": string; "place"?: string | null; "items"?: string | null }[];
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date | null;
+  byline?: BylineSummary | null;
+  bylines?: ContentBylineCredit[];
+  terms?: Record<string, TaxonomyTerm[]>;
+}
+
+export interface Program {
+  id: string;
+  slug: string | null;
+  status: string;
+  title: string;
+  subtitle?: string;
+  days?: { "day": string; "place"?: string | null; "items"?: string | null }[];
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
@@ -106,9 +118,9 @@ export interface Webinar {
   event_date: string;
   date_label?: string;
   description?: string;
+  image?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } };
   youtube_url?: string;
   order?: number;
-  image?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } };
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
@@ -123,6 +135,7 @@ declare module "emdash" {
     about: About;
     agenda: Agenda;
     info: Info;
+    program: Program;
     webinars: Webinar;
   }
 }

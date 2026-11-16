@@ -27,4 +27,5 @@ Consult these guides before working on related tasks:
 - After deploying a schema change, open `/_emdash/admin/plugins/fsmet-admin/sincronizar` (admin → "Sincronizar esquema") and apply the pending changes. It creates missing fields, updates labels/widgets/repeater sub-fields/order and collection names; it never deletes fields or content.
 - Local SQLite: `npx emdash seed seed/seed.json --no-content --on-conflict update` (stop the dev server first), or use the same admin page.
 - Local admin login without passkey (dev only): `http://localhost:4321/_emdash/api/auth/dev-bypass?redirect=/_emdash/admin`.
+- The "Programa general" block inside Información útil is its own singleton collection (`program`, component `ProgramaGeneral.astro`).
 - The local native plugin lives in `src/emdash/fsmet-admin/` (registered in `astro.config.mjs`). `datetime` fields should use `"widget": "fsmet-admin:fecha-hora"` (day/month/year + 24 h time, Argentina time).

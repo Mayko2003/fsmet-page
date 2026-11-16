@@ -1,0 +1,46 @@
+---
+import { getEmDashEntry } from "emdash";
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import PreviewNotice from "../../components/PreviewNotice.astro";
+import ProgramaGeneral from "../../components/ProgramaGeneral.astro";
+import "../../styles/global.css";
+
+const slug = Astro.params.slug;
+
+if (!slug) {
+	return Astro.rewrite("/404");
+}
+
+const { entry, isPreview, error } = await getEmDashEntry("program", slug, {
+	locale: Astro.currentLocale,
+});
+
+if (error) {
+	console.error("[emdash] No se pudo cargar el preview del programa:", error);
+	return new Response("No se pudo cargar la vista previa", { status: 500 });
+}
+
+if (!entry) {
+	if (isPreview) return Astro.rewrite("/404");
+	return Astro.redirect("/#programa");
+}
+
+if (!isPreview) {
+	return Astro.redirect("/#programa");
+}
+---
+
+<Layout title="Vista previa · Programa general">
+	<Header />
+	<main id="contenido">
+		<PreviewNotice label="Vista previa · Programa general" />
+		<section class="border-t border-sand">
+			<div class="mx-auto max-w-6xl px-5 py-20 md:px-8">
+				<ProgramaGeneral previewEntry={entry} />
+			</div>
+		</section>
+	</main>
+	<Footer />
+</Layout>
