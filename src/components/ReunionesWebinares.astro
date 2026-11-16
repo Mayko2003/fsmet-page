@@ -34,7 +34,7 @@ type WebinarData = {
 const queryWebinars = (queryLocale: string) =>
 	getEmDashCollection("webinars", {
 		locale: queryLocale,
-		orderBy: { order: "asc", event_date: "asc" },
+		orderBy: { event_date: "desc", order: "asc" },
 	});
 
 let { entries: reuniones, error } = await queryWebinars(locale);
