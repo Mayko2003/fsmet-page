@@ -13,6 +13,7 @@ type AxisData = {
 type AboutData = {
 	label?: string;
 	heading?: string;
+	video_url?: string;
 	paragraph_1?: string;
 	paragraph_2?: string;
 	link_label?: string;
@@ -41,6 +42,24 @@ const ejes =
 		}))
 	: s.quienes.ejes;
 
+const youtubeId = (url: string | undefined) => {
+	if (!url) return null;
+	try {
+		const { hostname, pathname, searchParams } = new URL(url);
+		const host = hostname.replace(/^(www|m)\./, "");
+		const id =
+			host === "youtu.be" ? pathname.split("/")[1]
+			: host === "youtube.com" || host === "youtube-nocookie.com" ?
+				searchParams.get("v") ?? pathname.match(/^\/(?:embed|live|shorts)\/([^/?]+)/)?.[1]
+			: null;
+		return id && /^[\w-]{6,}$/.test(id) ? id : null;
+	} catch {
+		return null;
+	}
+};
+
+const videoId = youtubeId(cms?.video_url);
+
 const about = {
 	label: cms?.label || s.quienes.label,
 	h2: cms?.heading || s.quienes.h2,
@@ -60,6 +79,21 @@ const about = {
 		<h2 data-reveal style="--reveal-delay: 80ms" class="mt-3 max-w-3xl font-display text-3xl font-semibold md:text-5xl">
 			{about.h2}
 		</h2>
+		{
+			videoId && (
+				<div data-reveal style="--reveal-delay: 120ms" class="mt-8 aspect-video overflow-hidden rounded-3xl border border-sand bg-ink">
+					<iframe
+						src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+						title={about.h2}
+						loading="lazy"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						referrerpolicy="strict-origin-when-cross-origin"
+						allowfullscreen
+						class="h-full w-full"
+					/>
+				</div>
+			)
+		}
 		<div data-reveal style="--reveal-delay: 150ms" class="mt-8 grid gap-8 lg:grid-cols-2">
 			<p class="text-lg leading-relaxed text-muted">
 				{about.p1}

@@ -235,6 +235,11 @@
           "required": true
         },
         {
+          "slug": "video_url",
+          "label": "Video de YouTube · URL",
+          "type": "url"
+        },
+        {
           "slug": "paragraph_1",
           "label": "Párrafo 1",
           "type": "text"

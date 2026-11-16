@@ -45,6 +45,7 @@ export interface About {
   axes?: { "number"?: string | null; "title": string; "text"?: string | null; "topics"?: string | null }[];
   link_label?: string;
   link_url?: string;
+  video_url?: string;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
