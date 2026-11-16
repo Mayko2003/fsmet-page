@@ -1,5 +1,6 @@
 // @ts-check
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { defineConfig, sessionDrivers } from "astro/config";
 import { loadEnv } from "vite";
 import tailwindcss from "@tailwindcss/vite";
@@ -94,6 +95,16 @@ if (isProduction && process.env.VERCEL && !redisUrl) {
   );
 }
 
+const fsmetAdminEntry = fileURLToPath(new URL("./src/emdash/fsmet-admin/admin.tsx", import.meta.url));
+const fsmetAdminPlugin = {
+  id: "fsmet-admin",
+  version: "0.1.0",
+  format: "native",
+  entrypoint: fileURLToPath(new URL("./src/emdash/fsmet-admin/plugin.ts", import.meta.url)),
+  adminEntry: fsmetAdminEntry,
+  options: { adminEntry: fsmetAdminEntry },
+};
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://fsmet.com.ar",
@@ -134,6 +145,7 @@ export default defineConfig({
       database,
       storage,
       siteUrl,
+      plugins: [fsmetAdminPlugin],
       admin: {
         siteName: "FSMET",
         locales: ["es-419", "en"],
