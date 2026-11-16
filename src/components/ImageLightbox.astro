@@ -1,0 +1,95 @@
+---
+import { Icon } from "astro-icon/components";
+import { getStrings } from "../i18n/strings";
+
+const s = getStrings(Astro.currentLocale);
+---
+
+<dialog
+	id="image-lightbox"
+	aria-label={s.reuniones.zoom}
+	class="m-auto w-full max-w-6xl bg-transparent p-0 text-paper"
+>
+	<div class="relative flex max-h-[92vh] w-full max-w-[94vw] flex-col items-center justify-center">
+		<button
+			type="button"
+			data-close-lightbox
+			aria-label={s.reuniones.close}
+			class="fixed top-4 right-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-paper/10 text-paper ring-1 ring-paper/30 backdrop-blur transition hover:bg-paper/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper"
+		>
+			<Icon name="mdi:close" class="h-6 w-6" />
+		</button>
+		<img
+			id="image-lightbox-image"
+			alt=""
+			class="max-h-[82vh] w-auto max-w-full rounded-2xl bg-ink/20 object-contain shadow-2xl ring-1 ring-paper/20"
+		/>
+		<p id="image-lightbox-caption" class="mt-4 max-w-2xl text-center text-sm font-medium text-paper/85"></p>
+	</div>
+</dialog>
+
+<style>
+	#image-lightbox::backdrop {
+		background: rgb(42 34 28 / 0.82);
+		backdrop-filter: blur(6px);
+	}
+</style>
+
+<script>
+	const lightbox = document.getElementById("image-lightbox") as HTMLDialogElement | null;
+	const lightboxImage = document.getElementById("image-lightbox-image") as HTMLImageElement | null;
+	const lightboxCaption = document.getElementById("image-lightbox-caption");
+
+	document.querySelectorAll<HTMLButtonElement>("[data-image-zoom]").forEach((button) => {
+		button.addEventListener("click", () => {
+			const image = button.querySelector("img");
+			if (!lightbox || !lightboxImage || !image) return;
+
+			// Huge 2x candidates (e.g. 9940w) are rejected or very slow in the
+			// image optimizer, so cap the lightbox source at a sane width.
+			const MAX_LIGHTBOX_WIDTH = 2560;
+			const srcset = image.getAttribute("srcset");
+			const candidates = srcset
+				? srcset
+						.split(",")
+						.map((part) => {
+							const [url, descriptor = ""] = part.trim().split(/\s+/);
+							const width = Number.parseInt(descriptor, 10);
+							return url ? { url, width: Number.isFinite(width) ? width : 0 } : null;
+						})
+						.filter((candidate): candidate is { url: string; width: number } => candidate !== null)
+				: [];
+			const largestWithinLimit = candidates
+				.filter((candidate) => candidate.width > 0 && candidate.width <= MAX_LIGHTBOX_WIDTH)
+				.at(-1);
+			const bestCandidate = largestWithinLimit ?? candidates.at(-1);
+
+			// `currentSrc` is "" (not null) while a lazy image has not loaded yet,
+			// so `||` is required to fall back to the `src` attribute.
+			lightboxImage.src = bestCandidate?.url || image.currentSrc || image.src;
+			lightboxImage.alt = image.alt || "";
+			if (lightboxCaption) {
+				lightboxCaption.textContent = button.dataset.title || image.alt || "";
+			}
+
+			document.documentElement.classList.add("overflow-hidden");
+			lightbox.showModal();
+		});
+	});
+
+	document.querySelector("[data-close-lightbox]")?.addEventListener("click", () => {
+		lightbox?.close();
+	});
+
+	lightbox?.addEventListener("click", (event) => {
+		if (event.target === lightbox) lightbox.close();
+	});
+
+	lightbox?.addEventListener("close", () => {
+		document.documentElement.classList.remove("overflow-hidden");
+		if (lightboxImage) {
+			lightboxImage.removeAttribute("src");
+			lightboxImage.alt = "";
+		}
+	});
+</script>

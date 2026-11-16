@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getStrings, LOCALES } from "../i18n/strings";
+import ImageLightbox from "../components/ImageLightbox.astro";
 
 const s = getStrings(Astro.currentLocale);
 const { title = s.meta.title, description = s.meta.description, noindex = false } = Astro.props;
@@ -68,6 +69,7 @@ interface Props {
 			{s.meta.skip}
 		</a>
 		<slot />
+		<ImageLightbox />
 		<script>
 			import "../scripts/ui";
 		</script>

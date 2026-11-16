@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { Image as EmDashImage } from "emdash/ui";
+import { getStrings } from "../i18n/strings";
 
 export interface CardItem {
 	icon: string;
@@ -31,6 +32,7 @@ interface Props {
 }
 
 const { id, label, h2, intro, items, accent = "clay" } = Astro.props;
+const s = getStrings(Astro.currentLocale);
 const labelClass = accent === "sage" ? "text-sage" : "text-clay";
 ---
 
@@ -61,21 +63,37 @@ const labelClass = accent === "sage" ? "text-sage" : "text-clay";
 						style={`--reveal-delay: ${i * 80}ms`}
 						class="flex flex-col rounded-3xl border border-sand bg-paper p-6"
 					>
-						{item.logoImage ? (
-							<EmDashImage
-								image={item.logoImage}
-								alt={item.title}
-								class="w-full rounded-2xl border border-sand"
-							/>
-						) : item.logo ? (
-							<img
-								src={item.logo}
-								alt={item.title}
-								width="800"
-								height="185"
-								loading="lazy"
-								class="w-full rounded-2xl border border-sand"
-							/>
+						{item.logoImage || item.logo ? (
+							<button
+								type="button"
+								data-image-zoom
+								data-title={item.title}
+								aria-label={`${s.reuniones.zoom}: ${item.title}`}
+								class="group relative block aspect-[16/9] w-full cursor-zoom-in overflow-hidden rounded-2xl border border-sand bg-cream"
+							>
+								{item.logoImage ? (
+									<EmDashImage
+										image={item.logoImage}
+										alt={item.title}
+										class="h-full w-full object-contain transition duration-500 group-hover:scale-[1.02]"
+									/>
+								) : (
+									<img
+										src={item.logo}
+										alt={item.title}
+										width="800"
+										height="450"
+										loading="lazy"
+										decoding="async"
+										class="h-full w-full object-contain transition duration-500 group-hover:scale-[1.02]"
+									/>
+								)}
+								<span class="pointer-events-none absolute inset-0 flex items-end justify-end bg-gradient-to-t from-ink/25 to-transparent p-3 opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
+									<span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-ink/75 text-paper ring-1 ring-paper/30 backdrop-blur-sm">
+										<Icon name="mdi:magnify-plus-outline" class="h-5 w-5" />
+									</span>
+								</span>
+							</button>
 						) : (
 							<span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gold-soft text-clay">
 								<Icon name={item.icon} class="h-6 w-6" />
