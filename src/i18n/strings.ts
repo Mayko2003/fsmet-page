@@ -360,6 +360,7 @@ const es = {
 		fields: {
 			nombre: "Nombre y apellido",
 			email: "Correo",
+			telefono: "Teléfono",
 			territorio: "Territorio / país",
 			organizacion: "Organización o comunidad",
 			opcional: "(opcional)",
@@ -759,6 +760,7 @@ const en: Strings = {
 		fields: {
 			nombre: "Full name",
 			email: "Email",
+			telefono: "Phone",
 			territorio: "Territory / country",
 			organizacion: "Organization or community",
 			opcional: "(optional)",
@@ -1156,6 +1158,7 @@ const pt: Strings = {
 		fields: {
 			nombre: "Nome e sobrenome",
 			email: "E-mail",
+			telefono: "Telefone",
 			territorio: "Território / país",
 			organizacion: "Organização ou comunidade",
 			opcional: "(opcional)",
@@ -1553,6 +1556,7 @@ const fr: Strings = {
 		fields: {
 			nombre: "Nom et prénom",
 			email: "Courriel",
+			telefono: "Téléphone",
 			territorio: "Territoire / pays",
 			organizacion: "Organisation ou communauté",
 			opcional: "(facultatif)",
