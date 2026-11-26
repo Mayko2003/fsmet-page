@@ -124,6 +124,21 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 				</label>
 				<label class="block">
 					<span class="mb-1.5 block text-sm font-medium">
+						{s.inscripcion.fields.telefono} <span class="text-clay" aria-hidden="true">*</span>
+					</span>
+					<input
+						required
+						name="telefono"
+						type="tel"
+						autocomplete="tel"
+						inputmode="tel"
+						pattern="[0-9+\(\)\-. ]{6,25}"
+						placeholder="+54 9 388 123 4567"
+						class={fieldClass}
+					/>
+				</label>
+				<label class="block">
+					<span class="mb-1.5 block text-sm font-medium">
 						{s.inscripcion.fields.territorio} <span class="text-clay" aria-hidden="true">*</span>
 					</span>
 					<input
@@ -133,7 +148,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 						class={fieldClass}
 					/>
 				</label>
-				<label class="block sm:col-span-2">
+				<label class="block">
 					<span class="mb-1.5 block text-sm font-medium">
 						{s.inscripcion.fields.organizacion} <span class="font-normal text-muted">{s.inscripcion.fields.opcional}</span>
 					</span>

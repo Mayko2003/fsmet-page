@@ -45,6 +45,7 @@ const escapeHtml = (value: string) =>
 		.replaceAll("'", "&#39;");
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const TELEFONO_RE = /^[0-9+()\-. ]{6,25}$/;
 
 const json = (body: Record<string, unknown>, status: number) =>
 	new Response(JSON.stringify(body), {
@@ -64,16 +65,19 @@ export const POST: APIRoute = async ({ request }) => {
 		return json({ ok: false, error: "Verificación anti-bot fallida." }, 403);
 	}
 
-	const { nombre, email, territorio, organizacion, rol } = data;
+	const { nombre, email, telefono, territorio, organizacion, rol } = data;
 
 	if (
 		typeof nombre !== "string" ||
 		typeof email !== "string" ||
+		typeof telefono !== "string" ||
 		typeof territorio !== "string" ||
 		typeof rol !== "string" ||
 		!nombre.trim() ||
 		!territorio.trim() ||
 		!EMAIL_RE.test(email) ||
+		!TELEFONO_RE.test(telefono.trim()) ||
+		telefono.replace(/\D/g, "").length < 6 ||
 		!["oyente", "expositor"].includes(rol)
 	) {
 		return json({ ok: false, error: "Faltan campos obligatorios." }, 400);
@@ -84,6 +88,7 @@ export const POST: APIRoute = async ({ request }) => {
 		["Idioma", typeof data.lang === "string" ? data.lang : "es"],
 		["Nombre", nombre],
 		["Correo", email],
+		["Teléfono", telefono.trim()],
 		["Territorio / país", territorio],
 		["Organización o comunidad", typeof organizacion === "string" ? organizacion : ""],
 	];
